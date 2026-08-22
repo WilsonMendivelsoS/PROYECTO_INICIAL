@@ -3,12 +3,11 @@ import java.awt.*;
 /**
  * A triangle that can be manipulated and that draws itself on a canvas.
  * 
- * @author  Michael Kolling and David J. Barnes
- * @version 1.0  (15 July 2000)
+ * @author David Garzon, Wilson Mendivelso
+ * @version 0.1
  */
 
 public class Triangle{
-    
     public static int VERTICES=3;
     
     private int height;
@@ -29,7 +28,14 @@ public class Triangle{
         color = "green";
         isVisible = false;
     }
-
+    /**
+     * Create a new triangle at default position with a specific color.
+     */
+    public Triangle(String color){
+        this();
+        this.color = color;
+    }
+    
     /**
      * Make this triangle visible. If it was already visible, do nothing.
      */
@@ -177,5 +183,22 @@ public class Triangle{
             Canvas canvas = Canvas.getCanvas();
             canvas.erase(this);
         }
+    }
+    
+    /**
+     * Returns triangle's position
+     * @return the xPosition and the yPosition
+     */
+    public int[] getPosition(){
+        int[] temp = {xPosition, yPosition};
+        return temp;
+    }
+    
+    /**
+     * Return triangle's color.
+     * @return triangle's color.
+     */
+    public String getColor(){
+        return color;
     }
 }

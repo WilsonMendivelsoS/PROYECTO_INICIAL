@@ -3,12 +3,9 @@ import java.awt.*;
 /**
  * A rectangle that can be manipulated and that draws itself on a canvas.
  * 
- * @author  Michael Kolling and David J. Barnes (Modified)
- * @version 1.0  (15 July 2000)()
+ * @author David Garzon, Wilson Mendivelso
+ * @version 0.1
  */
-
-
- 
 public class Rectangle{
 
     public static int EDGES = 4;
@@ -25,14 +22,20 @@ public class Rectangle{
      */
     public Rectangle(){
         height = 30;
-        width = 40;
+        width = 30;
         xPosition = 70;
         yPosition = 15;
         color = "magenta";
         isVisible = false;
     }
     
-
+    /**
+     * Create a new rectangle at default position with a specific color.
+     */
+    public Rectangle(String color){
+        this();
+        this.color = color;
+    }
     /**
      * Make this rectangle visible. If it was already visible, do nothing.
      */
@@ -181,6 +184,23 @@ public class Rectangle{
             Canvas canvas = Canvas.getCanvas();
             canvas.erase(this);
         }
+    }
+    
+    /**
+     * Returns rectangle's position
+     * @return the xPosition and the yPosition
+     */
+    public int[] getPosition(){
+        int[] temp = {xPosition, yPosition};
+        return temp;
+    }
+    
+    /**
+     * Return rectangle's color.
+     * @return rectangle's color.
+     */
+    public String getColor(){
+        return color;
     }
 }
 

@@ -4,12 +4,11 @@ import java.awt.geom.*;
 /**
  * A circle that can be manipulated and that draws itself on a canvas.
  * 
- * @author  Michael Kolling and David J. Barnes
- * @version 1.0.  (15 July 2000) 
+ * @author David Garzon, Wilson Mendivelso
+ * @version 0.1
  */
 
 public class Circle{
-
     public static final double PI=3.1416;
     
     private int diameter;
@@ -18,7 +17,9 @@ public class Circle{
     private String color;
     private boolean isVisible;
     
-
+    /**
+     * Create a new circle at default position with default color.
+     */
     public Circle(){
         diameter = 30;
         xPosition = 20;
@@ -26,20 +27,34 @@ public class Circle{
         color = "blue";
         isVisible = false;
     }
-
-
-       
+    
+    /**
+     * Create a new circle at default position with a specific color.
+     */
+    public Circle(String color){
+        this();
+        this.color = color;
+    }
+    
+    /**
+     * Make this circle visible. If it was already visible, do nothing.
+     */
     public void makeVisible(){
         isVisible = true;
         draw();
     }
     
-
+    /**
+     * Make this circle invisible. If it was already invisible, do nothing.
+     */
     public void makeInvisible(){
         erase();
         isVisible = false;
     }
-
+    
+    /*
+     * Draw the circle with current specifications on screen.
+     */
     private void draw(){
         if(isVisible) {
             Canvas canvas = Canvas.getCanvas();
@@ -49,7 +64,10 @@ public class Circle{
             canvas.wait(10);
         }
     }
-
+    
+    /*
+     * Erase the rectangle on screen.
+     */
     private void erase(){
         if(isVisible) {
             Canvas canvas = Canvas.getCanvas();
@@ -165,6 +183,20 @@ public class Circle{
         draw();
     }
 
-
-
+    /**
+     * Returns circle's position
+     * @return the xPosition and the yPosition
+     */
+    public int[] getPosition(){
+        int[] temp = {xPosition, yPosition};
+        return temp;
+    }
+    
+    /**
+     * Return circle's color.
+     * @return circle's color.
+     */
+    public String getColor(){
+        return color;
+    }
 }

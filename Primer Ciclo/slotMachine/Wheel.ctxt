@@ -1,0 +1,22 @@
+#BlueJ class context
+comment0.target=Wheel
+comment0.text=\r\n\ Represents\ a\ wheel\ that\ can\ have\ a\ lot\ of\ symbols.\r\n\ \r\n\ @author\ David\ Garzon,\ Wilson\ Mendivelso\r\n\ @version\ 0.1\r\n
+comment1.params=
+comment1.target=Wheel()
+comment1.text=\r\n\ Create\ a\ new\ wheel\ with\ color\ gray.\r\n
+comment2.params=
+comment2.target=void\ makeVisible()
+comment2.text=\r\n\ Make\ this\ wheel\ visible.\r\n
+comment3.params=
+comment3.target=void\ makeInvisible()
+comment3.text=\r\n\ Make\ this\ wheel\ invisible.\r\n
+comment4.params=x\ y
+comment4.target=void\ place(int,\ int)
+comment4.text=\r\n\ Puts\ the\ Wheel\ in\ a\ specific\ position.\r\n
+comment5.params=s
+comment5.target=void\ addSymbol(Symbol)
+comment5.text=\r\n\ Adds\ a\ symbol\ to\ the\ wheel.\r\n
+comment6.params=s
+comment6.target=void\ deleteSymbol(Symbol)
+comment6.text=\r\n\ Deletes\ a\ symbol\ in\ the\ wheel.\r\n
+numComments=7
