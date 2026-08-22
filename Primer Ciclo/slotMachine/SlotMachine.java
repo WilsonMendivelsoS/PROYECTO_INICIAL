@@ -9,8 +9,6 @@ import java.lang.Math;
 * @version 0.1
 */
 public class SlotMachine{
-    private int symbolsQuantity;
-    private int wheelsQuantity;
     private Rectangle[] rectangleBodyParts;
     private ArrayList<Symbol> symbols;
     private ArrayList<Wheel> wheels;
@@ -38,7 +36,7 @@ public class SlotMachine{
      */
     public void prepareMachine(){
         rectangleBodyParts[0].moveHorizontal(-rectangleBodyParts[0].getPosition()[0]+50);
-        rectangleBodyParts[0].moveVertical(-rectangleBodyParts[0].getPosition()[1]+50);
+        rectangleBodyParts[0].moveVertical(-rectangleBodyParts[0].getPosition()[1]+150);
         rectangleBodyParts[0].changeColor("gray");
         rectangleBodyParts[0].changeSize(200, 400);
     }
@@ -51,7 +49,6 @@ public class SlotMachine{
         symbols.add(new Symbol("green"));
         symbols.add(new Symbol("red"));
         symbols.add(new Symbol("blue"));
-        symbolsQuantity = 3;
     }
     
     /**
@@ -62,7 +59,6 @@ public class SlotMachine{
         wheels.add(new Wheel());
         wheels.add(new Wheel());
         wheels.add(new Wheel());
-        wheelsQuantity = 3;
         
         for(Symbol s: symbols){
             for(Wheel w: wheels){
@@ -107,14 +103,15 @@ public class SlotMachine{
     
     
     /**
-     * Symbol's colors in order starting by one.
+     * It returns all the symbol's colors.
+     * @return Symbol's colors in order starting by one.
      */
     public String[] symbols(){
-        String[] nombres = new String[symbols.size()];
+        String[] names = new String[symbols.size()];
         for (int i = 0; i < symbols.size(); i++){
-            nombres[i] = symbols.get(i).getColor();
+            names[i] = symbols.get(i).getColor();
         }
-        return nombres;
+        return names;
     }
 
     /**
@@ -122,8 +119,9 @@ public class SlotMachine{
      * @param pos is the position of the new wheel.
      */
     public void addWheel(int pos){
+        pos --;
         if(pos <= 0){
-            pos = 1;
+            pos = 0;
         }
         else if(pos > wheels.size()){
             pos = wheels.size();
@@ -133,6 +131,30 @@ public class SlotMachine{
         for(String color: symbols()){
             wheels.get(pos).addSymbol(new Symbol(color));
         }
+        makeInvisible();
+        wheels.get(pos).randomizeSymbol();
+        rectangleBodyParts[0].changeSize(200, rectangleBodyParts[0].getWidth()+50);
+        
+        makeVisible();
+    }
+    
+    /**
+     * Deletes a specific wheel
+     * @param pos is the position of thw wheel that we wanna delete
+     */
+    
+    public void delWheel(int pos){
+        pos --;
+        if(pos <= 0){
+            pos = 0;
+        }
+        else if(pos > wheels.size()){
+            pos = wheels.size();
+        }
+        makeInvisible();
+        wheels.remove(pos);
+        makeVisible();
+        
     }
     /**
      * Generates a random number.

@@ -42,11 +42,10 @@ public class Symbol
     }
     
     /**
-     * Get the symbols color.
+     * Get symbol's color.
      * @return the color's name.
      */
     public String getColor(){
         return rectangleBody.getColor();
-
     }
 }

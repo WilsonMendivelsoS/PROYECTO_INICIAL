@@ -43,6 +43,8 @@ public class Wheel{
     
     /**
      * Puts the Wheel in a specific position.
+     * @param x is the position in x.
+     * @param y is the position in y.
      */
     public void place(int x, int y){
         makeInvisible();

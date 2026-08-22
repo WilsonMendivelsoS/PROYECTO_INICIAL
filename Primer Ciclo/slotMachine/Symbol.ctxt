@@ -15,5 +15,5 @@ comment4.target=void\ place(int,\ int)
 comment4.text=\r\n\ Puts\ the\ Symbol\ in\ a\ specific\ position.\r\n
 comment5.params=
 comment5.target=java.lang.String\ getColor()
-comment5.text=\r\n\ Get\ the\ symbols\ color.\r\n\ @return\ the\ color's\ name.\r\n
+comment5.text=\r\n\ Get\ symbol's\ color.\r\n\ @return\ the\ color's\ name.\r\n
 numComments=6

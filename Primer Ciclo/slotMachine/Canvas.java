@@ -26,7 +26,7 @@ public class Canvas{
      */
     public static Canvas getCanvas(){
         if(canvasSingleton == null) {
-            canvasSingleton = new Canvas("BlueJ Shapes Demo", 800, 500, 
+            canvasSingleton = new Canvas("BlueJ Shapes Demo", 900, 500, 
                                          Color.white);
         }
         canvasSingleton.setVisible(true);
