@@ -202,5 +202,21 @@ public class Rectangle{
     public String getColor(){
         return color;
     }
+    
+    /**
+     * Return rectangle's height.
+     * @return rectangle's height.
+     */
+    public int getHeight(){
+        return height;
+    }
+    
+    /**
+     * Return rectangle's width.
+     * @return rectangle's width.
+     */
+    public int getWidth(){
+        return width;
+    }
 }
 

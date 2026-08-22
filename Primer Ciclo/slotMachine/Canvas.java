@@ -130,6 +130,8 @@ public class Canvas{
             graphic.setColor(Color.white);
         else if(colorString.equals("gray"))
             graphic.setColor(new Color(128,128,128));
+        else if(colorString.equals("purple")) 
+            graphic.setColor(new Color(179, 65, 217));
         else
             graphic.setColor(Color.black);
     }

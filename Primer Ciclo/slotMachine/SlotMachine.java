@@ -11,41 +11,135 @@ import java.lang.Math;
 public class SlotMachine{
     private int symbolsQuantity;
     private int wheelsQuantity;
-    private Circle lever;
     private Rectangle[] rectangleBodyParts;
     private ArrayList<Symbol> symbols;
     private ArrayList<Wheel> wheels;
-    
+    /**
+     * Creates a slotMachine with a initial composition.
+     */
     public SlotMachine(){
-        symbolsQuantity = 0;
-        wheelsQuantity = 0;
-        
-        lever = new Circle();
-        rectangleBodyParts = new Rectangle[2];
+        wheels = new ArrayList<>();
+        rectangleBodyParts = new Rectangle[1];
         
         for(int i = 0; i < rectangleBodyParts.length; i++){
             rectangleBodyParts[i] = new Rectangle();
         }
         
-        symbols.add(new Symbol("black"));
+        prepareMachine();
+        prepareSymbols();
+        prepareWheels();
+        
+        makeVisible();
+    }
+    
+    
+    /**
+     * Creates the Machine where the Wheels will be putted.
+     */
+    public void prepareMachine(){
+        rectangleBodyParts[0].moveHorizontal(-rectangleBodyParts[0].getPosition()[0]+50);
+        rectangleBodyParts[0].moveVertical(-rectangleBodyParts[0].getPosition()[1]+50);
+        rectangleBodyParts[0].changeColor("gray");
+        rectangleBodyParts[0].changeSize(200, 400);
+    }
+    
+    /**
+     * Creates all the starter symbols that the wheels will use.
+     */
+    public void prepareSymbols(){
+        symbols = new ArrayList<>();
         symbols.add(new Symbol("green"));
         symbols.add(new Symbol("red"));
         symbols.add(new Symbol("blue"));
-
         symbolsQuantity = 3;
+    }
+    
+    /**
+     * Creates started wheels that will use the created symbols.
+     */
+    public void prepareWheels(){
+        wheels = new ArrayList<>();
+        wheels.add(new Wheel());
+        wheels.add(new Wheel());
+        wheels.add(new Wheel());
+        wheelsQuantity = 3;
         
-        wheels.add(new Wheel());
-        wheels.add(new Wheel());
-        wheels.add(new Wheel());
-        
-        for(int i = 1; i < symbols.size(); i++){
-            wheels.get(1).addSymbol(symbols.get(i));
-            wheels.get(1).addSymbol(symbols.get(i));
-            wheels.get(1).addSymbol(symbols.get(i));
+        for(Symbol s: symbols){
+            for(Wheel w: wheels){
+                w.addSymbol(new Symbol(s.getColor()));
+            }
+        }
+        for(Wheel w: wheels){
+                w.randomizeSymbol();
+            }
 
+    }
+    
+    /**
+     * Makes visible the machine, its wheels and symbols.
+     */
+    public void makeVisible(){
+        for(Rectangle r: rectangleBodyParts){
+            r.makeVisible();
+        }
+        
+        int espacioInterm = (rectangleBodyParts[0].getWidth() - 50*wheels.size())/(wheels.size() + 1);
+        
+        for(int i = 0; i < wheels.size(); i++){
+            wheels.get(i).place(rectangleBodyParts[0].getPosition()[0] + espacioInterm*(1 + i) +50*i, rectangleBodyParts[0].getPosition()[1] + 50);
+            wheels.get(i).makeVisible();
+        } 
+    }
+    
+    
+    /**
+     * Makes invisible the machine, its wheels and symbols.
+     */
+    
+    public void makeInvisible(){
+        for(Rectangle r: rectangleBodyParts){
+            r.makeInvisible();
+        }
+        for(Wheel w: wheels){
+            w.makeInvisible();
         }
     }
     
+    
+    /**
+     * Symbol's colors in order starting by one.
+     */
+    public String[] symbols(){
+        String[] nombres = new String[symbols.size()];
+        for (int i = 0; i < symbols.size(); i++){
+            nombres[i] = symbols.get(i).getColor();
+        }
+        return nombres;
+    }
+
+    /**
+     * Add a new wheel in a specific position.
+     * @param pos is the position of the new wheel.
+     */
+    public void addWheel(int pos){
+        if(pos <= 0){
+            pos = 1;
+        }
+        else if(pos > wheels.size()){
+            pos = wheels.size();
+        }
+        
+        wheels.add(pos, new Wheel());
+        for(String color: symbols()){
+            wheels.get(pos).addSymbol(new Symbol(color));
+        }
+    }
+    /**
+     * Generates a random number.
+     * @param infLimit is the minimum number that can have.
+     * @param supLimit - 1 is the maximum number that can have.
+     * @return a random number between infLimit and supLimit-1
+     */
     public static int randomNumGenerator(int infLimit, int supLimit){
         int numeroRand = infLimit + (int)(Math.random()* supLimit);
         return numeroRand;

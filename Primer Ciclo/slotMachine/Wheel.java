@@ -6,20 +6,19 @@ import java.util.ArrayList;
  * @author David Garzon, Wilson Mendivelso
  * @version 0.1
  */
-public class Wheel
-{
+public class Wheel{
     private ArrayList<Symbol> symbols;
     private Rectangle rectangleBodyPart;
     private int currentSymbol;
+    private boolean isVisible;
     
     /**
      * Create a new wheel with color gray.
      */
     public Wheel(){
         symbols = new ArrayList<>();
-        symbols.add(new Symbol("black"));
-        rectangleBodyPart = new Rectangle("gray");
         currentSymbol = 0;
+        rectangleBodyPart = new Rectangle("white");
         rectangleBodyPart.changeSize(100,50);
     }
     
@@ -28,11 +27,9 @@ public class Wheel
      */
     public void makeVisible(){
         rectangleBodyPart.makeVisible();
-        if(currentSymbol == 0 && symbols.size()>1){
-            currentSymbol = SlotMachine.randomNumGenerator(1,symbols.size());
-            symbols.get(currentSymbol).place(4*rectangleBodyPart.getPosition()[0]/3,8*rectangleBodyPart.getPosition()[1]/3);
-            symbols.get(currentSymbol).makeVisible();
-        }
+        symbols.get(currentSymbol).place(rectangleBodyPart.getPosition()[0]+rectangleBodyPart.getHeight()/10 , rectangleBodyPart.getPosition()[1] + 7*rectangleBodyPart.getHeight()/20);
+        symbols.get(currentSymbol).makeVisible();
+        isVisible = true;
     }
     
     /**
@@ -41,6 +38,7 @@ public class Wheel
     public void makeInvisible(){
         rectangleBodyPart.makeInvisible();
         symbols.get(currentSymbol).makeInvisible();
+        isVisible = false;
     }
     
     /**
@@ -67,6 +65,16 @@ public class Wheel
         symbols.remove(s);
         if(currentSymbol > symbols.size()){
             currentSymbol = symbols.size();
+        }
+    }
+    
+    /**
+     * It changes the current symbol to any one.
+     */
+    public void randomizeSymbol(){
+        currentSymbol = SlotMachine.randomNumGenerator(0, symbols.size());
+        if(isVisible){
+            makeVisible();
         }
     }
 }
