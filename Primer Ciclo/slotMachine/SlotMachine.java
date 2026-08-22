@@ -10,8 +10,9 @@ import java.lang.Math;
 */
 public class SlotMachine{
     private Rectangle[] rectangleBodyParts;
-    private ArrayList<Symbol> symbols;
+    private ArrayList<String> symbolsColors;
     private ArrayList<Wheel> wheels;
+    
     /**
      * Creates a slotMachine with a initial composition.
      */
@@ -45,10 +46,10 @@ public class SlotMachine{
      * Creates all the starter symbols that the wheels will use.
      */
     public void prepareSymbols(){
-        symbols = new ArrayList<>();
-        symbols.add(new Symbol("green"));
-        symbols.add(new Symbol("red"));
-        symbols.add(new Symbol("blue"));
+        symbolsColors = new ArrayList<>();
+        symbolsColors.add("green");
+        symbolsColors.add("red");
+        symbolsColors.add("blue");
     }
     
     /**
@@ -60,9 +61,9 @@ public class SlotMachine{
         wheels.add(new Wheel());
         wheels.add(new Wheel());
         
-        for(Symbol s: symbols){
+        for(String s: symbolsColors){
             for(Wheel w: wheels){
-                w.addSymbol(new Symbol(s.getColor()));
+                w.addSymbol(new Symbol(s));
             }
         }
         for(Wheel w: wheels){
@@ -107,9 +108,9 @@ public class SlotMachine{
      * @return Symbol's colors in order starting by one.
      */
     public String[] symbols(){
-        String[] names = new String[symbols.size()];
-        for (int i = 0; i < symbols.size(); i++){
-            names[i] = symbols.get(i).getColor();
+        String[] names = new String[symbolsColors.size()];
+        for (int i = 0; i < symbolsColors.size(); i++){
+            names[i] = symbolsColors.get(i);
         }
         return names;
     }
@@ -180,6 +181,33 @@ public class SlotMachine{
         }
         wheels.get(wheel).spin();
         wheels.get(wheel).makeVisible();
+    }
+    
+    /**
+     * Adds a symbol in a specific position, this symbol is also added to all the wheels
+     */
+    public void addSymbol(int pos, String color){
+        pos --;
+        if(pos <= 0){
+            pos = 0;
+        }
+        if(pos > symbolsColors.size()+1){
+            symbolsColors.add(color);
+        }
+        else{
+            symbolsColors.add(pos, color);
+        }
+        
+        for(Wheel w: wheels){
+            w.addSymbol(pos+1, color);
+        }
+    }
+    
+    public void delSymbol(String symbol){
+        symbolsColors.remove(symbol);
+        for(Wheel w: wheels){
+            w.delSymbol(symbol);
+        }
     }
     
     /**

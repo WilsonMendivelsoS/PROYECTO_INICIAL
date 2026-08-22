@@ -68,19 +68,32 @@ public class Wheel{
         if(pos <= 0){
             pos = 0;
         }
-        else if(pos > symbols.size()){
-            pos = symbols.size();
+        if(pos > symbols.size()+1){
+            symbols.add(new Symbol(color));
         }
-        symbols.add(pos, new Symbol(color));
+        else{
+            symbols.add(pos, new Symbol(color));
+        }
+
     }
     
     /**
-     * Deletes a symbol in the wheel.
+     * Deletes a symbol in the wheel, if its symbol is deleted, then it moves to the next one.
      */
-    public void deleteSymbol(Symbol s){
-        symbols.remove(s);
-        if(currentSymbol > symbols.size()){
-            currentSymbol = symbols.size();
+    public void delSymbol(String symbol){
+        int idxDeleted = -1;
+        for(Symbol s: symbols){
+            idxDeleted ++;
+            if(s.getColor().equals(symbol)){
+                symbols.remove(s);
+                break;
+            }
+        }
+        if(idxDeleted < currentSymbol){
+            currentSymbol = (currentSymbol-1)%symbols.size();
+        }
+        else{
+            currentSymbol = (currentSymbol)%symbols.size();
         }
         if(isVisible){
             makeVisible();

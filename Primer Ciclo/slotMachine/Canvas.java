@@ -132,6 +132,12 @@ public class Canvas{
             graphic.setColor(new Color(128,128,128));
         else if(colorString.equals("purple")) 
             graphic.setColor(new Color(179, 65, 217));
+        else if (colorString.equals("orange"))
+            graphic.setColor(new Color(255,165,0));
+        else if(colorString.equals("pink"))
+            graphic.setColor(new Color(255,192,203));
+        else if(colorString.equals("cyan"))
+            graphic.setColor(new Color(0,255,255));
         else
             graphic.setColor(Color.black);
     }
