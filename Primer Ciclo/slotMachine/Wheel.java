@@ -61,6 +61,20 @@ public class Wheel{
     }
     
     /**
+     * Adds a symbol to the wheel in a specific position.
+     */
+    public void addSymbol(int pos, String color){
+        pos --;
+        if(pos <= 0){
+            pos = 0;
+        }
+        else if(pos > symbols.size()){
+            pos = symbols.size();
+        }
+        symbols.add(pos, new Symbol(color));
+    }
+    
+    /**
      * Deletes a symbol in the wheel.
      */
     public void deleteSymbol(Symbol s){
@@ -68,6 +82,16 @@ public class Wheel{
         if(currentSymbol > symbols.size()){
             currentSymbol = symbols.size();
         }
+        if(isVisible){
+            makeVisible();
+        }
+    }
+    
+    /**
+     * Moves to the next symbol.
+     */
+    public void spin(){
+        currentSymbol = (currentSymbol+1)% symbols.size();
     }
     
     /**

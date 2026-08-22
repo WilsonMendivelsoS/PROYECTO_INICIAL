@@ -156,6 +156,32 @@ public class SlotMachine{
         makeVisible();
         
     }
+    
+    /**
+     * Moves all the wheels to its next symbol.
+     */
+    public void spin(){
+        for(Wheel w: wheels){
+            w.spin();
+        }
+        makeVisible();
+    }
+    
+    /**
+     * Moves a specific wheel to its next symbol.
+     */
+    public void spin(int wheel){
+        wheel --;
+        if(wheel <= 0){
+            wheel = 0;
+        }
+        else if(wheel > wheels.size()){
+            wheel = wheels.size();
+        }
+        wheels.get(wheel).spin();
+        wheels.get(wheel).makeVisible();
+    }
+    
     /**
      * Generates a random number.
      * @param infLimit is the minimum number that can have.
