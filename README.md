@@ -1,47 +1,55 @@
-# Slot Machine Project
+# 🎰 Slot Machine Simulator
 
-> 🚧 **Status: In development.** This project is being built as part of an ongoing course and is not yet finished.
+> 🚧 **Work in Progress:** This project is actively under development as part of an ongoing course term.
 
-A slot machine simulator, developed as the initial project for the **Object Oriented Development (DOPO-POOB)** course.
+An object-oriented slot machine simulator written in Java. This application models a multi-wheel slot machine mechanism using customizable, color-based shape symbols.
 
-## 📚 Academic context
+---
 
-This project was developed at **Escuela Colombiana de Ingeniería Julio Garavito**, as part of the **Object Oriented Development (DOPO-POOB)** course, during the **2026-2** academic term.
+## 📌 Context & Background
 
-## 👥 Contributors
+This simulator is inspired by **Problem I: Slot Machine** from the **2025 ICPC World Finals**. 
 
-- [Wilson Mendivelso](https://github.com/WilsonMendivelsoS)
-- [David Garzon](https://github.com/DavidRod0)
+While the competitive problem focuses on finding an optimal algorithm to win the jackpot, **this phase focuses entirely on building the simulation engine**, its core domain logic, and its graphical engine interface.
 
-## 📝 Project description
+---
 
-The purpose of this project is to develop an application that simulates a situation inspired by **Problem I** (*Slot Machine*) of the 2025 ICPC World Finals. In this simulator, symbols are identified by shapes of different colors.
+## 👥 Authors & Academic Info
 
-During this first cycle, the goal is to **build the simulator**, without actually solving the competitive programming problem itself.
+- **Wilson Mendivelso** — [@WilsonMendivelsoS](https://github.com/WilsonMendivelsoS)
+- **David Garzon** — [@DavidRod0](https://github.com/DavidRod0)
 
-### Main features
+* **Institution:** Escuela Colombiana de Ingeniería Julio Garavito
+* **Course:** Object Oriented Development (*DOPO-POOB*)
+* **Academic Term:** 2026-2
 
-The simulator allows:
+---
 
-1. Creating a slot machine.
-2. Adding or removing a wheel.
-3. Adding or removing a symbol.
-4. Spinning the machine's wheels.
-5. Querying the machine's symbols.
-6. Checking whether the current configuration is the winning one.
-7. Making the simulator visible or invisible (it must be able to run in invisible mode).
-8. Terminating the simulator.
+## ✨ System Features
 
-## 🛠️ Build
+The application provides a full set of functionalities to manage the slot machine lifecycle:
 
-- The project was developed in **BlueJ**.
-- The classes reuse, and when necessary extend, components from the **shapes** package.
-- The design (class and sequence diagrams) was done using the **Astah** tool.
-- Code documentation follows **Javadoc** standards.
+- **Machine Operations:** Initialize a slot machine instance and shut down the engine safely.
+- **Dynamic Configuration:** Add or remove individual wheels and modify symbol sets per wheel on the fly.
+- **Mechanics & Logic:** Spin the wheels, inspect current visible symbols, and check if the current layout satisfies the jackpot condition.
+- **Flexible Execution Modes:** Toggle canvas visibility to run the simulator in either GUI mode or invisible (headless) mode.
 
-## 📂 Repository structure
+---
+
+## 🛠️ Tech Stack & Modeling
+
+| Tool / Standard | Usage |
+| :--- | :--- |
+| **BlueJ** | Primary IDE and execution environment |
+| **Java Shapes Package** | Base library reused and extended for graphical symbol rendering |
+| **Astah** | Tool used for UML Class and Sequence diagrams |
+| **Javadoc** | Standardized source code documentation |
+
+---
+
+## 📂 Project Structure
 
 ```text
-/src         → Project source code (Java classes)
-/design      → Class and sequence diagrams (Astah)
-/docs        → Additional documentation / retrospective
+├── design/     # UML design models (Astah class & sequence diagrams)
+├── docs/       # Retrospective reports, time logs, and references
+└── src/        # Java source code implementation
