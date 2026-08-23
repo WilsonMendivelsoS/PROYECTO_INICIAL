@@ -183,6 +183,41 @@ public class SlotMachine{
     }
     
     /**
+     * Return a List with the color of the current symbols  arranged from left to right. of the slotmachine
+     * @return String[] with the color of the current symbols
+     */
+    public String[] configuration(){
+        String[] actualSym = new String[wheels.size()];
+        int c =wheels.size()-1;
+        for(Wheel w: wheels){
+            actualSym[c]=w.colorCurrentSymbol();
+            c--;
+        }
+        return actualSym;
+    }
+    
+    /**
+     * Return the number of the distrincs Symbols of the currents wheels
+     */
+    public int distinctSymbols(){
+        String[] actualColorSym = configuration();
+        ArrayList<String> dif= new ArrayList<>();
+        for(String color : actualColorSym){
+            boolean encontrado = false;
+            for( String colorIn : dif){
+                if(color.equals(colorIn)){
+                    encontrado = true;
+                }
+            }
+            if(encontrado == false){
+                dif.add(color);
+            }
+        }
+        
+        return dif.size();
+    }
+    
+    /**
      * Adds a symbol in a specific position, this symbol is also added to all the wheels
      */
     public void addSymbol(int pos, String color){
