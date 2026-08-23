@@ -126,7 +126,7 @@ public class SlotMachine{
         else if(pos > wheels.size()){
             pos = wheels.size();
         }
-        
+                
         wheels.add(pos, new Wheel());
         for(String color: symbols()){
             wheels.get(pos).addSymbol(new Symbol(color));
@@ -148,8 +148,8 @@ public class SlotMachine{
         if(pos <= 0){
             pos = 0;
         }
-        else if(pos > wheels.size()){
-            pos = wheels.size();
+        else if(pos >= wheels.size()){
+            pos = wheels.size()-1;
         }
         makeInvisible();
         wheels.remove(pos);
@@ -175,8 +175,8 @@ public class SlotMachine{
         if(wheel <= 0){
             wheel = 0;
         }
-        else if(wheel > wheels.size()){
-            wheel = wheels.size();
+        else if(wheel >= wheels.size()){
+            wheel = wheels.size()-1;
         }
         wheels.get(wheel).spin();
         wheels.get(wheel).makeVisible();

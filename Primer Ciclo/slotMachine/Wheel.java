@@ -82,7 +82,7 @@ public class Wheel{
      */
     public void delSymbol(String symbol){
         int idxDeleted = -1;
-        for(Symbol s: symbols){
+        for(Symbol s: symbols){ 
             idxDeleted ++;
             if(s.getColor().equals(symbol)){
                 symbols.remove(s);
@@ -93,7 +93,7 @@ public class Wheel{
             currentSymbol = (currentSymbol-1)%symbols.size();
         }
         else{
-            currentSymbol = (currentSymbol)%symbols.size();
+            currentSymbol = (currentSymbol)%symbols.size(); 
         }
         if(isVisible){
             makeVisible();

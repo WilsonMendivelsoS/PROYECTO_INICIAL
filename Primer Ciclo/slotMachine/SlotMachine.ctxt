@@ -15,6 +15,7 @@ comment12.target=void\ addSymbol(int,\ java.lang.String)
 comment12.text=\r\n\ Adds\ a\ symbol\ in\ a\ specific\ position,\ this\ symbol\ is\ also\ added\ to\ all\ the\ wheels\r\n
 comment13.params=symbol
 comment13.target=void\ delSymbol(java.lang.String)
+comment13.text=\r\n\ Deletes\ a\ specific\ symbol\r\n
 comment14.params=infLimit\ supLimit
 comment14.target=int\ randomNumGenerator(int,\ int)
 comment14.text=\r\n\ Generates\ a\ random\ number.\r\n\ @param\ infLimit\ is\ the\ minimum\ number\ that\ can\ have.\r\n\ @param\ supLimit\ -\ 1\ is\ the\ maximum\ number\ that\ can\ have.\r\n\ @return\ a\ random\ number\ between\ infLimit\ and\ supLimit-1\r\n
