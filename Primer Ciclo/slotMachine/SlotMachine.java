@@ -202,7 +202,9 @@ public class SlotMachine{
             w.addSymbol(pos+1, color);
         }
     }
-    
+    /**
+     * Deletes a specific symbol
+     */
     public void delSymbol(String symbol){
         symbolsColors.remove(symbol);
         for(Wheel w: wheels){

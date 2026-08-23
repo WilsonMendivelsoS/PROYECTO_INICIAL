@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * @version 0.1
  */
 public class Wheel{
-    private ArrayList<Symbol> symbols;
+    private ArrayList<Symbol> symbols; 
     private Rectangle rectangleBodyPart;
     private int currentSymbol;
     private boolean isVisible;
