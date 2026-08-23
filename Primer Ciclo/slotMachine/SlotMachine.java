@@ -56,7 +56,6 @@ public class SlotMachine{
      * Creates started wheels that will use the created symbols.
      */
     public void prepareWheels(){
-        wheels = new ArrayList<>();
         wheels.add(new Wheel());
         wheels.add(new Wheel());
         wheels.add(new Wheel());
