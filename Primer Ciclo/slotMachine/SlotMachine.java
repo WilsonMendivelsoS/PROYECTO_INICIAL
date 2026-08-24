@@ -42,12 +42,7 @@ public class SlotMachine{
     /**
      * Creates the Machine where the Wheels will be putted.
      */
-<<<<<<< HEAD
-    public void prepareMachine(){
-        //Initial board
-=======
     private void prepareMachine(){
->>>>>>> main
         rectangleBodyParts[0].moveHorizontal(-rectangleBodyParts[0].getPosition()[0]+50);
         rectangleBodyParts[0].moveVertical(-rectangleBodyParts[0].getPosition()[1]+150);
         rectangleBodyParts[0].changeColor("gray");
@@ -172,39 +167,6 @@ public class SlotMachine{
         }else{
             JOptionPane.showMessageDialog(null, "Accion Invalida");
         }
-<<<<<<< HEAD
-=======
-        makeInvisible();
-        wheels.get(pos).randomizeSymbol();
-        
-        rectangleBodyParts[0].changeSize(200, rectangleBodyParts[0].getWidth()+50);
-<<<<<<< HEAD
-        changeBodyPartsPosition();
-        
-=======
-        isJackPot();
->>>>>>> main
-        makeVisible();
->>>>>>> animationCicle
-    }
-    /**
-     * Changes bodyParts position adapting all the body parts to the slotMachine window
-     */
-    private void changeBodyPartsPosition(){
-        handle.moveHorizontal(-handle.getPosition()[0] + rectangleBodyParts[0].getPosition()[0] + rectangleBodyParts[0].getWidth()+50);
-        handle.moveVertical(-handle.getPosition()[1]+ rectangleBodyParts[0].getPosition()[1]);
-        
-        rectangleBodyParts[1].moveHorizontal(-rectangleBodyParts[1].getPosition()[0]+rectangleBodyParts[0].getPosition()[0]+rectangleBodyParts[0].getWidth());
-        rectangleBodyParts[1].moveVertical(-rectangleBodyParts[1].getPosition()[1]+rectangleBodyParts[0].getPosition()[1]+100);
-        
-        rectangleBodyParts[2].moveHorizontal(-rectangleBodyParts[2].getPosition()[0]+rectangleBodyParts[0].getPosition()[0]+rectangleBodyParts[0].getWidth()+60);
-        rectangleBodyParts[2].moveVertical(-rectangleBodyParts[2].getPosition()[1]+rectangleBodyParts[0].getPosition()[1]+10);
-        
-        rectangleBodyParts[3].moveHorizontal(-rectangleBodyParts[3].getPosition()[0]+rectangleBodyParts[0].getPosition()[0]+rectangleBodyParts[0].getWidth()+60);
-        rectangleBodyParts[3].moveVertical(-rectangleBodyParts[3].getPosition()[1]+rectangleBodyParts[0].getPosition()[1]-100+3);
-        
-        rectangleBodyParts[4].moveHorizontal(-rectangleBodyParts[4].getPosition()[0]+rectangleBodyParts[0].getPosition()[0]+rectangleBodyParts[0].getWidth()+60);
-        rectangleBodyParts[4].moveVertical(-rectangleBodyParts[4].getPosition()[1]+rectangleBodyParts[0].getPosition()[1]+100+10+1);
     }
     
     /**
@@ -334,7 +296,9 @@ public class SlotMachine{
             w.addSymbol(pos+1, color);
         }
         
+        
     }
+    
     
     /**
      * Deletes a specific symbol
@@ -351,7 +315,6 @@ public class SlotMachine{
     }
     
     /**
-<<<<<<< HEAD
      * The program ends with a message and make invisible all wheels and symbols.
      */
     public void exit(){
@@ -372,42 +335,6 @@ public class SlotMachine{
         return true;
     }
     
-=======
-     * Animates the slotMachine
-     */
-    private void animation(){
-        for(int i = 0; i <49; i++){
-            handle.fastMoveVertical(2,2);
-            rectangleBodyParts[3].fastMoveVertical(2,2);
-            if (i>40){
-                rectangleBodyParts[4].fastMoveVertical(2,2);
-            }
-        }
-
-        for(int i = 0; i < 36; i++){
-            rectangleBodyParts[4].fastMoveVertical(2,2);
-            handle.fastMoveVertical(2,2);
-        }
-        
-        
-        for(int i = 0; i < 36; i++){
-            handle.fastMoveVertical(-2,2);
-            rectangleBodyParts[4].fastMoveVertical(-2,2);
-        }
-        for(int i = 0; i <49; i++){
-            handle.fastMoveVertical(-2,2);
-            rectangleBodyParts[3].fastMoveVertical(-2,2);
-            if(i<8){
-                rectangleBodyParts[4].fastMoveVertical(-2,2);
-            }
-        }
-
-        rectangleBodyParts[3].moveVertical(-rectangleBodyParts[3].getPosition()[1]+rectangleBodyParts[0].getPosition()[1]-100+1);
-        rectangleBodyParts[4].moveVertical(-rectangleBodyParts[4].getPosition()[1]+rectangleBodyParts[0].getPosition()[1]+100+10+1);
-    }
-    
-    
->>>>>>> animationCicle
     /**
      * Generates a random number.
      * @param infLimit is the minimum number that can have.
