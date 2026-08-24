@@ -97,7 +97,7 @@ public class SlotMachine{
     public void makeVisible(){
         for(Rectangle r: rectangleBodyParts){
             if(!r.isVisible()){
-                if(r != rectangleBodyParts[6]){
+                if(r != rectangleBodyParts[5]){
                     r.makeVisible();
                 }
                 
@@ -289,12 +289,12 @@ public class SlotMachine{
     public boolean isJackPot(){
         if(distinctSymbols()==1 && symbols().length > 1){
             rectangleBodyParts[0].changeColor("yellow");
-            rectangleBodyParts[6].changeSize( 25 , rectangleBodyParts[0].getWidth()+50);
-            rectangleBodyParts[6].moveHorizontal(-rectangleBodyParts[0].getPosition()[0]+5);
-            rectangleBodyParts[6].moveVertical(rectangleBodyParts[0].getPosition()[1]+185);
-            rectangleBodyParts[6].changeColor("black");
+            rectangleBodyParts[5].changeSize( 25 , rectangleBodyParts[0].getWidth()+50);
+            rectangleBodyParts[5].moveHorizontal(-rectangleBodyParts[0].getPosition()[0]+5);
+            rectangleBodyParts[5].moveVertical(rectangleBodyParts[0].getPosition()[1]+185);
+            rectangleBodyParts[5].changeColor("black");
             makeVisible();
-            rectangleBodyParts[6].makeVisible();
+            rectangleBodyParts[5].makeVisible();
             return true;
         }
         return false;
@@ -384,9 +384,6 @@ public class SlotMachine{
                 rectangleBodyParts[4].fastMoveVertical(-2,2);
             }
         }
-
-        rectangleBodyParts[3].moveVertical(-rectangleBodyParts[3].getPosition()[1]+rectangleBodyParts[0].getPosition()[1]-100+1);
-        rectangleBodyParts[4].moveVertical(-rectangleBodyParts[4].getPosition()[1]+rectangleBodyParts[0].getPosition()[1]+100+10+1);
     }
     
     

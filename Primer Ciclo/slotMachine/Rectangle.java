@@ -219,7 +219,7 @@ public class Rectangle{
         return width;
     }
     
-        /**
+    /**
      * Fastly move the circle vertically
      * @param distance the desired distance in pixels
      * @param speed is speed drawing
