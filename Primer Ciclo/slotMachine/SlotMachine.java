@@ -21,7 +21,7 @@ public class SlotMachine{
      */
     public SlotMachine(){
         wheels = new ArrayList<>();
-        rectangleBodyParts = new Rectangle[5];
+        rectangleBodyParts = new Rectangle[6];
         handle = new Circle("red");
         
         for(int i = 0; i < rectangleBodyParts.length; i++){
@@ -97,7 +97,10 @@ public class SlotMachine{
     public void makeVisible(){
         for(Rectangle r: rectangleBodyParts){
             if(!r.isVisible()){
-                r.makeVisible();
+                if(r != rectangleBodyParts[6]){
+                    r.makeVisible();
+                }
+                
             }
         }
         handle.makeVisible();
@@ -159,8 +162,10 @@ public class SlotMachine{
             }
             makeInvisible();
             wheels.get(pos).randomizeSymbol();
+        
             rectangleBodyParts[0].changeSize(200, rectangleBodyParts[0].getWidth()+50);
-            isJackPot();
+            changeBodyPartsPosition();
+        
             makeVisible();
         }else{
             JOptionPane.showMessageDialog(null, "Accion Invalida");
@@ -284,13 +289,12 @@ public class SlotMachine{
     public boolean isJackPot(){
         if(distinctSymbols()==1 && symbols().length > 1){
             rectangleBodyParts[0].changeColor("yellow");
-            Rectangle base = new Rectangle();
-            base.changeSize( 25 , rectangleBodyParts[0].getWidth()+50);
-            base.moveHorizontal(-rectangleBodyParts[0].getPosition()[0]+5);
-            base.moveVertical(rectangleBodyParts[0].getPosition()[1]+185);
-            base.changeColor("black");
+            rectangleBodyParts[6].changeSize( 25 , rectangleBodyParts[0].getWidth()+50);
+            rectangleBodyParts[6].moveHorizontal(-rectangleBodyParts[0].getPosition()[0]+5);
+            rectangleBodyParts[6].moveVertical(rectangleBodyParts[0].getPosition()[1]+185);
+            rectangleBodyParts[6].changeColor("black");
             makeVisible();
-            base.makeVisible();
+            rectangleBodyParts[6].makeVisible();
             return true;
         }
         return false;

@@ -106,6 +106,7 @@ public class Wheel{
      * Moves to the next symbol.
      */
     public void spin(){
+        symbols.get(currentSymbol).makeInvisible();
         currentSymbol = (currentSymbol+1)% symbols.size();
     }
     
