@@ -108,6 +108,16 @@ public class Wheel{
     }
     
     /**
+     * Return the color of de current symbol
+     * @return the symbol color's name
+     */
+    public String colorCurrentSymbol(){
+        String color = new String();
+        color=symbols.get(currentSymbol).getColor();
+        return color;
+    }
+    
+    /**
      * It changes the current symbol to any one.
      */
     public void randomizeSymbol(){

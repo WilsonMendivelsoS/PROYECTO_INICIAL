@@ -14,7 +14,8 @@ public class SlotMachine{
     private ArrayList<Wheel> wheels;
     private Circle handle;
     
-    /**
+    /** 
+     * 
      * Creates a slotMachine with a initial composition.
      */
     public SlotMachine(){
@@ -29,7 +30,10 @@ public class SlotMachine{
         prepareMachine();
         prepareSymbols();
         prepareWheels();
-        
+        if (distinctSymbols()==1){
+            int temp1=randomNumGenerator(0, wheels.size()-1);
+            spin(temp1);
+        }
         makeVisible();
     }
     
@@ -37,8 +41,12 @@ public class SlotMachine{
     /**
      * Creates the Machine where the Wheels will be putted.
      */
+<<<<<<< HEAD
     public void prepareMachine(){
         //Initial board
+=======
+    private void prepareMachine(){
+>>>>>>> main
         rectangleBodyParts[0].moveHorizontal(-rectangleBodyParts[0].getPosition()[0]+50);
         rectangleBodyParts[0].moveVertical(-rectangleBodyParts[0].getPosition()[1]+150);
         rectangleBodyParts[0].changeColor("gray");
@@ -63,7 +71,7 @@ public class SlotMachine{
     /**
      * Creates all the starter symbols that the wheels will use.
      */
-    public void prepareSymbols(){
+    private void prepareSymbols(){
         symbolsColors = new ArrayList<>();
         symbolsColors.add("green");
         symbolsColors.add("red");
@@ -73,7 +81,7 @@ public class SlotMachine{
     /**
      * Creates started wheels that will use the created symbols.
      */
-    public void prepareWheels(){
+    private void prepareWheels(){
         wheels.add(new Wheel());
         wheels.add(new Wheel());
         wheels.add(new Wheel());
@@ -158,8 +166,12 @@ public class SlotMachine{
         wheels.get(pos).randomizeSymbol();
         
         rectangleBodyParts[0].changeSize(200, rectangleBodyParts[0].getWidth()+50);
+<<<<<<< HEAD
         changeBodyPartsPosition();
         
+=======
+        isJackPot();
+>>>>>>> main
         makeVisible();
     }
     /**
@@ -197,6 +209,7 @@ public class SlotMachine{
         }
         makeInvisible();
         wheels.remove(pos);
+        isJackPot();
         makeVisible();
         
     }
@@ -225,8 +238,63 @@ public class SlotMachine{
             wheel = wheels.size()-1;
         }
         wheels.get(wheel).spin();
+        isJackPot();
         wheels.get(wheel).makeVisible();
     }
+    
+    /**
+     * Return a List with the color of the current symbols  arranged from left to right. of the slotmachine
+     * @return String[] with the color of the current symbols
+     */
+    public String[] configuration(){
+        String[] actualSym = new String[wheels.size()];
+        int c =wheels.size()-1;
+        for(Wheel w: wheels){
+            actualSym[c]=w.colorCurrentSymbol();
+            c--;
+        }
+        return actualSym;
+    }
+    
+    /**
+     * Return the number of the distrincs Symbols of the currents wheels
+     */
+    public int distinctSymbols(){
+        String[] actualColorSym = configuration();
+        ArrayList<String> dif= new ArrayList<>();
+        for(String color : actualColorSym){
+            boolean encontrado = false;
+            for( String colorIn : dif){
+                if(color.equals(colorIn)){
+                    encontrado = true;
+                }
+            }
+            if(encontrado == false){
+                dif.add(color);
+            }
+        }
+        
+        return dif.size();
+    }
+    
+    /**
+     * return true if the current number of symbols is 1 iand finish the game
+     * @return true if the symbols currents in the wheels are equals 1
+     */
+    public boolean isJackPot(){
+        if(distinctSymbols()==1 && symbols().length > 1){
+            rectangleBodyParts[0].changeColor("yellow");
+            Rectangle base = new Rectangle();
+            base.changeSize( 25 , rectangleBodyParts[0].getWidth()+50);
+            base.moveHorizontal(-rectangleBodyParts[0].getPosition()[0]+5);
+            base.moveVertical(rectangleBodyParts[0].getPosition()[1]+185);
+            base.changeColor("black");
+            makeVisible();
+            base.makeVisible();
+            return true;
+        }
+        return false;
+    } 
     
     /**
      * Adds a symbol in a specific position, this symbol is also added to all the wheels
