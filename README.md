@@ -50,5 +50,5 @@ The application provides a full set of functionalities to manage the slot machin
 ## 📂 Project Structure
 
 ```text
-├── ciclos/     # Differents development cicles explained
+├── cicles/     # Differents development cicles explained
 └── src/        # Java source code implementation
