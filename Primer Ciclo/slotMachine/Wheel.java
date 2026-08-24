@@ -26,7 +26,9 @@ public class Wheel{
      * Make this wheel visible.
      */
     public void makeVisible(){
-        rectangleBodyPart.makeVisible();
+        if(!isVisible){
+            rectangleBodyPart.makeVisible();
+        }
         symbols.get(currentSymbol).place(rectangleBodyPart.getPosition()[0]+rectangleBodyPart.getHeight()/10 , rectangleBodyPart.getPosition()[1] + 7*rectangleBodyPart.getHeight()/20);
         symbols.get(currentSymbol).makeVisible();
         isVisible = true;

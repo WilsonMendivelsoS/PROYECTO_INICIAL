@@ -56,11 +56,9 @@ public class SlotMachine{
         //False handle
         rectangleBodyParts[3].changeColor("white");
         rectangleBodyParts[3].changeSize(100, 10);
-        rectangleBodyParts[3].makeVisible();
         //False down
         rectangleBodyParts[4].changeColor("white");
         rectangleBodyParts[4].changeSize(100, 10);
-        rectangleBodyParts[4].makeVisible();
         changeBodyPartsPosition();
     }
     
@@ -98,7 +96,7 @@ public class SlotMachine{
      */
     public void makeVisible(){
         for(Rectangle r: rectangleBodyParts){
-            if(r != rectangleBodyParts[2] || !rectangleBodyParts[2].isVisible()){
+            if(!r.isVisible()){
                 r.makeVisible();
             }
         }
@@ -376,8 +374,8 @@ public class SlotMachine{
             rectangleBodyParts[4].fastMoveVertical(-2,2);
         }
         for(int i = 0; i <49; i++){
-            handle.fastMoveVertical(-2,2);
             rectangleBodyParts[3].fastMoveVertical(-2,2);
+            handle.fastMoveVertical(-2,2);       
             if(i<8){
                 rectangleBodyParts[4].fastMoveVertical(-2,2);
             }

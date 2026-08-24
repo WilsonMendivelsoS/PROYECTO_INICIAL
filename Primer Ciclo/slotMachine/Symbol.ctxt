@@ -1,17 +1,19 @@
 #BlueJ class context
-#Sat Aug 22 21:24:49 COT 2026
 comment0.target=Symbol
-comment0.text=\r\n Represents a symbol with a specefic shape and color.<br>\r\n <b>circleBody, triangleBody, rectangleBody</b><br>\r\n <b>Inv\: circleBody \!\= null</b> or <b> triangleBody \!\= null</b> or <b> rectangleBody \!\= null </b>\r\n @author David Garzon, Wilson Mendivelso\r\n @version 0.1\r\n
+comment0.text=\r\n\ Represents\ a\ symbol\ with\ a\ specefic\ shape\ and\ color.<br>\r\n\ <b>circleBody,\ triangleBody,\ rectangleBody</b><br>\r\n\ <b>Inv\:\ circleBody\ \!\=\ null</b>\ or\ <b>\ triangleBody\ \!\=\ null</b>\ or\ <b>\ rectangleBody\ \!\=\ null\ </b>\r\n\ @author\ David\ Garzon,\ Wilson\ Mendivelso\r\n\ @version\ 0.1\r\n
 comment1.params=color
 comment1.target=Symbol(java.lang.String)
-comment1.text=\r\n Create a new symbol with a specific color and a random shape.\r\n
-comment2.target=void makeVisible()
-comment2.text=\r\n Make this symbol visible.\r\n
-comment3.target=void makeInvisible()
-comment3.text=\r\n Make this symbol invisible.\r\n
-comment4.params=x y
-comment4.target=void place(int, int)
-comment4.text=\r\n Puts the Symbol in a specific position.\r\n
-comment5.target=java.lang.String getColor()
-comment5.text=\r\n Get symbol's color.\r\n @return the color's name.\r\n
+comment1.text=\r\n\ Create\ a\ new\ symbol\ with\ a\ specific\ color\ and\ a\ random\ shape.\r\n
+comment2.params=
+comment2.target=void\ makeVisible()
+comment2.text=\r\n\ Make\ this\ symbol\ visible.\r\n
+comment3.params=
+comment3.target=void\ makeInvisible()
+comment3.text=\r\n\ Make\ this\ symbol\ invisible.\r\n
+comment4.params=x\ y
+comment4.target=void\ place(int,\ int)
+comment4.text=\r\n\ Puts\ the\ Symbol\ in\ a\ specific\ position.\r\n
+comment5.params=
+comment5.target=java.lang.String\ getColor()
+comment5.text=\r\n\ Get\ symbol's\ color.\r\n\ @return\ the\ color's\ name.\r\n
 numComments=6
