@@ -218,5 +218,43 @@ public class Rectangle{
     public int getWidth(){
         return width;
     }
+    
+        /**
+     * Fastly move the circle vertically
+     * @param distance the desired distance in pixels
+     * @param speed is speed drawing
+     */
+    public void fastMoveVertical(int distance, int speed){
+        int delta;
+
+        if(distance < 0) {
+            delta = -1;
+            distance = -distance;
+        }else {
+            delta = 1;
+        }
+
+        for(int i = 0; i < distance; i = i+speed){
+            yPosition += speed*delta;
+            fastDraw();
+        }
+    }
+    
+    /*
+     * Draw the rectangle very fast with current specifications on screen.
+     */
+    private void fastDraw() {
+        if(isVisible) {
+            Canvas canvas = Canvas.getCanvas();
+            canvas.draw(this, color,
+                new java.awt.Rectangle(xPosition, yPosition, 
+                                       width, height));
+            canvas.wait(1);
+        }
+    }
+    
+    public boolean isVisible(){
+        return isVisible;
+    }
 }
 
