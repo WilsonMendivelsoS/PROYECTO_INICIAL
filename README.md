@@ -50,6 +50,5 @@ The application provides a full set of functionalities to manage the slot machin
 ## 📂 Project Structure
 
 ```text
-├── design/     # UML design models (Astah class & sequence diagrams)
-├── docs/       # Retrospective reports, time logs, and references
+├── ciclos/     # Differents development cicles explained
 └── src/        # Java source code implementation
