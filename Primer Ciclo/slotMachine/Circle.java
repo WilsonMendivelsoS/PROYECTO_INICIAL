@@ -66,6 +66,18 @@ public class Circle{
     }
     
     /*
+     * Draw the circle very fast with current specifications on screen.
+     */
+    private void fastDraw(){
+        if(isVisible) {
+            Canvas canvas = Canvas.getCanvas();
+            canvas.draw(this, color, 
+                new Ellipse2D.Double(xPosition, yPosition, 
+                diameter, diameter));
+            canvas.wait(1);
+        }
+    }
+    /*
      * Erase the rectangle on screen.
      */
     private void erase(){
@@ -138,11 +150,32 @@ public class Circle{
         }
 
         for(int i = 0; i < distance; i++){
-            xPosition += delta;
+            yPosition += delta;
             draw();
         }
     }
+    
+    /**
+     * Fastly move the circle vertically
+     * @param distance the desired distance in pixels
+     * @param speed is speed drawing
+     */
+    public void fastMoveVertical(int distance, int speed){
+        int delta;
 
+        if(distance < 0) {
+            delta = -1;
+            distance = -distance;
+        }else {
+            delta = 1;
+        }
+
+        for(int i = 0; i < distance; i = i+speed){
+            yPosition += speed*delta;
+            fastDraw();
+        }
+    }
+    
     /**
      * Slowly move the circle vertically
      * @param distance the desired distance in pixels
@@ -159,7 +192,7 @@ public class Circle{
 
         for(int i = 0; i < distance; i++){
             yPosition += delta;
-            draw();
+            fastDraw();
         }
     }
 
@@ -199,4 +232,6 @@ public class Circle{
     public String getColor(){
         return color;
     }
+    
+    
 }
