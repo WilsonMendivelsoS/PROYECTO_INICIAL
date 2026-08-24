@@ -170,6 +170,26 @@ public class SlotMachine{
     }
     
     /**
+     * Changes bodyParts position adapting all the body parts to the slotMachine window
+     */
+    private void changeBodyPartsPosition(){
+        handle.moveHorizontal(-handle.getPosition()[0] + rectangleBodyParts[0].getPosition()[0] + rectangleBodyParts[0].getWidth()+50);
+        handle.moveVertical(-handle.getPosition()[1]+ rectangleBodyParts[0].getPosition()[1]);
+        
+        rectangleBodyParts[1].moveHorizontal(-rectangleBodyParts[1].getPosition()[0]+rectangleBodyParts[0].getPosition()[0]+rectangleBodyParts[0].getWidth());
+        rectangleBodyParts[1].moveVertical(-rectangleBodyParts[1].getPosition()[1]+rectangleBodyParts[0].getPosition()[1]+100);
+        
+        rectangleBodyParts[2].moveHorizontal(-rectangleBodyParts[2].getPosition()[0]+rectangleBodyParts[0].getPosition()[0]+rectangleBodyParts[0].getWidth()+60);
+        rectangleBodyParts[2].moveVertical(-rectangleBodyParts[2].getPosition()[1]+rectangleBodyParts[0].getPosition()[1]+10);
+        
+        rectangleBodyParts[3].moveHorizontal(-rectangleBodyParts[3].getPosition()[0]+rectangleBodyParts[0].getPosition()[0]+rectangleBodyParts[0].getWidth()+60);
+        rectangleBodyParts[3].moveVertical(-rectangleBodyParts[3].getPosition()[1]+rectangleBodyParts[0].getPosition()[1]-100+3);
+        
+        rectangleBodyParts[4].moveHorizontal(-rectangleBodyParts[4].getPosition()[0]+rectangleBodyParts[0].getPosition()[0]+rectangleBodyParts[0].getWidth()+60);
+        rectangleBodyParts[4].moveVertical(-rectangleBodyParts[4].getPosition()[1]+rectangleBodyParts[0].getPosition()[1]+100+10+1);
+    }
+    
+    /**
      * Deletes a specific wheel
      * @param pos is the position of thw wheel that we wanna delete
      */
@@ -193,6 +213,7 @@ public class SlotMachine{
         
     }
     
+    
     /**
      * Moves all the wheels to its next symbol.
      */
@@ -208,15 +229,16 @@ public class SlotMachine{
      * Moves a specific wheel to its next symbol.
      */
     public void spin(int wheel){
-        animation();
-        wheel --;
-        if(wheel <= 0){
-            wheel = 0;
-        }
+        if(ok()){
+            animation();
+            wheel --;
+            if(wheel <= 0){
+                wheel = 0;
+            }
         else if(wheel >= wheels.size()){
-            wheel = wheels.size()-1;
+                wheel = wheels.size()-1;
+            }
         }
-        wheels.get(wheel).makeInvisible();
         wheels.get(wheel).spin();
         isJackPot();
         wheels.get(wheel).makeVisible();
@@ -284,22 +306,17 @@ public class SlotMachine{
         if(pos <= 0){
             pos = 0;
         }
-        
         if(pos > symbolsColors.size()+1){
             symbolsColors.add(color);
         }
         else{
             symbolsColors.add(pos, color);
         }
-    
+        
         for(Wheel w: wheels){
             w.addSymbol(pos+1, color);
         }
-        
-        
     }
-    
-    
     /**
      * Deletes a specific symbol
      */
@@ -313,7 +330,7 @@ public class SlotMachine{
             JOptionPane.showMessageDialog(null, "Accion Invalida");
         }
     }
-    
+
     /**
      * The program ends with a message and make invisible all wheels and symbols.
      */
@@ -321,6 +338,7 @@ public class SlotMachine{
         makeInvisible();
         JOptionPane.showMessageDialog(null, "Adios");
     }
+
     
     /**
      * check if the last action can be performed
@@ -334,6 +352,41 @@ public class SlotMachine{
         }
         return true;
     }
+  
+    /**
+     * Animates the slotMachine
+     */
+    private void animation(){
+        for(int i = 0; i <49; i++){
+            handle.fastMoveVertical(2,2);
+            rectangleBodyParts[3].fastMoveVertical(2,2);
+            if (i>40){
+                rectangleBodyParts[4].fastMoveVertical(2,2);
+            }
+        }
+
+        for(int i = 0; i < 36; i++){
+            rectangleBodyParts[4].fastMoveVertical(2,2);
+            handle.fastMoveVertical(2,2);
+        }
+        
+        
+        for(int i = 0; i < 36; i++){
+            handle.fastMoveVertical(-2,2);
+            rectangleBodyParts[4].fastMoveVertical(-2,2);
+        }
+        for(int i = 0; i <49; i++){
+            handle.fastMoveVertical(-2,2);
+            rectangleBodyParts[3].fastMoveVertical(-2,2);
+            if(i<8){
+                rectangleBodyParts[4].fastMoveVertical(-2,2);
+            }
+        }
+
+        rectangleBodyParts[3].moveVertical(-rectangleBodyParts[3].getPosition()[1]+rectangleBodyParts[0].getPosition()[1]-100+1);
+        rectangleBodyParts[4].moveVertical(-rectangleBodyParts[4].getPosition()[1]+rectangleBodyParts[0].getPosition()[1]+100+10+1);
+    }
+    
     
     /**
      * Generates a random number.
