@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.lang.Math;
+import javax.swing.JOptionPane;
 
 /**
 * Represents a slotMachine, it can add wheels and spin them, if you wanna win, you will need a jackpot.<br>
@@ -123,23 +124,27 @@ public class SlotMachine{
      * @param pos is the position of the new wheel.
      */
     public void addWheel(int pos){
-        pos --;
-        if(pos <= 0){
-            pos = 0;
-        }
-        else if(pos > wheels.size()){
-            pos = wheels.size();
-        }
+        if(ok()){
+            pos --;
+            if(pos <= 0){
+                pos = 0;
+            }
+            else if(pos > wheels.size()){
+                pos = wheels.size();
+            }
                 
-        wheels.add(pos, new Wheel());
-        for(String color: symbols()){
-            wheels.get(pos).addSymbol(new Symbol(color));
+            wheels.add(pos, new Wheel());
+            for(String color: symbols()){
+                wheels.get(pos).addSymbol(new Symbol(color));
+            }
+            makeInvisible();
+            wheels.get(pos).randomizeSymbol();
+            rectangleBodyParts[0].changeSize(200, rectangleBodyParts[0].getWidth()+50);
+            isJackPot();
+            makeVisible();
+        }else{
+            JOptionPane.showMessageDialog(null, "Accion Invalida");
         }
-        makeInvisible();
-        wheels.get(pos).randomizeSymbol();
-        rectangleBodyParts[0].changeSize(200, rectangleBodyParts[0].getWidth()+50);
-        isJackPot();
-        makeVisible();
     }
     
     /**
@@ -148,17 +153,21 @@ public class SlotMachine{
      */
     
     public void delWheel(int pos){
-        pos --;
-        if(pos <= 0){
-            pos = 0;
+        if(ok()){
+            pos --;
+            if(pos <= 0){
+                pos = 0;
+            }
+            else if(pos >= wheels.size()){
+                pos = wheels.size()-1;
+            }
+            makeInvisible();
+            wheels.remove(pos);
+            isJackPot();
+            makeVisible();
+        }else{
+            JOptionPane.showMessageDialog(null, "Accion Invalida");
         }
-        else if(pos >= wheels.size()){
-            pos = wheels.size()-1;
-        }
-        makeInvisible();
-        wheels.remove(pos);
-        isJackPot();
-        makeVisible();
         
     }
     
@@ -183,6 +192,7 @@ public class SlotMachine{
         else if(wheel >= wheels.size()){
             wheel = wheels.size()-1;
         }
+        wheels.get(wheel).makeInvisible();
         wheels.get(wheel).spin();
         isJackPot();
         wheels.get(wheel).makeVisible();
@@ -250,25 +260,53 @@ public class SlotMachine{
         if(pos <= 0){
             pos = 0;
         }
+        
         if(pos > symbolsColors.size()+1){
             symbolsColors.add(color);
         }
         else{
             symbolsColors.add(pos, color);
         }
-        
+    
         for(Wheel w: wheels){
             w.addSymbol(pos+1, color);
         }
+        
     }
+    
     /**
      * Deletes a specific symbol
      */
     public void delSymbol(String symbol){
-        symbolsColors.remove(symbol);
-        for(Wheel w: wheels){
-            w.delSymbol(symbol);
+        if(ok()){
+            symbolsColors.remove(symbol);
+            for(Wheel w: wheels){
+                w.delSymbol(symbol);            
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Accion Invalida");
         }
+    }
+    
+    /**
+     * The program ends with a message and make invisible all wheels and symbols.
+     */
+    public void exit(){
+        makeInvisible();
+        JOptionPane.showMessageDialog(null, "Adios");
+    }
+    
+    /**
+     * check if the last action can be performed
+     * return true if the last action can be performed
+     */
+    public boolean ok(){
+        if(wheels.size() ==2|| wheels.size()==50){
+            if (symbolsColors.size()==2 ){
+                return false;
+            }
+        }
+        return true;
     }
     
     /**
