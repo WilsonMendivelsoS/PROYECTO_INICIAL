@@ -295,6 +295,7 @@ public class SlotMachine{
             rectangleBodyParts[5].changeColor("black");
             makeVisible();
             rectangleBodyParts[5].makeVisible();
+            JOptionPane.showMessageDialog(null, "Ganaste");
             return true;
         }
         return false;
