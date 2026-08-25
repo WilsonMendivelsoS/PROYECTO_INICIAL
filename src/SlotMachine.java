@@ -213,7 +213,6 @@ public class SlotMachine{
         }else{
             JOptionPane.showMessageDialog(null, "Accion Invalida");
         }
-        
     }
     
     
@@ -348,9 +347,11 @@ public class SlotMachine{
      * return true if the last action can be performed
      */
     public boolean ok(){
-        if(wheels.size() ==2|| wheels.size()==50){
-            if (symbolsColors.size()==2 ){
+        while(wheels.size() ==2|| wheels.size()==50){
+            if (symbolsColors.size()==2){
                 return false;
+            }else{
+                break;
             }
         }
         return true;

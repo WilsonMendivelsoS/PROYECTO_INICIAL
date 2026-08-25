@@ -1,5 +1,5 @@
 #BlueJ class context
-#Sat Aug 22 21:24:49 COT 2026
+#Mon Aug 24 19:08:58 COT 2026
 comment0.target=Triangle
 comment0.text=\r\n A triangle that can be manipulated and that draws itself on a canvas.\r\n \r\n @author David Garzon, Wilson Mendivelso\r\n @version 0.1\r\n
 comment1.target=Triangle()
