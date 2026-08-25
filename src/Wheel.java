@@ -66,17 +66,11 @@ public class Wheel{
      * Adds a symbol to the wheel in a specific position.
      */
     public void addSymbol(int pos, String color){
-        pos --;
-        if(pos <= 0){
-            pos = 0;
+        symbols.add(Math.min(Math.max(0, pos-1), symbols.size()), new Symbol(color));
+        if(pos<= currentSymbol+1){
+            currentSymbol =  (currentSymbol+1)%symbols.size(); 
         }
-        if(pos > symbols.size()+1){
-            symbols.add(new Symbol(color));
-        }
-        else{
-            symbols.add(pos, new Symbol(color));
-        }
-
+        
     }
     
     /**
@@ -128,5 +122,12 @@ public class Wheel{
         if(isVisible){
             makeVisible();
         }
+    }
+    
+    /**
+     * Sets wheel's currentSymbol to the new symbol
+     */
+    public void setCurrentSymbol(int numSymbol){
+        currentSymbol = numSymbol; 
     }
 }

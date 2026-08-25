@@ -163,7 +163,7 @@ public class SlotMachine{
             makeInvisible();
             wheels.get(pos).randomizeSymbol();
         
-            rectangleBodyParts[0].changeSize(200, rectangleBodyParts[0].getWidth()+50);
+            rectangleBodyParts[0].changeSize(200, rectangleBodyParts[0].getWidth()+40);
             changeBodyPartsPosition();
         
             makeVisible();
@@ -232,14 +232,8 @@ public class SlotMachine{
      */
     public void spin(int wheel){
         if(ok()){
+            wheel = Math.min(Math.max(0, wheel-1), wheels.size()-1);
             animation();
-            wheel --;
-            if(wheel <= 0){
-                wheel = 0;
-            }
-        else if(wheel >= wheels.size()){
-                wheel = wheels.size()-1;
-            }
         }
         wheels.get(wheel).spin();
         isJackPot();
@@ -261,19 +255,15 @@ public class SlotMachine{
     }
     
     /**
-     * 
+     * Place a wheel in a specific symbol
+     * @param wheel is the number of the wheel.
+     * @param symbol is the name of the symbol
      */
     public void placeSymbol(int wheel, String symbol){
-        boolean temp= false;
-        for( String s : symbolsColors){
-            if(s.equals(symbol)){
-                temp=true;
-                break;
-            }
-        }
-        
-        if(temp){
-            
+        if(symbolsColors.contains(symbol)){
+            animation();
+            wheels.get(Math.min(Math.max(0, wheel-1), wheels.size()-1)).setCurrentSymbol(symbolsColors.indexOf(symbol));
+            wheels.get(Math.min(Math.max(0, wheel-1), wheels.size()-1)).makeVisible();
         }
     }
     
@@ -321,16 +311,10 @@ public class SlotMachine{
      * Adds a symbol in a specific position, this symbol is also added to all the wheels
      */
     public void addSymbol(int pos, String color){
-        pos --;
-        if(pos <= 0){
-            pos = 0;
-        }
-        if(pos > symbolsColors.size()+1){
-            symbolsColors.add(color);
-        }
-        else{
-            symbolsColors.add(pos, color);
-        }
+        
+        pos = Math.min(Math.max(0, pos-1), symbolsColors.size());
+        symbolsColors.add(pos, color);
+
         
         for(Wheel w: wheels){
             w.addSymbol(pos+1, color);
