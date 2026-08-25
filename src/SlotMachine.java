@@ -252,12 +252,29 @@ public class SlotMachine{
      */
     public String[] configuration(){
         String[] actualSym = new String[wheels.size()];
-        int c =wheels.size()-1;
+        int c =0;
         for(Wheel w: wheels){
             actualSym[c]=w.colorCurrentSymbol();
-            c--;
+            c++;
         }
         return actualSym;
+    }
+    
+    /**
+     * 
+     */
+    public void placeSymbol(int wheel, String symbol){
+        boolean temp= false;
+        for( String s : symbolsColors){
+            if(s.equals(symbol)){
+                temp=true;
+                break;
+            }
+        }
+        
+        if(temp){
+            
+        }
     }
     
     /**
