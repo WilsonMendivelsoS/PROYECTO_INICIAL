@@ -33,6 +33,9 @@ public class Wheel{
         if(symbols.get(currentSymbol).getBodyFigureName().equals("TRIANGLE")){
             moverExtra = 15;
         }
+        else if(symbols.get(currentSymbol).getBodyFigureName().equals("CIRCLE")){
+            moverExtra = -2;
+        }
         symbols.get(currentSymbol).place(rectangleBodyPart.getPosition()[0]+10 + moverExtra, rectangleBodyPart.getPosition()[1] + 7*rectangleBodyPart.getHeight()/20);
         
         

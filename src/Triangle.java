@@ -18,7 +18,7 @@ public class Triangle extends Figure{
      */
     public Triangle(){
         super();
-        width = 30;
+        width = 35;
         equilateral();
     }
     /**

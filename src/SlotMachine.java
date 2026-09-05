@@ -23,6 +23,7 @@ public class SlotMachine{
         wheels = new ArrayList<>();
         rectangleBodyParts = new Rectangle[6];
         handle = new Circle("red");
+        handle.changeSize(30);
         
         for(int i = 0; i < rectangleBodyParts.length; i++){
             rectangleBodyParts[i] = new Rectangle();
@@ -247,7 +248,7 @@ public class SlotMachine{
     /**
      * Moves all the wheels to its next symbol.
      */
-    public void spin(){
+    private void spin(){
         animation();
         for(Wheel w: wheels){
             w.spin();

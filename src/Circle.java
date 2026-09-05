@@ -18,7 +18,7 @@ public class Circle extends Figure{
      */
     public Circle(){
         super();
-        diameter = 30;
+        diameter = 35;
     }
     
     /**
