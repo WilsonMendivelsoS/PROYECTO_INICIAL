@@ -7,11 +7,11 @@ import javax.swing.JOptionPane;
 * <b>(symbolsQuantity, wheelsQuantity, lever, rectangleBodyParts, symbols, wheels)</b><br>
 * <b>Inv: symbols</b> > 0 and <b>wheels</b> > 0 
 * @author David Garzon, Wilson Mendivelso
-* @version 0.1
+* @version 1
 */
 public class SlotMachine{
     private Rectangle[] rectangleBodyParts;
-    private ArrayList<String> symbolsColors;
+    private ArrayList<Figure> symbolsFigure;
     private ArrayList<Wheel> wheels;
     private Circle handle;
     
@@ -38,13 +38,12 @@ public class SlotMachine{
         makeVisible();
     }
     
-    
     /**
      * Creates the Machine where the Wheels will be putted.
      */
     private void prepareMachine(){
         rectangleBodyParts[0].moveHorizontal(-rectangleBodyParts[0].getPosition()[0]+50);
-        rectangleBodyParts[0].moveVertical(-rectangleBodyParts[0].getPosition()[1]+150);
+        rectangleBodyParts[0].moveVertical(-rectangleBodyParts[0].getPosition()[1]+50);
         rectangleBodyParts[0].changeColor("gray");
         rectangleBodyParts[0].changeSize(200, 400);
         //Handle body
@@ -60,16 +59,30 @@ public class SlotMachine{
         rectangleBodyParts[4].changeColor("white");
         rectangleBodyParts[4].changeSize(100, 10);
         changeBodyPartsPosition();
+        
+        //Base
+        rectangleBodyParts[5].changeSize( 25 , rectangleBodyParts[0].getWidth()+50);
+        rectangleBodyParts[5].changeColor("black");
     }
     
     /**
      * Creates all the starter symbols that the wheels will use.
      */
     private void prepareSymbols(){
-        symbolsColors = new ArrayList<>();
-        symbolsColors.add("green");
-        symbolsColors.add("red");
-        symbolsColors.add("blue");
+        symbolsFigure = new ArrayList<>();
+        String[] colors = {"green", "red", "blue"};
+        for(int i = 0; i < 3; i++){
+            int ran = randomNumGenerator(0,3);
+            if(ran == 0){
+                symbolsFigure.add(new Triangle(colors[i]));
+            }
+            else if(ran == 1){
+                symbolsFigure.add(new Rectangle(colors[i]));
+            }
+            else if(ran == 2){
+                symbolsFigure.add(new Circle(colors[i]));
+            }
+        }
     }
     
     /**
@@ -80,9 +93,9 @@ public class SlotMachine{
         wheels.add(new Wheel());
         wheels.add(new Wheel());
         
-        for(String s: symbolsColors){
+        for(Figure f: symbolsFigure){
             for(Wheel w: wheels){
-                w.addSymbol(new Symbol(s));
+                w.addSymbol(new Symbol(f.getFigureName(), f.getColor()));
             }
         }
         for(Wheel w: wheels){
@@ -97,21 +110,18 @@ public class SlotMachine{
     public void makeVisible(){
         for(Rectangle r: rectangleBodyParts){
             if(!r.isVisible()){
-                if(r != rectangleBodyParts[5]){
-                    r.makeVisible();
-                }
-                
+                r.makeVisible();    
             }
         }
         handle.makeVisible();
-        int espacioInterm = (rectangleBodyParts[0].getWidth() - 50*wheels.size())/(wheels.size() + 1);
+        int espacioInterm = (rectangleBodyParts[0].getWidth() - 50*Math.min(wheels.size(),13))/(Math.min(wheels.size(),13) + 1);
         
-        for(int i = 0; i < wheels.size(); i++){
-            wheels.get(i).place(rectangleBodyParts[0].getPosition()[0] + espacioInterm*(1 + i) +50*i, rectangleBodyParts[0].getPosition()[1] + 50);
-            wheels.get(i).makeVisible();
-        } 
-        
-        
+        for(int j = 0; j < wheels.size(); j++){
+            int posX = j % 13;
+            int posY = j/13;
+            wheels.get(j).place(rectangleBodyParts[0].getPosition()[0] + espacioInterm*(1 + posX) + 50 * posX, rectangleBodyParts[0].getPosition()[1] +50 + 125*posY);
+            wheels.get(j).makeVisible();
+        }
     }
     
     
@@ -135,9 +145,9 @@ public class SlotMachine{
      * @return Symbol's colors in order starting by one.
      */
     public String[] symbols(){
-        String[] names = new String[symbolsColors.size()];
-        for (int i = 0; i < symbolsColors.size(); i++){
-            names[i] = symbolsColors.get(i);
+        String[] names = new String[symbolsFigure.size()];
+        for (int i = 0; i < symbolsFigure.size(); i++){
+            names[i] = symbolsFigure.get(i).getColor();
         }
         return names;
     }
@@ -157,13 +167,21 @@ public class SlotMachine{
             }
                 
             wheels.add(pos, new Wheel());
-            for(String color: symbols()){
-                wheels.get(pos).addSymbol(new Symbol(color));
+            for(Figure f: symbolsFigure){
+                wheels.get(pos).addSymbol(new Symbol(f.getFigureName(), f.getColor()));
             }
             makeInvisible();
             wheels.get(pos).randomizeSymbol();
-        
-            rectangleBodyParts[0].changeSize(200, rectangleBodyParts[0].getWidth()+40);
+            
+            // If wheels are 13 or 26 or 39, slotMachine will be higher.  
+            if(wheels.size() <14 ){
+                rectangleBodyParts[0].changeSize(200, rectangleBodyParts[0].getWidth()+60);
+            }
+            else{
+                rectangleBodyParts[0].changeSize(((wheels.size()/13)+1)*150, rectangleBodyParts[0].getWidth());
+            }
+            rectangleBodyParts[5].changeSize(25, rectangleBodyParts[0].getWidth()+50);
+            
             changeBodyPartsPosition();
         
             makeVisible();
@@ -176,20 +194,23 @@ public class SlotMachine{
      * Changes bodyParts position adapting all the body parts to the slotMachine window
      */
     private void changeBodyPartsPosition(){
-        handle.moveHorizontal(-handle.getPosition()[0] + rectangleBodyParts[0].getPosition()[0] + rectangleBodyParts[0].getWidth()+50);
-        handle.moveVertical(-handle.getPosition()[1]+ rectangleBodyParts[0].getPosition()[1]);
+        handle.moveHorizontal(-handle.getPosition()[0] + rectangleBodyParts[0].getPosition()[0] + rectangleBodyParts[0].getWidth()+70-2*10);
+        handle.moveVertical(-handle.getPosition()[1]+ rectangleBodyParts[0].getPosition()[1]-100+rectangleBodyParts[0].getHeight()/2);
         
         rectangleBodyParts[1].moveHorizontal(-rectangleBodyParts[1].getPosition()[0]+rectangleBodyParts[0].getPosition()[0]+rectangleBodyParts[0].getWidth());
-        rectangleBodyParts[1].moveVertical(-rectangleBodyParts[1].getPosition()[1]+rectangleBodyParts[0].getPosition()[1]+100);
+        rectangleBodyParts[1].moveVertical(-rectangleBodyParts[1].getPosition()[1]+rectangleBodyParts[0].getPosition()[1]+rectangleBodyParts[0].getHeight()/2);
         
-        rectangleBodyParts[2].moveHorizontal(-rectangleBodyParts[2].getPosition()[0]+rectangleBodyParts[0].getPosition()[0]+rectangleBodyParts[0].getWidth()+60);
-        rectangleBodyParts[2].moveVertical(-rectangleBodyParts[2].getPosition()[1]+rectangleBodyParts[0].getPosition()[1]+10);
+        rectangleBodyParts[2].moveHorizontal(-rectangleBodyParts[2].getPosition()[0]+rectangleBodyParts[0].getPosition()[0]+rectangleBodyParts[0].getWidth()+70-10);
+        rectangleBodyParts[2].moveVertical(-rectangleBodyParts[2].getPosition()[1]+handle.getPosition()[1]+10);
         
-        rectangleBodyParts[3].moveHorizontal(-rectangleBodyParts[3].getPosition()[0]+rectangleBodyParts[0].getPosition()[0]+rectangleBodyParts[0].getWidth()+60);
-        rectangleBodyParts[3].moveVertical(-rectangleBodyParts[3].getPosition()[1]+rectangleBodyParts[0].getPosition()[1]-100+3);
+        rectangleBodyParts[3].moveHorizontal(-rectangleBodyParts[3].getPosition()[0]+handle.getPosition()[0]+10);
+        rectangleBodyParts[3].moveVertical(-rectangleBodyParts[3].getPosition()[1]+handle.getPosition()[1]-100);
         
-        rectangleBodyParts[4].moveHorizontal(-rectangleBodyParts[4].getPosition()[0]+rectangleBodyParts[0].getPosition()[0]+rectangleBodyParts[0].getWidth()+60);
-        rectangleBodyParts[4].moveVertical(-rectangleBodyParts[4].getPosition()[1]+rectangleBodyParts[0].getPosition()[1]+100+10+1);
+        rectangleBodyParts[4].moveHorizontal(-rectangleBodyParts[4].getPosition()[0]+handle.getPosition()[0]+10);
+        rectangleBodyParts[4].moveVertical(-rectangleBodyParts[4].getPosition()[1]+handle.getPosition()[1]+100+10);
+        
+        rectangleBodyParts[5].moveHorizontal(-rectangleBodyParts[5].getPosition()[0]+rectangleBodyParts[0].getPosition()[0]-25);
+        rectangleBodyParts[5].moveVertical(-rectangleBodyParts[5].getPosition()[1] +rectangleBodyParts[0].getPosition()[1]+rectangleBodyParts[0].getHeight());
     }
     
     /**
@@ -209,6 +230,13 @@ public class SlotMachine{
             makeInvisible();
             wheels.remove(pos);
             isJackPot();
+            
+            rectangleBodyParts[0].changeSize(200, rectangleBodyParts[0].getWidth()-60);
+            rectangleBodyParts[5].changeSize(25, rectangleBodyParts[0].getWidth()+50);
+            
+            changeBodyPartsPosition();
+            
+            
             makeVisible();
         }else{
             JOptionPane.showMessageDialog(null, "Accion Invalida");
@@ -260,9 +288,19 @@ public class SlotMachine{
      * @param symbol is the name of the symbol
      */
     public void placeSymbol(int wheel, String symbol){
-        if(symbolsColors.contains(symbol)){
+        boolean canBePlaced = false;
+        int idxSymbol = 0;
+        for(Figure f: symbolsFigure){
+            if(symbol.equals(f.getColor())){
+                canBePlaced = true;
+                idxSymbol = symbolsFigure.indexOf(f);
+                break;
+            }
+        }
+        
+        if(canBePlaced){
             animation();
-            wheels.get(Math.min(Math.max(0, wheel-1), wheels.size()-1)).setCurrentSymbol(symbolsColors.indexOf(symbol));
+            wheels.get(Math.min(Math.max(0, wheel-1), wheels.size()-1)).setCurrentSymbol(idxSymbol);
             wheels.get(Math.min(Math.max(0, wheel-1), wheels.size()-1)).makeVisible();
         }
     }
@@ -295,12 +333,8 @@ public class SlotMachine{
     public boolean isJackPot(){
         if(distinctSymbols()==1 && symbols().length > 1){
             rectangleBodyParts[0].changeColor("yellow");
-            rectangleBodyParts[5].changeSize( 25 , rectangleBodyParts[0].getWidth()+50);
-            rectangleBodyParts[5].moveHorizontal(-rectangleBodyParts[0].getPosition()[0]+5);
-            rectangleBodyParts[5].moveVertical(rectangleBodyParts[0].getPosition()[1]+185);
-            rectangleBodyParts[5].changeColor("black");
             makeVisible();
-            rectangleBodyParts[5].makeVisible();
+            
             JOptionPane.showMessageDialog(null, "Ganaste");
             return true;
         }
@@ -311,23 +345,41 @@ public class SlotMachine{
      * Adds a symbol in a specific position, this symbol is also added to all the wheels
      */
     public void addSymbol(int pos, String color){
-        
-        pos = Math.min(Math.max(0, pos-1), symbolsColors.size());
-        symbolsColors.add(pos, color);
-
-        
-        for(Wheel w: wheels){
-            w.addSymbol(pos+1, color);
+        boolean isNewSymbol = true;
+        for(Figure f: symbolsFigure){
+            if(f.getFigureName().equals(color)){
+                isNewSymbol = false;
+                break;
+            }
         }
+        if(isNewSymbol){   
+            pos = Math.min(Math.max(0, pos-1), symbolsFigure.size());
+            int ran = randomNumGenerator(0,3);
+            if(ran == 0){
+                symbolsFigure.add(pos, new Triangle(color));
+            }
+            else if(ran == 1){
+                symbolsFigure.add(pos, new Rectangle(color));
+            }
+            else if(ran == 2){
+                symbolsFigure.add(pos,new Circle(color));
+            }
+            
+            for(Wheel w: wheels){
+                w.addSymbol(pos+1, color, symbolsFigure.get(pos).getFigureName());
+            }            
+        }
+
     }
     /**
      * Deletes a specific symbol
      */
-    public void delSymbol(String symbol){
+    public void delSymbol(String symbolColor){
         if(ok()){
-            symbolsColors.remove(symbol);
-            for(Wheel w: wheels){
-                w.delSymbol(symbol);            
+            for(int i = 0; i < symbolsFigure.size(); i++){
+                if(symbolsFigure.get(i).getColor().equals(symbolColor)){
+                    symbolsFigure.remove(i);
+                }
             }
         }else{
             JOptionPane.showMessageDialog(null, "Accion Invalida");
@@ -345,11 +397,11 @@ public class SlotMachine{
     
     /**
      * check if the last action can be performed
-     * return true if the last action can be performed
+     * @return true if the last action can be performed
      */
     public boolean ok(){
         while(wheels.size() ==2|| wheels.size()==50){
-            if (symbolsColors.size()==2){
+            if (symbolsFigure.size()==2){
                 return false;
             }else{
                 break;

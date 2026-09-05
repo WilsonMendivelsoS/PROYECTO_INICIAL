@@ -4,29 +4,22 @@ import java.awt.*;
  * A triangle that can be manipulated and that draws itself on a canvas.
  * 
  * @author David Garzon, Wilson Mendivelso
- * @version 0.1
+ * @version 1
  */
 
-public class Triangle{
+public class Triangle extends Figure{
     public static int VERTICES=3;
     
     private int height;
     private int width;
-    private int xPosition;
-    private int yPosition;
-    private String color;
-    private boolean isVisible;
 
     /**
      * Create a new triangle at default position with default color.
      */
     public Triangle(){
-        height = 30;
-        width = 40;
-        xPosition = 140;
-        yPosition = 15;
-        color = "green";
-        isVisible = false;
+        super();
+        width = 30;
+        equilateral();
     }
     /**
      * Create a new triangle at default position with a specific color.
@@ -35,22 +28,13 @@ public class Triangle{
         this();
         this.color = color;
     }
-    
     /**
-     * Make this triangle visible. If it was already visible, do nothing.
+     * Makes the triangle an equilateral triangle.
      */
-    public void makeVisible(){
-        isVisible = true;
-        draw();
+    public void equilateral(){
+        height = (int)(Math.sqrt(3) * width)/2;
     }
     
-    /**
-     * Make this triangle invisible. If it was already invisible, do nothing.
-     */
-    public void makeInvisible(){
-        erase();
-        isVisible = false;
-    }
     
     /**
      * Move the triangle a few pixels to the right.
@@ -80,65 +64,8 @@ public class Triangle{
         moveVertical(20);
     }
 
-    /**
-     * Move the triangle horizontally.
-     * @param distance the desired distance in pixels
-     */
-    public void moveHorizontal(int distance){
-        erase();
-        xPosition += distance;
-        draw();
-    }
 
-    /**
-     * Move the triangle vertically.
-     * @param distance the desired distance in pixels
-     */
-    public void moveVertical(int distance){
-        erase();
-        yPosition += distance;
-        draw();
-    }
 
-    /**
-     * Slowly move the triangle horizontally.
-     * @param distance the desired distance in pixels
-     */
-    public void slowMoveHorizontal(int distance){
-        int delta;
-
-        if(distance < 0) {
-            delta = -1;
-            distance = -distance;
-        } else {
-            delta = 1;
-        }
-
-        for(int i = 0; i < distance; i++){
-            xPosition += delta;
-            draw();
-        }
-    }
-
-    /**
-     * Slowly move the triangle vertically.
-     * @param distance the desired distance in pixels
-     */
-    public void slowMoveVertical(int distance){
-        int delta;
-
-        if(distance < 0) {
-            delta = -1;
-            distance = -distance;
-        } else {
-            delta = 1;
-        }
-
-        for(int i = 0; i < distance; i++){
-            yPosition += delta;
-            draw();
-        }
-    }
 
     /**
      * Change the size to the new size
@@ -152,20 +79,12 @@ public class Triangle{
         draw();
     }
     
-    /**
-     * Change the color. 
-     * @param color the new color. Valid colors are "red", "yellow", "blue", "green",
-     * "magenta" and "black".
-     */
-    public void changeColor(String newColor){
-        color = newColor;
-        draw();
-    }
 
     /*
      * Draw the triangle with current specifications on screen.
      */
-    private void draw(){
+    @Override
+    protected void draw(){
         if(isVisible) {
             Canvas canvas = Canvas.getCanvas();
             int[] xpoints = { xPosition, xPosition + (width/2), xPosition - (width/2) };
@@ -175,30 +94,12 @@ public class Triangle{
         }
     }
 
-    /*
-     * Erase the triangle on screen.
-     */
-    private void erase(){
-        if(isVisible) {
-            Canvas canvas = Canvas.getCanvas();
-            canvas.erase(this);
-        }
-    }
     
     /**
-     * Returns triangle's position
-     * @return the xPosition and the yPosition
+     * Gives the Figure's name.
      */
-    public int[] getPosition(){
-        int[] temp = {xPosition, yPosition};
-        return temp;
-    }
-    
-    /**
-     * Return triangle's color.
-     * @return triangle's color.
-     */
-    public String getColor(){
-        return color;
+    @Override
+    public String getFigureName(){
+        return "TRIANGLE";
     }
 }

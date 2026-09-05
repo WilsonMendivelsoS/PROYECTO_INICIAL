@@ -8,27 +8,35 @@
  */
 public class Symbol
 {
-    private Rectangle rectangleBody;
+    private Figure body;
     
     /**
-     * Create a new symbol with a specific color and a random shape.
+     * Create a new symbol with a specific color and an specific shape.
      */
-    public Symbol(String color){   
-        rectangleBody = new Rectangle(color);
+    public Symbol(String figure, String color){   
+        if(figure == "RECTANGLE"){
+            body = new Rectangle(color);
+        }
+        else if(figure == "TRIANGLE"){
+            body = new Triangle(color);
+        }
+        else{
+            body = new Circle(color);
+        }
     }
     
     /**
      * Make this symbol visible.
      */
     public void makeVisible(){
-        rectangleBody.makeVisible();
+        body.makeVisible();
     }
     
     /**
      * Make this symbol invisible.
      */
     public void makeInvisible(){
-        rectangleBody.makeInvisible();
+        body.makeInvisible();
     }
     
     /**
@@ -36,8 +44,8 @@ public class Symbol
      */
     public void place(int x, int y){
         makeInvisible();
-        rectangleBody.moveHorizontal(-rectangleBody.getPosition()[0]+x);
-        rectangleBody.moveVertical(-rectangleBody.getPosition()[1]+y);
+        body.moveHorizontal(-body.getPosition()[0]+x);
+        body.moveVertical(-body.getPosition()[1]+y);
         makeVisible();
     }
     
@@ -46,6 +54,14 @@ public class Symbol
      * @return the color's name.
      */
     public String getColor(){
-        return rectangleBody.getColor();
+        return body.getColor();
+    }
+    
+    /**
+     * Get symbol's body name.
+     * @return body's figure.
+     */
+    public String getBodyFigureName(){
+        return body.getFigureName();
     }
 }

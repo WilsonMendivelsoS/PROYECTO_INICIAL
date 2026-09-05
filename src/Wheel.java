@@ -29,7 +29,13 @@ public class Wheel{
         if(!isVisible){
             rectangleBodyPart.makeVisible();
         }
-        symbols.get(currentSymbol).place(rectangleBodyPart.getPosition()[0]+rectangleBodyPart.getHeight()/10 , rectangleBodyPart.getPosition()[1] + 7*rectangleBodyPart.getHeight()/20);
+        int moverExtra = 0;
+        if(symbols.get(currentSymbol).getBodyFigureName().equals("TRIANGLE")){
+            moverExtra = 15;
+        }
+        symbols.get(currentSymbol).place(rectangleBodyPart.getPosition()[0]+10 + moverExtra, rectangleBodyPart.getPosition()[1] + 7*rectangleBodyPart.getHeight()/20);
+        
+        
         symbols.get(currentSymbol).makeVisible();
         isVisible = true;
     }
@@ -65,8 +71,8 @@ public class Wheel{
     /**
      * Adds a symbol to the wheel in a specific position.
      */
-    public void addSymbol(int pos, String color){
-        symbols.add(Math.min(Math.max(0, pos-1), symbols.size()), new Symbol(color));
+    public void addSymbol(int pos, String color, String figure){
+        symbols.add(Math.min(Math.max(0, pos-1), symbols.size()), new Symbol(figure, color));
         if(pos<= currentSymbol+1){
             currentSymbol =  (currentSymbol+1)%symbols.size(); 
         }

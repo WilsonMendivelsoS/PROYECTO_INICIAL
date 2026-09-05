@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=SlotMachine
-comment0.text=\r\n\ Represents\ a\ slotMachine,\ it\ can\ add\ wheels\ and\ spin\ them,\ if\ you\ wanna\ win,\ you\ will\ need\ a\ jackpot.<br>\r\n\ <b>(symbolsQuantity,\ wheelsQuantity,\ lever,\ rectangleBodyParts,\ symbols,\ wheels)</b><br>\r\n\ <b>Inv\:\ symbols</b>\ >\ 0\ and\ <b>wheels</b>\ >\ 0\ \r\n\ @author\ David\ Garzon,\ Wilson\ Mendivelso\r\n\ @version\ 0.1\r\n
+comment0.text=\r\n\ Represents\ a\ slotMachine,\ it\ can\ add\ wheels\ and\ spin\ them,\ if\ you\ wanna\ win,\ you\ will\ need\ a\ jackpot.<br>\r\n\ <b>(symbolsQuantity,\ wheelsQuantity,\ lever,\ rectangleBodyParts,\ symbols,\ wheels)</b><br>\r\n\ <b>Inv\:\ symbols</b>\ >\ 0\ and\ <b>wheels</b>\ >\ 0\ \r\n\ @author\ David\ Garzon,\ Wilson\ Mendivelso\r\n\ @version\ 1\r\n
 comment1.params=
 comment1.target=SlotMachine()
 comment1.text=\ \r\n\ \r\n\ Creates\ a\ slotMachine\ with\ a\ initial\ composition.\r\n
@@ -28,7 +28,7 @@ comment16.text=\r\n\ return\ true\ if\ the\ current\ number\ of\ symbols\ is\ 1\
 comment17.params=pos\ color
 comment17.target=void\ addSymbol(int,\ java.lang.String)
 comment17.text=\r\n\ Adds\ a\ symbol\ in\ a\ specific\ position,\ this\ symbol\ is\ also\ added\ to\ all\ the\ wheels\r\n
-comment18.params=symbol
+comment18.params=symbolColor
 comment18.target=void\ delSymbol(java.lang.String)
 comment18.text=\r\n\ Deletes\ a\ specific\ symbol\r\n
 comment19.params=
@@ -39,7 +39,7 @@ comment2.target=void\ prepareMachine()
 comment2.text=\r\n\ Creates\ the\ Machine\ where\ the\ Wheels\ will\ be\ putted.\r\n
 comment20.params=
 comment20.target=boolean\ ok()
-comment20.text=\r\n\ check\ if\ the\ last\ action\ can\ be\ performed\r\n\ return\ true\ if\ the\ last\ action\ can\ be\ performed\r\n
+comment20.text=\r\n\ check\ if\ the\ last\ action\ can\ be\ performed\r\n\ @return\ true\ if\ the\ last\ action\ can\ be\ performed\r\n
 comment21.params=
 comment21.target=void\ animation()
 comment21.text=\r\n\ Animates\ the\ slotMachine\r\n
