@@ -271,7 +271,6 @@ public class SlotMachine{
         }
     }
     
-    
     /**
      * Moves all the wheels to its next symbol.
      */
@@ -500,23 +499,59 @@ public class SlotMachine{
     }
     
     
-    //Llenar
+    /**
+     * swap the positions of two wheels given their positions
+     * @param wheel1 Position in ArrayList wheels of wheel number 1
+     * @param wheel2 Position in Arraylist wheels of wheel number 2
+     */
     public void swap(int wheel1, int wheel2){
+        int b = Math.max(wheel1, 0);
+        int a = Math.min(b, wheels.size()-1);
+        int d = Math.max(wheel2, 0);
+        int c = Math.min(d, wheels.size()-1);
         
+        makeInvisible();
+        Wheel wheelOne = wheels.get(a);
+        Wheel wheelTwo = wheels.get(c);
+        int indexOne = wheels.indexOf(wheelOne);
+        int indexTwo = wheels.indexOf(wheelTwo);
+        wheels.set(indexOne, wheelTwo);
+        wheels.set(indexTwo, wheelOne);         
+        makeVisible(); 
     }
     
-    //Llenar
+    /**
+     * lock a wheel, if is negative, get position 0, if is larger than the wheel size, it adopts that size
+     * @param wheel in wheels( position )
+     */
     public void lock(int wheel){
-        
+        int a = Math.max(wheel, 0);
+        int b = Math.min(a, wheels.size()-1);
+        Wheel wheelact = wheels.get(a);
+        if(wheelact.getIsLocked() == false){
+            wheelact.setIsLocked(true);
+        }
     }
     
-    //Llenar
+    /**
+     * unlock a wheel, if is negative, get position 0, if is larger than the wheel size, it adopts that size
+     * @param wheel in wheels ( position )
+     */
     public void unlock(int wheel){
-        
+        int a = Math.max(wheel, 0);
+        int b = Math.min(a, wheels.size()-1);
+        Wheel wheelact = wheels.get(a);
+        if(wheelact.getIsLocked() == true){
+            wheelact.setIsLocked(false);
+        }        
     }
     
     //Llenar
     public void spin(int wheel, int steps){
+        int a = Math.max(wheel, 0);
+        int b = Math.min(a, wheels.size()-1);
+        Wheel wheelact = wheels.get(a);       
+        wheelact.spin(steps);    
         
     }
     
