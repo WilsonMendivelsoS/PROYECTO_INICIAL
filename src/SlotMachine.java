@@ -249,7 +249,7 @@ public class SlotMachine{
             }
             makeInvisible();
             wheels.remove(pos);
-            isJackPot();
+            isJackpot();
             
             
             // If wheels are 13 or 26 or 39, slotMachine will be lower.  
@@ -275,7 +275,7 @@ public class SlotMachine{
     /**
      * Moves all the wheels to its next symbol.
      */
-    private void spin(){
+    public void spin(){
         animation();
         for(Wheel w: wheels){
             w.spin();
@@ -292,7 +292,7 @@ public class SlotMachine{
             animation();
         }
         wheels.get(wheel).spin();
-        isJackPot();
+        isJackpot();
         makeVisible();
     }
     
@@ -368,7 +368,7 @@ public class SlotMachine{
      * return true if the current number of symbols is 1 iand finish the game
      * @return true if the symbols currents in the wheels are equals 1
      */
-    public boolean isJackPot(){
+    public boolean isJackpot(){
         if(distinctSymbols()==1 && symbols().length > 1){
             rectangleBodyParts[0].changeColor("yellow");
             makeVisible();

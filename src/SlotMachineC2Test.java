@@ -317,8 +317,66 @@ public class SlotMachineC2Test{
      */
     @Test
     public void shouldStayAWheelIfItsSymbolIsIncorrect(){
-        
+        String[] setSymbols = {"green", "red", "blue"};
+        slotMachine.spin(setSymbols);
+        String[] incorrectSymbols = {"good", "no", "red"};
+        slotMachine.spin(incorrectSymbols);
+        String[] waited = {"green", "red", "red"};
+        assertEquals(waited, slotMachine.configuration());
     }
+    
+    /**
+     * If we do spin to all the wheels it should change their symbols.
+     */
+    @Test
+    public void shouldChangeAllWheelsSymbols(){
+        String[] setSymbols = {"green", "red", "blue"};
+        slotMachine.spin(setSymbols);
+        slotMachine.spin();
+        String[] afterSymbols = slotMachine.configuration();
+        assertTrue(!setSymbols[0].equals(afterSymbols[0]) && !setSymbols[1].equals(afterSymbols[1]) && !setSymbols[2].equals(afterSymbols[2]));
+    }
+    
+    /**
+     * If we put a set of symbols it should give us how many different symbols are.
+     */
+    @Test
+    public void shouldGiveCorrectDistinctSymbolsNumber(){
+        String[] setSymbols = {"green", "red", "blue"};
+        slotMachine.spin(setSymbols);
+        int result = slotMachine.distinctSymbols();
+        assertEquals(3, result);
+    }
+    
+    /**
+     * If we put a set of symbols configuration should give us those current symbols
+     */
+    @Test
+    public void shouldGiveCorrectCurrentSymbols(){
+        String[] setSymbols = {"green", "red", "blue"};
+        slotMachine.spin(setSymbols);
+        assertEquals(setSymbols, slotMachine.configuration());
+    }
+    
+    /**
+     * If all symbols are equals we should win.
+     */
+    @Test
+    public void shouldBeJackpotIfAllSymbolsAreEquals(){
+        String[] setSymbols = {"red", "red", "red"};
+        slotMachine.spin(setSymbols);
+        assertTrue(slotMachine.isJackpot());
+    }
+    /**
+     * If at least two symbols are differents we shouldn't win.
+     */
+    @Test
+    public void shouldNotBeJackpotIfAtLeastTwoSymbolsAreDifferent(){
+        String[] setSymbols = {"green", "red", "blue"};
+        slotMachine.spin(setSymbols);
+        assertFalse(slotMachine.isJackpot());
+    }
+    
     /**
      * Tears down the test fixture.
      *
