@@ -1,0 +1,331 @@
+import static org.junit.Assert.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+/**
+ * The test class SlotMachineC2Test.
+ *
+ * @author David Garzon, Wilson Mendivelso
+ * @version 1
+ */
+public class SlotMachineC2Test{
+    private SlotMachine slotMachine;
+    
+    /**
+     * Sets up the test fixture.
+     *
+     * Called before every test case method.
+     */
+    @Before
+    public void setUp(){
+        
+        slotMachine = new SlotMachine(false);
+
+    }
+    /**
+     * If a wheel is added, the number of wheels should be greater
+     */
+    @Test
+    public void shouldWheelNumberBeGreaterIfWheelAdded(){
+        slotMachine.addWheel(1);
+        assertEquals(4,slotMachine.configuration().length);
+    }
+    /**
+     * If we put a wheel in a position bigger than the number of wheels it should be placed at the end.
+     */
+    @Test
+    public void shouldAddWheelAtEndIfPosTooBig(){
+        String[] before = slotMachine.configuration();
+        slotMachine.addWheel(1000);
+        String[] after = slotMachine.configuration();
+        assertTrue(before[0].equals(after[0]) && before[1].equals(after[1]) && before[2].equals(after[2]));
+    }
+    /**
+     * If we put a wheel in a position lower than the number of wheels it should be placed at the start.
+     */
+    @Test
+    public void shouldAddWheelAtStartIfPosTooLittle(){
+        String[] before = slotMachine.configuration();
+        slotMachine.addWheel(-1000);
+        String[] after = slotMachine.configuration();
+        assertTrue(before[0].equals(after[1]) && before[1].equals(after[2]) && before[2].equals(after[3]));
+    }
+    
+    /**
+     * If a wheel is deleted, the number of wheels should be lower
+     */
+    @Test
+    public void shouldWheelNumberBeLessIfWheelDeleted(){
+        slotMachine.delWheel(1);
+        assertEquals(2,slotMachine.configuration().length);
+    }
+    /**
+     * If we delete a wheel in a position bigger than the number of wheels it should be deleted at the end.
+     */
+    @Test
+    public void shouldDeleteWheelAtEndIfPosTooBig(){
+        String[] before = slotMachine.configuration();
+        slotMachine.delWheel(1000);
+        String[] after = slotMachine.configuration();
+        assertTrue(before[0].equals(after[0]) && before[1].equals(after[1]) && before.length> after.length);
+    }
+    /**
+     * If we delete a wheel in a position lower than the number of wheels it should be deleted at the start.
+     */
+    @Test
+    public void shouldDeleteWheelAtEndIfPosTooLittle(){
+        String[] before = slotMachine.configuration();
+        slotMachine.delWheel(-1000);
+        String[] after = slotMachine.configuration();
+        assertTrue(before[1].equals(after[0]) && before[2].equals(after[1]) && before.length > after.length);
+    }
+    
+    /**
+     * If we do a swap between to symbols with different colors configuration should change.
+     */
+    @Test
+    public void shouldSwapWheelsWillChangeColorsOrder(){
+        String[] symbols = {"red", "blue", "green"};
+        slotMachine.spin(symbols);
+        slotMachine.swap(2,3);
+        String[] waited = {"red", "green", "blue"};
+        assertEquals(slotMachine.configuration(), waited);
+    }
+    /**
+     * If the swap is with the same wheel is should not change the configuration.
+     */
+    @Test
+    public void shouldNotChangeIfSwapWithTheSameWheel(){
+        String[] symbols = {"red", "blue", "green"};
+        slotMachine.spin(symbols);
+        slotMachine.swap(2,2);
+        String[] waited = {"red", "blue", "green"};
+        assertEquals(slotMachine.configuration(), waited);
+    }
+    
+    /**
+     * If a wheel is locked, it should not change the symbols.
+     */
+    @Test
+    public void shouldNotChangeWheelsSymbolIfItIslocked(){
+        String[] symbols = {"red", "blue", "green"};
+        slotMachine.spin(symbols);
+        slotMachine.lock(1);
+        slotMachine.spin(1);
+        String[] waited = {"red", "blue", "green"};
+        assertEquals(slotMachine.configuration(), waited);
+    }
+
+    /**
+     * If a wheel is unlocked, it can change its symbols.
+     */
+    @Test
+    public void shouldChangeWheelsSymbolsIfItIsUnlocked(){
+        String afterLockSymbol = slotMachine.configuration()[0];
+        slotMachine.lock(1);
+        slotMachine.unlock(1);
+        slotMachine.spin(1);
+        assertTrue(!slotMachine.configuration()[0].equals(afterLockSymbol));
+    }
+    
+    /**
+     * If we add a new symbol correctly the number of symbols should be greater.
+     */
+    @Test
+    public void shouldSymbolNumberBeGreaterIfSymbolAdded(){
+        slotMachine.addSymbol(2,"pink");
+        assertEquals(4, slotMachine.symbols().length);
+    }
+    /**
+     * If we add a symbol in a specific position the symbol should be there.
+     */
+    @Test
+    public void shouldSymbolNumberBeInTheSpecificPosition(){
+        slotMachine.addSymbol(2,"pink");
+        assertEquals("pink", slotMachine.symbols()[1]);
+    }
+    /**
+     * If we add a repeated symbol it shouldn't be change the number of symbols, because it was already there.
+     */
+    @Test
+    public void shouldNotAddRepeatedSymbols(){
+        slotMachine.addSymbol(2,"red");
+        assertEquals(3, slotMachine.symbols().length);
+    }
+    /**
+     * If we add a symbol in a position bigger than the number of symbols it should be deleted at the end.
+     */
+    @Test
+    public void shouldAddSymbolAtEndIfPosTooBig(){
+        slotMachine.addSymbol(1000,"pink");
+        assertEquals("pink", slotMachine.symbols()[3]);
+    }
+    /**
+     * If we add a symbol in a position lower than the number of symbols it should be deleted at the start.
+     */
+    @Test
+    public void shouldAddSymbolAtStartIfPosTooLittle(){
+        slotMachine.addSymbol(-1000,"pink");
+        assertEquals("pink", slotMachine.symbols()[0]);
+    }
+    /**
+     * If a symbol is not in the list of possible symbols it won't we added
+     */
+    @Test
+    public void shouldNotAddStrangeSymbols(){
+        slotMachine.addSymbol(2,"strange");
+        assertEquals(3, slotMachine.symbols().length);
+    }
+    
+    /**
+     * If delete a symbol the number of symbols should be less
+     */
+    @Test
+    public void shouldSymbolNumberBeLessIfSymbolWasDeleted(){
+        slotMachine.delSymbol("red");
+        assertEquals(2, slotMachine.symbols().length);
+    }
+    /**
+     * If the symbol doesn't exists you shouldn't delete something
+     */
+    @Test
+    public void shouldNotDeleteIfTheSymbolNotExists(){
+        slotMachine.delSymbol("pink");
+        assertEquals(3, slotMachine.symbols().length);
+    }
+    
+    /**
+     * Should change the symbols of the wheels
+     */
+    @Test
+    public void shouldPlaceWheelSymbol(){
+        slotMachine.addSymbol(1000,"pink");
+        slotMachine.placeSymbol(1,"pink");
+        slotMachine.placeSymbol(2,"pink");
+        assertTrue(slotMachine.configuration()[0].equals("pink") && slotMachine.configuration()[1].equals("pink"));
+    }
+    /**
+     * Should not change the symbols of the wheels if the symbol doesn't exists.
+     */
+    @Test
+    public void shouldStayIfSymbolDoesNotExists(){
+        String[] before = slotMachine.configuration();
+        slotMachine.placeSymbol(1, "strange");
+        slotMachine.placeSymbol(2, "strange2");
+        assertEquals(before, slotMachine.configuration());
+    }
+    
+    /**
+     * Should spin a specific wheel's symbol
+     */
+    @Test
+    public void shouldSpinJustASpecificWheel(){
+        String[] before = slotMachine.configuration();
+        slotMachine.spin(1);
+        String[] after = slotMachine.configuration();
+        assertTrue(!before[0].equals(after[0]) && before[1].equals(after[1]) && before[2].equals(after[2]));
+    }
+    /**
+     * If we spin a specific wheel in a position bigger than the number of wheels, we should spin the last one.
+     */
+    @Test
+    public void shouldSpinLastWheelIfPosTooBig(){
+        String[] before = slotMachine.configuration();
+        slotMachine.spin(1000);
+        String[] after = slotMachine.configuration();
+        assertTrue(!before[2].equals(after[2]) && before[1].equals(after[1]) && before[0].equals(after[0]));
+    }
+    /**
+     * If we spin a specific wheel in a position lower than the number of wheels, we should spin the first one.
+     */
+    @Test
+    public void shouldSpinFirstWheelIfPosTooShort(){
+        String[] before = slotMachine.configuration();
+        slotMachine.spin(-1000);
+        String[] after = slotMachine.configuration();
+        assertTrue(!before[0].equals(after[0]) && before[1].equals(after[1]) && before[2].equals(after[2]));
+    }   
+
+    /**
+     * If steps are negative we should spin back.
+     */
+    @Test
+    public void shouldSpinBackIfStepsAreNegatives(){
+        slotMachine.addSymbol(1, "black");
+        slotMachine.addSymbol(3, "pink");
+        slotMachine.placeSymbol(1, "pink");
+        slotMachine.spin(1,-2);
+        assertEquals("black", slotMachine.configuration()[0]);
+    }
+    /**
+     * If steps are zero it should be at the same place.
+     */
+    @Test
+    public void shoultNotSpinIfStepsAreZero(){
+        slotMachine.addSymbol(1, "black");
+        slotMachine.addSymbol(3, "pink");
+        slotMachine.placeSymbol(1, "pink");
+        slotMachine.spin(1,0);
+        assertEquals("pink", slotMachine.configuration()[0]);
+    }
+    /**
+     * If steps are given it should spin correctly
+     */
+    @Test
+    public void shouldSpinNPositionsCorrectly(){
+        slotMachine.addSymbol(1, "black");
+        slotMachine.addSymbol(3, "pink");
+        slotMachine.placeSymbol(1, "black");
+        slotMachine.spin(1,2);
+        assertEquals("pink", slotMachine.configuration()[0]);
+    }
+    /**
+     * If the number of wheel is too big it will spin the last wheel.
+     */
+    @Test
+    public void shouldSpinLastWheelIfWheelNumIsTooBig(){
+        slotMachine.addSymbol(1, "black");
+        slotMachine.addSymbol(3, "pink");
+        slotMachine.placeSymbol(3, "black");
+        slotMachine.spin(1000,2);
+        assertEquals("pink", slotMachine.configuration()[2]);
+    }
+    /**
+     * If the number of wheel is too short it will spin the first wheel.
+     */
+    @Test
+    public void shouldSpinFirstWheelIfWheelNumIsTooShort(){
+        slotMachine.addSymbol(1, "black");
+        slotMachine.addSymbol(3, "pink");
+        slotMachine.placeSymbol(1, "pink");
+        slotMachine.spin(-1000,2);
+        assertEquals("black", slotMachine.configuration()[0]);
+    }
+    
+    /**
+     * If symbols are given all the wheels must be in the position of the setSymbols.
+     */
+    @Test
+    public void shouldSetAllSymbols(){
+        String[] setSymbols = {"green", "red", "blue"};
+        slotMachine.spin(setSymbols);
+        assertEquals(setSymbols, slotMachine.configuration());
+    }
+    /**
+     * If there are incorrect symbols, those wheels should ignore the spin.
+     */
+    @Test
+    public void shouldStayAWheelIfItsSymbolIsIncorrect(){
+        
+    }
+    /**
+     * Tears down the test fixture.
+     *
+     * Called after every test case method.
+     */
+    @After
+    public void tearDown(){
+        
+    }
+}

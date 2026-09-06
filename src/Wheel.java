@@ -4,7 +4,7 @@ import java.util.ArrayList;
  * Represents a wheel that can have a lot of symbols.
  * 
  * @author David Garzon, Wilson Mendivelso
- * @version 0.1
+ * @version 1
  */
 public class Wheel{
     private ArrayList<Symbol> symbols; 

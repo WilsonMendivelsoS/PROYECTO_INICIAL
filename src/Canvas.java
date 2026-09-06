@@ -20,6 +20,7 @@ public class Canvas{
     // shape objects in this project clean and simple for educational purposes.
 
     private static Canvas canvasSingleton;
+    public static String[] colors = {"red", "black", "blue", "yellow", "green", "magenta", "white", "gray", "purple", "orange", "pink", "cyan"};
 
     /**
      * Factory method to get the canvas singleton object.

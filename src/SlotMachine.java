@@ -14,12 +14,22 @@ public class SlotMachine{
     private ArrayList<Figure> symbolsFigure;
     private ArrayList<Wheel> wheels;
     private Circle handle;
+    private boolean isVisual;
     
     /** 
      * 
      * Creates a slotMachine with a initial composition.
      */
     public SlotMachine(){
+        this(true);
+    }
+
+    /**
+     * Creates a slotMachine with optional visualization
+     * @param visible true to show the machine, false is for tests
+     */
+    public SlotMachine(boolean isVisual){
+        this.isVisual = isVisual;
         wheels = new ArrayList<>();
         rectangleBodyParts = new Rectangle[6];
         handle = new Circle("red");
@@ -109,6 +119,9 @@ public class SlotMachine{
      * Makes visible the machine, its wheels and symbols.
      */
     public void makeVisible(){
+        if(!isVisual){
+            return;
+        }
         for(Rectangle r: rectangleBodyParts){
             if(!r.isVisible()){
                 r.makeVisible();    
@@ -214,6 +227,12 @@ public class SlotMachine{
         rectangleBodyParts[5].moveVertical(-rectangleBodyParts[5].getPosition()[1] +rectangleBodyParts[0].getPosition()[1]+rectangleBodyParts[0].getHeight());
     }
     
+    public void addSomeWheels(int num){
+        for(int i = 0; i < num; i++){
+            addWheel(0);
+        }
+    }
+    
     /**
      * Deletes a specific wheel
      * @param pos is the position of thw wheel that we wanna delete
@@ -232,7 +251,15 @@ public class SlotMachine{
             wheels.remove(pos);
             isJackPot();
             
-            rectangleBodyParts[0].changeSize(200, rectangleBodyParts[0].getWidth()-60);
+            
+            // If wheels are 13 or 26 or 39, slotMachine will be lower.  
+            if(wheels.size() <13 ){
+                rectangleBodyParts[0].changeSize(200, rectangleBodyParts[0].getWidth()-60);
+            }
+            else{
+                rectangleBodyParts[0].changeSize(((wheels.size()/13)+1)*150, rectangleBodyParts[0].getWidth());
+            }
+            
             rectangleBodyParts[5].changeSize(25, rectangleBodyParts[0].getWidth()+50);
             
             changeBodyPartsPosition();
@@ -266,7 +293,7 @@ public class SlotMachine{
         }
         wheels.get(wheel).spin();
         isJackPot();
-        wheels.get(wheel).makeVisible();
+        makeVisible();
     }
     
     /**
@@ -289,6 +316,16 @@ public class SlotMachine{
      * @param symbol is the name of the symbol
      */
     public void placeSymbol(int wheel, String symbol){
+        boolean colorExists = false;
+        for(String c: Canvas.colors){
+            if(symbol.equals(c)){
+                colorExists = true;
+                break;
+            }
+        }
+        if(!colorExists){
+            return;
+        }
         boolean canBePlaced = false;
         int idxSymbol = 0;
         for(Figure f: symbolsFigure){
@@ -302,7 +339,7 @@ public class SlotMachine{
         if(canBePlaced){
             animation();
             wheels.get(Math.min(Math.max(0, wheel-1), wheels.size()-1)).setCurrentSymbol(idxSymbol);
-            wheels.get(Math.min(Math.max(0, wheel-1), wheels.size()-1)).makeVisible();
+            makeVisible();
         }
     }
     
@@ -335,8 +372,10 @@ public class SlotMachine{
         if(distinctSymbols()==1 && symbols().length > 1){
             rectangleBodyParts[0].changeColor("yellow");
             makeVisible();
+            if(isVisual){
+                JOptionPane.showMessageDialog(null, "Ganaste");    
+            }
             
-            JOptionPane.showMessageDialog(null, "Ganaste");
             return true;
         }
         return false;
@@ -346,31 +385,37 @@ public class SlotMachine{
      * Adds a symbol in a specific position, this symbol is also added to all the wheels
      */
     public void addSymbol(int pos, String color){
-        boolean isNewSymbol = true;
-        for(Figure f: symbolsFigure){
-            if(f.getFigureName().equals(color)){
-                isNewSymbol = false;
+        boolean colorExists = false;
+        for(String c: Canvas.colors){
+            if(color.equals(c)){
+                colorExists = true;
                 break;
             }
         }
-        if(isNewSymbol){   
-            pos = Math.min(Math.max(0, pos-1), symbolsFigure.size());
-            int ran = randomNumGenerator(0,3);
-            if(ran == 0){
-                symbolsFigure.add(pos, new Triangle(color));
-            }
-            else if(ran == 1){
-                symbolsFigure.add(pos, new Rectangle(color));
-            }
-            else if(ran == 2){
-                symbolsFigure.add(pos,new Circle(color));
-            }
-            
-            for(Wheel w: wheels){
-                w.addSymbol(pos+1, color, symbolsFigure.get(pos).getFigureName());
-            }            
+        if(!colorExists){
+            return;
         }
-
+        for(Figure f: symbolsFigure){
+            if(f.getColor().equals(color)){
+                return;
+            }
+        }
+        pos = Math.min(Math.max(0, pos-1), symbolsFigure.size());
+        int ran = randomNumGenerator(0,3);
+        if(ran == 0){
+            symbolsFigure.add(pos, new Triangle(color));
+        }
+        else if(ran == 1){
+            symbolsFigure.add(pos, new Rectangle(color));
+        }
+        else if(ran == 2){
+            symbolsFigure.add(pos,new Circle(color));
+        }
+        
+        for(Wheel w: wheels){
+            w.addSymbol(pos+1, color, symbolsFigure.get(pos).getFigureName());
+        }            
+        
     }
     /**
      * Deletes a specific symbol
@@ -454,4 +499,29 @@ public class SlotMachine{
         return numeroRand;
     }
     
+    
+    //Llenar
+    public void swap(int wheel1, int wheel2){
+        
+    }
+    
+    //Llenar
+    public void lock(int wheel){
+        
+    }
+    
+    //Llenar
+    public void unlock(int wheel){
+        
+    }
+    
+    //Llenar
+    public void spin(int wheel, int steps){
+        
+    }
+    
+    //Llenar
+    public void spin(String[] setSymbols){
+        
+    }
 }
