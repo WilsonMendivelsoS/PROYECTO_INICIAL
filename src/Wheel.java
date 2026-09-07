@@ -129,6 +129,7 @@ public class Wheel{
                     spin();
                     if(isVisible){
                         makeVisible(); 
+                        Canvas.getCanvas().wait(300);
                     }                    
                 }
             }
@@ -143,7 +144,8 @@ public class Wheel{
                             currentSymbol--;
                         }
                         if(isVisible){
-                            makeVisible();   
+                            makeVisible();
+                            Canvas.getCanvas().wait(300);
                         }
                     }
                 }

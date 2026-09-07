@@ -33,7 +33,7 @@ public class Canvas{
         canvasSingleton.setVisible(true);
         return canvasSingleton;
     }
-
+    
     //  ----- instance part -----
 
     private JFrame frame;
