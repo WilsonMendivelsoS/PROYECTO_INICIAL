@@ -11,6 +11,7 @@ public class Wheel{
     private Rectangle rectangleBodyPart;
     private int currentSymbol;
     private boolean isVisible;
+    private boolean isLocked;
     
     /**
      * Create a new wheel with color gray.
@@ -20,6 +21,7 @@ public class Wheel{
         currentSymbol = 0;
         rectangleBodyPart = new Rectangle("white");
         rectangleBodyPart.changeSize(100,50);
+        isLocked = false;
     }
     
     /**
@@ -109,8 +111,46 @@ public class Wheel{
      * Moves to the next symbol.
      */
     public void spin(){
-        symbols.get(currentSymbol).makeInvisible();
-        currentSymbol = (currentSymbol+1)% symbols.size();
+        if(isLocked == false){
+            symbols.get(currentSymbol).makeInvisible();
+            currentSymbol = (currentSymbol+1)% symbols.size(); 
+            return;
+        }
+    }
+
+    /**
+     * Moves n steps the symbol. It can be negative.
+     * @steps are the steps, if it is negative it will go back.
+     */
+    public void spin(int steps){
+        if(isLocked == false){
+            if(steps>=0){
+                for( int i = 0; steps>i ; i++){
+                    spin();
+                    if(isVisible){
+                        makeVisible(); 
+                        Canvas.getCanvas().wait(300);
+                    }                    
+                }
+            }
+            if(steps<0){
+                if(isLocked == false){
+                    for(int i = 0; i < Math.abs(steps); i++){
+                        symbols.get(currentSymbol).makeInvisible();
+                        if(currentSymbol == 0){
+                            currentSymbol = symbols.size()-1;
+                        }
+                        else{
+                            currentSymbol--;
+                        }
+                        if(isVisible){
+                            makeVisible();
+                            Canvas.getCanvas().wait(300);
+                        }
+                    }
+                }
+            }
+        } 
     }
     
     /**
@@ -138,5 +178,20 @@ public class Wheel{
      */
     public void setCurrentSymbol(int numSymbol){
         currentSymbol = numSymbol; 
+    }
+    
+    /**
+     * return if the wheel is locked
+     * @return isLocked
+     */
+    public boolean getIsLocked(){
+        return isLocked;
+    }
+    
+    /**
+     * modifies the wheel's locking state
+     */
+    public void setIsLocked(boolean isLocked){
+        this.isLocked = isLocked;
     }
 }

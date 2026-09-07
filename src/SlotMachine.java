@@ -15,25 +15,19 @@ public class SlotMachine{
     private ArrayList<Wheel> wheels;
     private Circle handle;
     private boolean isVisual;
+    private boolean ok;
     
     /** 
      * 
      * Creates a slotMachine with a initial composition.
      */
     public SlotMachine(){
-        this(true);
-    }
-
-    /**
-     * Creates a slotMachine with optional visualization
-     * @param visible true to show the machine, false is for tests
-     */
-    public SlotMachine(boolean isVisual){
         this.isVisual = isVisual;
         wheels = new ArrayList<>();
         rectangleBodyParts = new Rectangle[6];
         handle = new Circle("red");
         handle.changeSize(30);
+        ok = true;
         
         for(int i = 0; i < rectangleBodyParts.length; i++){
             rectangleBodyParts[i] = new Rectangle();
@@ -46,10 +40,9 @@ public class SlotMachine{
             int temp1=randomNumGenerator(0, wheels.size()-1);
             spin(temp1);
         }
-        makeVisible();
     }
-    
-    /**
+
+        /**
      * Creates the Machine where the Wheels will be putted.
      */
     private void prepareMachine(){
@@ -120,7 +113,7 @@ public class SlotMachine{
      */
     public void makeVisible(){
         if(!isVisual){
-            return;
+            isVisual = true;
         }
         for(Rectangle r: rectangleBodyParts){
             if(!r.isVisible()){
@@ -171,7 +164,7 @@ public class SlotMachine{
      * @param pos is the position of the new wheel.
      */
     public void addWheel(int pos){
-        if(ok()){
+        if(wheels.size()!= 50){
             pos --;
             if(pos <= 0){
                 pos = 0;
@@ -197,10 +190,13 @@ public class SlotMachine{
             rectangleBodyParts[5].changeSize(25, rectangleBodyParts[0].getWidth()+50);
             
             changeBodyPartsPosition();
-        
-            makeVisible();
+            ok = true;
+            if(isVisual){
+                makeVisible();  
+            }   
         }else{
-            JOptionPane.showMessageDialog(null, "Accion Invalida");
+            JOptionPane.showMessageDialog(null, "Accion Invalida, se ha alcanzado el máximo número de ruedas.");
+            ok = false;
         }
     }
     
@@ -221,16 +217,10 @@ public class SlotMachine{
         rectangleBodyParts[3].moveVertical(-rectangleBodyParts[3].getPosition()[1]+handle.getPosition()[1]-100);
         
         rectangleBodyParts[4].moveHorizontal(-rectangleBodyParts[4].getPosition()[0]+handle.getPosition()[0]+10);
-        rectangleBodyParts[4].moveVertical(-rectangleBodyParts[4].getPosition()[1]+handle.getPosition()[1]+100+10);
+        rectangleBodyParts[4].moveVertical(-rectangleBodyParts[4].getPosition()[1]+handle.getPosition()[1]+100+10+1);
         
         rectangleBodyParts[5].moveHorizontal(-rectangleBodyParts[5].getPosition()[0]+rectangleBodyParts[0].getPosition()[0]-25);
         rectangleBodyParts[5].moveVertical(-rectangleBodyParts[5].getPosition()[1] +rectangleBodyParts[0].getPosition()[1]+rectangleBodyParts[0].getHeight());
-    }
-    
-    public void addSomeWheels(int num){
-        for(int i = 0; i < num; i++){
-            addWheel(0);
-        }
     }
     
     /**
@@ -239,7 +229,7 @@ public class SlotMachine{
      */
     
     public void delWheel(int pos){
-        if(ok()){
+        if(wheels.size()>0){
             pos --;
             if(pos <= 0){
                 pos = 0;
@@ -263,14 +253,16 @@ public class SlotMachine{
             rectangleBodyParts[5].changeSize(25, rectangleBodyParts[0].getWidth()+50);
             
             changeBodyPartsPosition();
+            ok = true;
+            if(isVisual){
+                makeVisible();  
+            }
             
-            
-            makeVisible();
         }else{
-            JOptionPane.showMessageDialog(null, "Accion Invalida");
+            JOptionPane.showMessageDialog(null, "Accion Invalida, no puedes tener menos de 3 ruedas.");
+            ok = false;
         }
     }
-    
     
     /**
      * Moves all the wheels to its next symbol.
@@ -279,21 +271,27 @@ public class SlotMachine{
         animation();
         for(Wheel w: wheels){
             w.spin();
+            if(isVisual){
+                w.makeVisible();
+                Canvas.getCanvas().wait(150);
+            }
         }
-        makeVisible();
     }
     
     /**
      * Moves a specific wheel to its next symbol.
      */
     public void spin(int wheel){
-        if(ok()){
-            wheel = Math.min(Math.max(0, wheel-1), wheels.size()-1);
-            animation();
-        }
-        wheels.get(wheel).spin();
+        
+        int a= Math.max(0, wheel-1);
+        int b = Math.min(a, wheels.size()-1);
+        animation();
+        wheels.get(b).spin();
+           
         isJackpot();
-        makeVisible();
+        if(isVisual){
+            wheels.get(b).makeVisible();
+        }
     }
     
     /**
@@ -317,13 +315,14 @@ public class SlotMachine{
      */
     public void placeSymbol(int wheel, String symbol){
         boolean colorExists = false;
-        for(String c: Canvas.colors){
+        for(String c: symbols()){
             if(symbol.equals(c)){
                 colorExists = true;
                 break;
             }
         }
         if(!colorExists){
+            ok = false;
             return;
         }
         boolean canBePlaced = false;
@@ -338,8 +337,13 @@ public class SlotMachine{
         
         if(canBePlaced){
             animation();
-            wheels.get(Math.min(Math.max(0, wheel-1), wheels.size()-1)).setCurrentSymbol(idxSymbol);
-            makeVisible();
+            int idxWheel = Math.min(Math.max(0, wheel-1), wheels.size()-1);
+            wheels.get(idxWheel).setCurrentSymbol(idxSymbol);
+            ok = true;
+            if(isVisual){
+                wheels.get(idxWheel).makeVisible();
+                isJackpot();
+            }
         }
     }
     
@@ -371,11 +375,11 @@ public class SlotMachine{
     public boolean isJackpot(){
         if(distinctSymbols()==1 && symbols().length > 1){
             rectangleBodyParts[0].changeColor("yellow");
-            makeVisible();
-            if(isVisual){
-                JOptionPane.showMessageDialog(null, "Ganaste");    
-            }
-            
+            if(isVisual){ 
+                makeVisible();
+                JOptionPane.showMessageDialog(null, "Ganaste");  
+                winningAnimation();
+            }       
             return true;
         }
         return false;
@@ -393,6 +397,7 @@ public class SlotMachine{
             }
         }
         if(!colorExists){
+            ok = false;
             return;
         }
         for(Figure f: symbolsFigure){
@@ -415,20 +420,22 @@ public class SlotMachine{
         for(Wheel w: wheels){
             w.addSymbol(pos+1, color, symbolsFigure.get(pos).getFigureName());
         }            
-        
+        ok = true;
     }
     /**
      * Deletes a specific symbol
      */
     public void delSymbol(String symbolColor){
-        if(ok()){
+        if(symbolsFigure.size()>0){
             for(int i = 0; i < symbolsFigure.size(); i++){
                 if(symbolsFigure.get(i).getColor().equals(symbolColor)){
                     symbolsFigure.remove(i);
                 }
             }
+            ok = true;
         }else{
             JOptionPane.showMessageDialog(null, "Accion Invalida");
+            ok = false;
         }
     }
 
@@ -446,44 +453,37 @@ public class SlotMachine{
      * @return true if the last action can be performed
      */
     public boolean ok(){
-        while(wheels.size() ==2|| wheels.size()==50){
-            if (symbolsFigure.size()==2){
-                return false;
-            }else{
-                break;
-            }
-        }
-        return true;
+        return ok;
     }
   
     /**
      * Animates the slotMachine
      */
     private void animation(){
-        for(int i = 0; i <49; i++){
-            handle.fastMoveVertical(2,2);
-            rectangleBodyParts[3].fastMoveVertical(2,2);
-            if (i>40){
-                rectangleBodyParts[4].fastMoveVertical(2,2);
+        int speed = 3;
+        for(int i = 0; i <99/speed; i++){
+            if (i>81/speed){
+                rectangleBodyParts[4].fastMoveVertical(speed,speed);
             }
+            rectangleBodyParts[3].fastMoveVertical(speed,speed); 
+            handle.fastMoveVertical(speed,speed);  
         }
 
-        for(int i = 0; i < 36; i++){
-            rectangleBodyParts[4].fastMoveVertical(2,2);
-            handle.fastMoveVertical(2,2);
+        for(int i = 0; i < 72/speed; i++){
+            rectangleBodyParts[4].fastMoveVertical(speed,speed);
+            handle.fastMoveVertical(speed,speed);
         }
         
-        
-        for(int i = 0; i < 36; i++){
-            handle.fastMoveVertical(-2,2);
-            rectangleBodyParts[4].fastMoveVertical(-2,2);
+        for(int i = 0; i < 72/speed; i++){
+            handle.fastMoveVertical(-speed,speed);  
+            rectangleBodyParts[4].fastMoveVertical(-speed,speed);
         }
-        for(int i = 0; i <49; i++){
-            rectangleBodyParts[3].fastMoveVertical(-2,2);
-            handle.fastMoveVertical(-2,2);       
-            if(i<8){
-                rectangleBodyParts[4].fastMoveVertical(-2,2);
+        for(int i = 0; i <99/speed; i++){
+            handle.fastMoveVertical(-speed,speed);     
+            if(i<15/speed){
+                rectangleBodyParts[4].fastMoveVertical(-speed,speed);
             }
+            rectangleBodyParts[3].fastMoveVertical(-speed,speed); 
         }
     }
     
@@ -500,28 +500,112 @@ public class SlotMachine{
     }
     
     
-    //Llenar
+    /**
+     * swap the positions of two wheels given their positions
+     * @param wheel1 Position in ArrayList wheels of wheel number 1
+     * @param wheel2 Position in Arraylist wheels of wheel number 2
+     */
     public void swap(int wheel1, int wheel2){
+        int b = Math.max(wheel1-1, 0);
+        int a = Math.min(b, wheels.size()-1);
+        int d = Math.max(wheel2-1, 0);
+        int c = Math.min(d, wheels.size()-1);
         
+        Wheel wheelOne = wheels.get(a);
+        Wheel wheelTwo = wheels.get(c);
+        if(wheelOne.getIsLocked() == false && wheelTwo.getIsLocked() == false){
+            wheels.set(a, wheelTwo);
+            wheels.set(c, wheelOne);
+            ok = true;
+        }
+        else{
+            ok = false;
+        }
+        if(isVisual){
+            wheelOne.makeVisible(); 
+            wheelTwo.makeVisible();
+        }
     }
     
-    //Llenar
+    /**
+     * lock a wheel, if is negative, get position 0, if is larger than the wheel size, it adopts that size
+     * @param wheel in wheels( position )
+     */
     public void lock(int wheel){
-        
+        int a = Math.max(wheel-1, 0);
+        int b = Math.min(a, wheels.size()-1);
+        Wheel wheelact = wheels.get(b);
+        if(wheelact.getIsLocked() == false){
+            wheelact.setIsLocked(true);
+        }
     }
     
-    //Llenar
+    /**
+     * unlock a wheel, if is negative, get position 0, if is larger than the wheel size, it adopts that size
+     * @param wheel in wheels ( position )
+     */
     public void unlock(int wheel){
-        
+        int a = Math.max(wheel-1, 0);
+        int b = Math.min(a, wheels.size()-1);
+        Wheel wheelact = wheels.get(b);
+        if(wheelact.getIsLocked() == true){
+            wheelact.setIsLocked(false);
+        }        
     }
     
-    //Llenar
+    /**
+     * Moves a specific wheel specific steps. Steps can be negative.
+     * @param wheel is the wheel number.
+     * @param steps are the steps it will move.
+     */
     public void spin(int wheel, int steps){
-        
+        int a = Math.max(wheel-1, 0);
+        int b = Math.min(a, wheels.size()-1);
+        animation();
+        wheels.get(b).spin(steps);
     }
     
-    //Llenar
+    /**
+     * Change the symbol's color that are given
+     * @param setSymbols are the symbols that are given
+     */
     public void spin(String[] setSymbols){
-        
+        if(setSymbols.length == wheels.size()){
+            for(int i = 0; i< wheels.size();i++){
+                boolean colorExists = false;
+                for(String c: symbols()){
+                    if(setSymbols[i].equals(c)){
+                        colorExists = true;
+                        break;
+                    }
+                }
+                if(colorExists){
+                    while(wheels.get(i).colorCurrentSymbol() != setSymbols[i]){
+                        wheels.get(i).spin();
+                    }    
+                }
+            }
+            if(isVisual){
+                makeVisible(); 
+                isJackpot();
+            }
+            ok = true;
+        }
+        else{
+            ok = false;
+        }
+    }
+    
+    /**
+     * If you win you will see this animation, where all the symbols changes.
+     */
+    private void winningAnimation(){
+        for(int i = 0; i < 2*symbolsFigure.size(); i++){
+            for(Wheel w: wheels){
+                w.spin();
+                w.makeVisible();
+            }
+            Canvas.getCanvas().wait(300);
+        }
     }
 }
