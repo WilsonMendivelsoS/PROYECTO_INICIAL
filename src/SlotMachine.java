@@ -549,7 +549,11 @@ public class SlotMachine{
     public void spin(int wheel, int steps){
         int a = Math.max(wheel-1, 0);
         int b = Math.min(a, wheels.size()-1);
-        wheels.get(b).spin(steps);        
+        for(int i = 0; i < Math.abs(steps); i++){
+            animation();
+            wheels.get(b).spin(steps/Math.abs(steps));  
+        }
+     
     }
     
     /**
