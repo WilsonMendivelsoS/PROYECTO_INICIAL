@@ -512,8 +512,11 @@ public class SlotMachine{
         makeInvisible();
         Wheel wheelOne = wheels.get(a);
         Wheel wheelTwo = wheels.get(c);
-        wheels.set(a, wheelTwo);
-        wheels.set(c, wheelOne);         
+        if(wheelOne.getIsLocked()==false && wheelTwo.getIsLocked()==false){
+            wheels.set(a, wheelTwo);
+            wheels.set(c, wheelOne);  
+        }
+        
         if(isVisual){
             makeVisible();  
         }

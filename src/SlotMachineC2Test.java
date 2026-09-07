@@ -483,6 +483,41 @@ public class SlotMachineC2Test{
         assertTrue(slotMachine.isJackpot());
         
     }
+    
+    /**
+     * This is the Second acceptation test.
+     */
+    @Test
+    public void shouldSecondAcceptationTestPass(){
+        //1. User add a wheel
+        slotMachine.addWheel(2);
+        //2. User add a symbol.
+        slotMachine.addSymbol(1,"cyan");
+        
+        //3. Machine has next symbols:
+        String[] setSymbols = {"cyan", "red", "blue", "blue"};
+        slotMachine.spin(setSymbols);
+        
+        //4. Lock the wheels number 3 and 4
+        slotMachine.lock(3);
+        slotMachine.lock(4);
+        
+        //5. Move first wheel to get blue there.
+        slotMachine.spin(1, 3);
+        
+        //6. unLock the wheels number 3 and 4
+        slotMachine.unlock(3);
+        slotMachine.unlock(4);
+        
+        //7. Moves second wheel once to win.
+        slotMachine.spin(2,1);
+        
+        //8. He got jackpot
+        assertTrue(slotMachine.isJackpot());
+        
+    }
+    
+    
     /**
      * Tears down the test fixture.
      *

@@ -1,16 +1,13 @@
 #BlueJ class context
+#Mon Sep 07 00:32:43 COT 2026
 comment0.target=SlotMachineCC2Test
-comment0.text=\r\n\ The\ test\ class\ SlotMachineCC2Test.\r\n\r\n\ @author\ David\ Garzon,\ Wilson\ Mendivelso\r\n\ @version\ 1\r\n
-comment1.params=
-comment1.target=void\ setUp()
-comment1.text=\r\n\ Sets\ up\ the\ test\ fixture.\r\n\r\n\ Called\ before\ every\ test\ case\ method.\r\n
-comment2.params=
-comment2.target=void\ accordingGrMsShouldNotSetSymbolsThatDoesNotExists()
-comment2.text=\r\n\ If\ a\ symbol\ doesn't\ exists,\ wheels\ should\ change\ their\ symbols\ except\ \r\n\ that\ one\ with\ the\ strange\ symbol.\r\n
-comment3.params=
-comment3.target=void\ accordingGrMsShouldNotAddStrangeSymbolsAndWinWithThatSymbol()
-comment3.text=\r\n\ If\ a\ symbol\ doesn't\ exists\ it\ shouldn't\ be\ added\ and\ \r\n\ you\ shouldn't\ win\ if\ you\ try\ to\ set\ the\ machine\ with\ that\ symbol.\r\n
-comment4.params=
-comment4.target=void\ tearDown()
-comment4.text=\r\n\ Tears\ down\ the\ test\ fixture.\r\n\r\n\ Called\ after\ every\ test\ case\ method.\r\n
+comment0.text=\r\n The test class SlotMachineCC2Test.\r\n\r\n @author David Garzon, Wilson Mendivelso\r\n @version 1\r\n
+comment1.target=void setUp()
+comment1.text=\r\n Sets up the test fixture.\r\n\r\n Called before every test case method.\r\n
+comment2.target=void accordingGrMsShouldNotSetSymbolsThatDoesNotExists()
+comment2.text=\r\n If a symbol doesn't exists, wheels should change their symbols except \r\n that one with the strange symbol.\r\n
+comment3.target=void accordingGrMsShouldNotAddStrangeSymbolsAndWinWithThatSymbol()
+comment3.text=\r\n If a symbol doesn't exists it shouldn't be added and \r\n you shouldn't win if you try to set the machine with that symbol.\r\n
+comment4.target=void tearDown()
+comment4.text=\r\n Tears down the test fixture.\r\n\r\n Called after every test case method.\r\n
 numComments=5
