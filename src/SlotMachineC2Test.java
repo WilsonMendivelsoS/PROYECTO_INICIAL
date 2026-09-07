@@ -103,6 +103,28 @@ public class SlotMachineC2Test{
         String[] waited = {"red", "blue", "green"};
         assertEquals(slotMachine.configuration(), waited);
     }
+    /**
+     * If one of the wheels position is too short we should take the first wheel.
+     */
+    @Test
+     public void shouldSwapIfWheelPosIsTooShort(){
+        String[] symbols = {"red", "blue", "green"};
+        slotMachine.spin(symbols);
+        slotMachine.swap(-1000,2);
+        String[] waited = {"blue", "red", "green"};
+        assertEquals(slotMachine.configuration(), waited);
+    }
+    /**
+     * If one of the wheels position is too big we should take the last wheel.
+     */
+    @Test
+    public void shouldSwapIfWheelPosIsTooBig(){
+        String[] symbols = {"red", "blue", "green"};
+        slotMachine.spin(symbols);
+        slotMachine.swap(1000,2);
+        String[] waited = {"red", "green", "blue"};
+        assertEquals(slotMachine.configuration(), waited);
+    }
     
     /**
      * If a wheel is locked, it should not change the symbols.
@@ -116,17 +138,63 @@ public class SlotMachineC2Test{
         String[] waited = {"red", "blue", "green"};
         assertEquals(slotMachine.configuration(), waited);
     }
-
+    /**
+     * If wheel position is too short it should lock the first wheel.
+     */
+    @Test
+    public void shouldLockIfWheelPosIsTooShort(){
+        String[] symbols = {"red", "blue", "green"};
+        slotMachine.spin(symbols);
+        slotMachine.lock(-1000);
+        slotMachine.spin(1);
+        String[] waited = {"red", "blue", "green"};
+        assertEquals(slotMachine.configuration(), waited);
+    }
+    /**
+     * If wheel position is too short it should lock the first wheel.
+     */
+    @Test
+    public void shouldLockIfWheelPosIsTooBig(){
+        String[] symbols = {"red", "blue", "green"};
+        slotMachine.spin(symbols);
+        slotMachine.lock(1000);
+        slotMachine.spin(3);
+        String[] waited = {"red", "blue", "green"};
+        assertEquals(slotMachine.configuration(), waited);
+    }
+    
     /**
      * If a wheel is unlocked, it can change its symbols.
      */
     @Test
     public void shouldChangeWheelsSymbolsIfItIsUnlocked(){
-        String afterLockSymbol = slotMachine.configuration()[0];
+        String beforeLockSymbol = slotMachine.configuration()[0];
         slotMachine.lock(1);
         slotMachine.unlock(1);
         slotMachine.spin(1);
-        assertTrue(!slotMachine.configuration()[0].equals(afterLockSymbol));
+        assertTrue(!slotMachine.configuration()[0].equals(beforeLockSymbol));
+    }
+    /**
+     * If wheel position is too short it should unlock the first wheel.
+     */
+    @Test
+    public void shouldUnlockIfWheelPosIsTooShort(){
+        String beforeLockSymbol = slotMachine.configuration()[0];
+        slotMachine.lock(1);
+        slotMachine.unlock(-1000);
+        slotMachine.spin(1);
+        assertTrue(!slotMachine.configuration()[0].equals(beforeLockSymbol));
+    }
+    /**
+     * If wheel position is too short it should unlock the first wheel.
+     */
+    @Test
+    public void shouldUnlockIfWheelPosIsTooBig(){
+        String beforeLockSymbol = slotMachine.configuration()[2];
+        slotMachine.lock(3);
+        slotMachine.unlock(3000);
+        slotMachine.spin(3);
+        assertTrue(!slotMachine.configuration()[2].equals(beforeLockSymbol));
     }
     
     /**
@@ -230,8 +298,10 @@ public class SlotMachineC2Test{
      * If we spin a specific wheel in a position bigger than the number of wheels, we should spin the last one.
      */
     @Test
-    public void shouldSpinLastWheelIfPosTooBig(){
-        String[] before = slotMachine.configuration();
+    public void shouldSpinLastWheelIfPosTooBig() {
+        String[] before = {"red", "blue", "green"};
+        slotMachine.spin(before);
+
         slotMachine.spin(1000);
         String[] after = slotMachine.configuration();
         assertTrue(!before[2].equals(after[2]) && before[1].equals(after[1]) && before[0].equals(after[0]));
@@ -299,7 +369,7 @@ public class SlotMachineC2Test{
         slotMachine.addSymbol(1, "black");
         slotMachine.addSymbol(3, "pink");
         slotMachine.placeSymbol(1, "pink");
-        slotMachine.spin(-1000,2);
+        slotMachine.spin(-1000,-2);
         assertEquals("black", slotMachine.configuration()[0]);
     }
     

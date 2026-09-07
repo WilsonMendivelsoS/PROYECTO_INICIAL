@@ -227,12 +227,6 @@ public class SlotMachine{
         rectangleBodyParts[5].moveVertical(-rectangleBodyParts[5].getPosition()[1] +rectangleBodyParts[0].getPosition()[1]+rectangleBodyParts[0].getHeight());
     }
     
-    public void addSomeWheels(int num){
-        for(int i = 0; i < num; i++){
-            addWheel(0);
-        }
-    }
-    
     /**
      * Deletes a specific wheel
      * @param pos is the position of thw wheel that we wanna delete
@@ -287,10 +281,12 @@ public class SlotMachine{
      */
     public void spin(int wheel){
         if(ok()){
-            wheel = Math.min(Math.max(0, wheel-1), wheels.size()-1);
             animation();
-        }
-        wheels.get(wheel).spin();
+            int a= Math.max(0, wheel-1);
+            int b = Math.min(a, wheels.size()-1);
+            animation();
+            wheels.get(b).spin();
+        }    
         isJackpot();
         makeVisible();
     }
@@ -316,7 +312,7 @@ public class SlotMachine{
      */
     public void placeSymbol(int wheel, String symbol){
         boolean colorExists = false;
-        for(String c: Canvas.colors){
+        for(String c: symbols()){
             if(symbol.equals(c)){
                 colorExists = true;
                 break;
@@ -337,7 +333,8 @@ public class SlotMachine{
         
         if(canBePlaced){
             animation();
-            wheels.get(Math.min(Math.max(0, wheel-1), wheels.size()-1)).setCurrentSymbol(idxSymbol);
+            int idxWheel = Math.min(Math.max(0, wheel-1), wheels.size()-1);
+            wheels.get(idxWheel).setCurrentSymbol(idxSymbol);
             makeVisible();
         }
     }
@@ -505,18 +502,16 @@ public class SlotMachine{
      * @param wheel2 Position in Arraylist wheels of wheel number 2
      */
     public void swap(int wheel1, int wheel2){
-        int b = Math.max(wheel1, 0);
+        int b = Math.max(wheel1-1, 0);
         int a = Math.min(b, wheels.size()-1);
-        int d = Math.max(wheel2, 0);
+        int d = Math.max(wheel2-1, 0);
         int c = Math.min(d, wheels.size()-1);
         
         makeInvisible();
         Wheel wheelOne = wheels.get(a);
         Wheel wheelTwo = wheels.get(c);
-        int indexOne = wheels.indexOf(wheelOne);
-        int indexTwo = wheels.indexOf(wheelTwo);
-        wheels.set(indexOne, wheelTwo);
-        wheels.set(indexTwo, wheelOne);         
+        wheels.set(a, wheelTwo);
+        wheels.set(c, wheelOne);         
         makeVisible(); 
     }
     
@@ -525,9 +520,9 @@ public class SlotMachine{
      * @param wheel in wheels( position )
      */
     public void lock(int wheel){
-        int a = Math.max(wheel, 0);
+        int a = Math.max(wheel-1, 0);
         int b = Math.min(a, wheels.size()-1);
-        Wheel wheelact = wheels.get(a);
+        Wheel wheelact = wheels.get(b);
         if(wheelact.getIsLocked() == false){
             wheelact.setIsLocked(true);
         }
@@ -538,25 +533,47 @@ public class SlotMachine{
      * @param wheel in wheels ( position )
      */
     public void unlock(int wheel){
-        int a = Math.max(wheel, 0);
+        int a = Math.max(wheel-1, 0);
         int b = Math.min(a, wheels.size()-1);
-        Wheel wheelact = wheels.get(a);
+        Wheel wheelact = wheels.get(b);
         if(wheelact.getIsLocked() == true){
             wheelact.setIsLocked(false);
         }        
     }
     
-    //Llenar
+    /**
+     * Moves a specific wheel specific steps. Steps can be negative.
+     * @param wheel is the wheel number.
+     * @param steps are the steps it will move.
+     */
     public void spin(int wheel, int steps){
-        int a = Math.max(wheel, 0);
+        int a = Math.max(wheel-1, 0);
         int b = Math.min(a, wheels.size()-1);
-        Wheel wheelact = wheels.get(a);       
-        wheelact.spin(steps);    
-        
+        wheels.get(b).spin(steps);        
     }
     
-    //Llenar
+    /**
+     * Change the symbol's color that are given
+     * @param setSymbols are the symbols that are given
+     */
     public void spin(String[] setSymbols){
-        
+        if(setSymbols.length == wheels.size()){
+            makeInvisible();
+            for(int i = 0; i< wheels.size();i++){
+                boolean colorExists = false;
+                for(String c: symbols()){
+                    if(setSymbols[i].equals(c)){
+                        colorExists = true;
+                        break;
+                    }
+                }
+                if(colorExists){
+                    while(wheels.get(i).colorCurrentSymbol() != setSymbols[i]){
+                        wheels.get(i).spin();
+                    }    
+                }
+            }
+            makeVisible();
+        }
     }
 }
