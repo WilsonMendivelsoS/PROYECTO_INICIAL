@@ -555,8 +555,34 @@ public class SlotMachine{
         
     }
     
-    //Llenar
+    /**
+     * change the symbol's color that are given
+     * @param setSymbols that are given
+     */
     public void spin(String[] setSymbols){
-        
+        if(setSymbols.length == wheels.size()){
+            int cont=0;
+            String[] symbAct = symbols();
+            for(int i = 0; i<symbAct.length; i++){
+                for(int j=0; j<setSymbols.length; j++){
+                    if(symbAct[i]==setSymbols[j]){
+                        cont++;
+                        break;
+                    }
+                }
+                
+            }
+            for(int i=0; i<cont; i++){
+                int temp=0;
+                makeInvisible();
+                for(Wheel w : wheels){
+                    while(w.colorCurrentSymbol() != setSymbols[temp]){
+                        w.spin();
+                    }
+                    temp++;
+                }
+                makeVisible();
+            }
+        }
     }
 }
