@@ -9,7 +9,7 @@ import org.junit.Test;
  * @author David Garzon, Wilson Mendivelso
  * @version 1
  */
-public class SlotMachineCC2TestTest
+public class SlotMachineCC2Test
 {
     
     /**
@@ -22,7 +22,8 @@ public class SlotMachineCC2TestTest
     
     }
     /**
-     * 
+     * If a symbol doesn't exists, wheels should change their symbols except 
+     * that one with the strange symbol.
      */
     @Test
     public void accordingGrMsShouldNotSetSymbolsThatDoesNotExists(){
@@ -47,7 +48,8 @@ public class SlotMachineCC2TestTest
         assertEquals(waited, afterSpin);
     }
     /**
-     * 
+     * If a symbol doesn't exists it shouldn't be added and 
+     * you shouldn't win if you try to set the machine with that symbol.
      */
     @Test
     public void accordingGrMsShouldNotAddStrangeSymbolsAndWinWithThatSymbol(){
