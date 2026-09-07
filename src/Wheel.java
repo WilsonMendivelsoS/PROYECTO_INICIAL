@@ -117,17 +117,38 @@ public class Wheel{
             return;
         }
     }
-    
+
+    /**
+     * Moves n steps the symbol. It can be negative.
+     * @steps are the steps, if it is negative it will go back.
+     */
     public void spin(int steps){
         if(isLocked == false){
             if(steps>=0){
                 for( int i = 0; steps>i ; i++){
                     spin();
-                    symbols.get(currentSymbol).makeVisible();
+                    if(isVisible){
+                        makeVisible(); 
+                    }                    
                 }
             }
-        }
-        
+            if(steps<0){
+                if(isLocked == false){
+                    for(int i = 0; i < Math.abs(steps); i++){
+                        symbols.get(currentSymbol).makeInvisible();
+                        if(currentSymbol == 0){
+                            currentSymbol = symbols.size()-1;
+                        }
+                        else{
+                            currentSymbol--;
+                        }
+                        if(isVisible){
+                            makeVisible();   
+                        }
+                    }
+                }
+            }
+        } 
     }
     
     /**
