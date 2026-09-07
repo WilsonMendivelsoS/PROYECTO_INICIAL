@@ -21,14 +21,6 @@ public class SlotMachine{
      * Creates a slotMachine with a initial composition.
      */
     public SlotMachine(){
-        this(true);
-    }
-
-    /**
-     * Creates a slotMachine with optional visualization
-     * @param visible true to show the machine, false is for tests
-     */
-    public SlotMachine(boolean isVisual){
         this.isVisual = isVisual;
         wheels = new ArrayList<>();
         rectangleBodyParts = new Rectangle[6];
@@ -46,10 +38,9 @@ public class SlotMachine{
             int temp1=randomNumGenerator(0, wheels.size()-1);
             spin(temp1);
         }
-        makeVisible();
     }
-    
-    /**
+
+        /**
      * Creates the Machine where the Wheels will be putted.
      */
     private void prepareMachine(){
@@ -120,7 +111,7 @@ public class SlotMachine{
      */
     public void makeVisible(){
         if(!isVisual){
-            return;
+            isVisual = true;
         }
         for(Rectangle r: rectangleBodyParts){
             if(!r.isVisible()){
@@ -198,7 +189,9 @@ public class SlotMachine{
             
             changeBodyPartsPosition();
         
-            makeVisible();
+            if(isVisual){
+                makeVisible();  
+            }   
         }else{
             JOptionPane.showMessageDialog(null, "Accion Invalida");
         }
@@ -258,8 +251,10 @@ public class SlotMachine{
             
             changeBodyPartsPosition();
             
+            if(isVisual){
+                makeVisible();  
+            }
             
-            makeVisible();
         }else{
             JOptionPane.showMessageDialog(null, "Accion Invalida");
         }
@@ -273,7 +268,9 @@ public class SlotMachine{
         for(Wheel w: wheels){
             w.spin();
         }
-        makeVisible();
+        if(isVisual){
+            makeVisible();  
+        }
     }
     
     /**
@@ -281,14 +278,15 @@ public class SlotMachine{
      */
     public void spin(int wheel){
         if(ok()){
-            animation();
             int a= Math.max(0, wheel-1);
             int b = Math.min(a, wheels.size()-1);
             animation();
             wheels.get(b).spin();
         }    
         isJackpot();
-        makeVisible();
+        if(isVisual){
+            makeVisible();  
+        }
     }
     
     /**
@@ -335,7 +333,9 @@ public class SlotMachine{
             animation();
             int idxWheel = Math.min(Math.max(0, wheel-1), wheels.size()-1);
             wheels.get(idxWheel).setCurrentSymbol(idxSymbol);
-            makeVisible();
+            if(isVisual){
+                makeVisible();  
+            }
         }
     }
     
@@ -367,7 +367,9 @@ public class SlotMachine{
     public boolean isJackpot(){
         if(distinctSymbols()==1 && symbols().length > 1){
             rectangleBodyParts[0].changeColor("yellow");
-            makeVisible();
+            if(isVisual){
+                makeVisible();  
+            }       
             if(isVisual){
                 JOptionPane.showMessageDialog(null, "Ganaste");    
             }
@@ -512,7 +514,9 @@ public class SlotMachine{
         Wheel wheelTwo = wheels.get(c);
         wheels.set(a, wheelTwo);
         wheels.set(c, wheelOne);         
-        makeVisible(); 
+        if(isVisual){
+            makeVisible();  
+        }
     }
     
     /**
@@ -577,7 +581,9 @@ public class SlotMachine{
                     }    
                 }
             }
-            makeVisible();
+            if(isVisual){
+                makeVisible();  
+            }
 
         }
     }

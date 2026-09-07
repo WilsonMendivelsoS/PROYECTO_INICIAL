@@ -21,6 +21,50 @@ public class SlotMachineCC2TestTest
     public void setUp(){
     
     }
+    /**
+     * 
+     */
+    @Test
+    public void accordingGrMsShouldNotSetSymbolsThatDoesNotExists(){
+        SlotMachine slotMachine = new SlotMachine();
+        slotMachine.addSymbol(1,"red");
+        slotMachine.addSymbol(2,"blue");
+        slotMachine.addSymbol(3,"green");
+        while(slotMachine.configuration().length < 3){
+             slotMachine.addWheel(1);   
+        }
+
+        
+        String[] begin = {"red", "blue", "green"};
+        slotMachine.spin(begin);
+        
+        String[] strangeSymbols = {"red", "null", "blue"};
+        slotMachine.spin(strangeSymbols);
+        
+        String[] waited = {"red", "blue", "blue"};
+        String[] afterSpin = slotMachine.configuration();
+        
+        assertEquals(waited, afterSpin);
+    }
+    /**
+     * 
+     */
+    @Test
+    public void accordingGrMsShouldNotAddStrangeSymbolsAndWinWithThatSymbol(){
+        SlotMachine slotMachine = new SlotMachine();
+        slotMachine.addSymbol(1,"red");
+        slotMachine.addSymbol(2,"blue");
+        slotMachine.addSymbol(3,"green");
+        while(slotMachine.configuration().length < 3){
+             slotMachine.addWheel(1);   
+        }
+
+        slotMachine.addSymbol(4, "strange");
+        
+        String[] strangeCombination = {"strange", "strange", "strange"};
+        
+        assertFalse(slotMachine.isJackpot());
+    }
     
     /**
      * Tears down the test fixture.

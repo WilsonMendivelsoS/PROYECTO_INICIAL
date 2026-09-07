@@ -20,7 +20,7 @@ public class SlotMachineC2Test{
     @Before
     public void setUp(){
         
-        slotMachine = new SlotMachine(false);
+        slotMachine = new SlotMachine();
 
     }
     /**
@@ -447,6 +447,42 @@ public class SlotMachineC2Test{
         assertFalse(slotMachine.isJackpot());
     }
     
+    
+    
+    
+    /**
+     * This is the first acceptation test.
+     */
+    @Test
+    public void shouldFirstAcceptationTestPass(){
+        //1. User adds three wheels but tryes to break the machine putting strange positions.
+        slotMachine.addWheel(-1000);
+        slotMachine.addWheel(1000);
+        slotMachine.addWheel(0);
+        //2. User add three symbols.
+        slotMachine.addSymbol(1,"orange");
+        slotMachine.addSymbol(1,"cyan");
+        
+        //3. Machine has next symbols:
+        String[] setSymbols = {"green", "red", "blue", "orange", "orange", "cyan"};
+        slotMachine.spin(setSymbols);
+        
+        //4. Moves first wheel 4 steps to get orange there
+        slotMachine.spin(1,4);
+        
+        //5. Moves last wheel to get orange there.
+        slotMachine.spin(6);
+        
+        //6. Deletes second wheel to win easier.
+        slotMachine.delWheel(2);
+        
+        //7. Moves second wheel two times to win.
+        slotMachine.spin(2,2);
+        
+        //8. He got jackpot
+        assertTrue(slotMachine.isJackpot());
+        
+    }
     /**
      * Tears down the test fixture.
      *
