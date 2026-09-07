@@ -454,7 +454,7 @@ public class SlotMachineC2Test{
      * This is the first acceptation test.
      */
     @Test
-    public void shouldFirstAcceptationTestPass(){
+    public void shouldPassFirstAcceptationTest(){
         //1. User adds three wheels but tryes to break the machine putting strange positions.
         slotMachine.addWheel(-1000);
         slotMachine.addWheel(1000);
