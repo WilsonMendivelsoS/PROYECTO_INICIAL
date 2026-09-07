@@ -1,4 +1,8 @@
 #BlueJ class context
+<<<<<<< HEAD
+=======
+#Sun Sep 06 20:11:41 COT 2026
+>>>>>>> origin/spin
 comment0.target=Wheel
 comment0.text=\r\n\ Represents\ a\ wheel\ that\ can\ have\ a\ lot\ of\ symbols.\r\n\ \r\n\ @author\ David\ Garzon,\ Wilson\ Mendivelso\r\n\ @version\ 1\r\n
 comment1.params=

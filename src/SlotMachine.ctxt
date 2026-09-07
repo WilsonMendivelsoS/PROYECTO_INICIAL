@@ -1,4 +1,8 @@
 #BlueJ class context
+<<<<<<< HEAD
+=======
+#Sun Sep 06 20:27:59 COT 2026
+>>>>>>> origin/spin
 comment0.target=SlotMachine
 comment0.text=\r\n\ Represents\ a\ slotMachine,\ it\ can\ add\ wheels\ and\ spin\ them,\ if\ you\ wanna\ win,\ you\ will\ need\ a\ jackpot.<br>\r\n\ <b>(symbolsQuantity,\ wheelsQuantity,\ lever,\ rectangleBodyParts,\ symbols,\ wheels)</b><br>\r\n\ <b>Inv\:\ symbols</b>\ >\ 0\ and\ <b>wheels</b>\ >\ 0\ \r\n\ @author\ David\ Garzon,\ Wilson\ Mendivelso\r\n\ @version\ 1\r\n
 comment1.params=
@@ -56,6 +60,7 @@ comment25.params=wheel
 comment25.target=void\ lock(int)
 comment25.text=\r\n\ lock\ a\ wheel,\ if\ is\ negative,\ get\ position\ 0,\ if\ is\ larger\ than\ the\ wheel\ size,\ it\ adopts\ that\ size\r\n\ @param\ wheel\ in\ wheels(\ position\ )\r\n
 comment26.params=wheel
+<<<<<<< HEAD
 comment26.target=void\ unlock(int)
 comment26.text=\r\n\ unlock\ a\ wheel,\ if\ is\ negative,\ get\ position\ 0,\ if\ is\ larger\ than\ the\ wheel\ size,\ it\ adopts\ that\ size\r\n\ @param\ wheel\ in\ wheels\ (\ position\ )\r\n
 comment27.params=wheel\ steps
@@ -82,6 +87,30 @@ comment7.text=\r\n\ Makes\ invisible\ the\ machine,\ its\ wheels\ and\ symbols.\
 comment8.params=
 comment8.target=java.lang.String[]\ symbols()
 comment8.text=\r\n\ It\ returns\ all\ the\ symbol's\ colors.\r\n\ @return\ Symbol's\ colors\ in\ order\ starting\ by\ one.\r\n
+=======
+comment26.target=void lock(int)
+comment26.text=\r\n lock a wheel, if is negative, get position 0, if is larger than the wheel size, it adopts that size\r\n @param wheel in wheels( position )\r\n
+comment27.params=wheel
+comment27.target=void unlock(int)
+comment27.text=\r\n unlock a wheel, if is negative, get position 0, if is larger than the wheel size, it adopts that size\r\n @param wheel in wheels ( position )\r\n
+comment28.params=wheel steps
+comment28.target=void spin(int, int)
+comment29.params=setSymbols
+comment29.target=void spin(java.lang.String[])
+comment29.text=\r\n change the symbol's color that are given\r\n @param setSymbols that are given\r\n
+comment3.target=void prepareMachine()
+comment3.text=\r\n Creates the Machine where the Wheels will be putted.\r\n
+comment4.target=void prepareSymbols()
+comment4.text=\r\n Creates all the starter symbols that the wheels will use.\r\n
+comment5.target=void prepareWheels()
+comment5.text=\r\n Creates started wheels that will use the created symbols.\r\n
+comment6.target=void makeVisible()
+comment6.text=\r\n Makes visible the machine, its wheels and symbols.\r\n
+comment7.target=void makeInvisible()
+comment7.text=\r\n Makes invisible the machine, its wheels and symbols.\r\n
+comment8.target=java.lang.String[] symbols()
+comment8.text=\r\n It returns all the symbol's colors.\r\n @return Symbol's colors in order starting by one.\r\n
+>>>>>>> origin/spin
 comment9.params=pos
 comment9.target=void\ addWheel(int)
 comment9.text=\r\n\ Add\ a\ new\ wheel\ in\ a\ specific\ position.\r\n\ @param\ pos\ is\ the\ position\ of\ the\ new\ wheel.\r\n
