@@ -13,16 +13,8 @@ public class Symbol
     /**
      * Create a new symbol with a specific color and an specific shape.
      */
-    public Symbol(String figure, String color){   
-        if(figure == "RECTANGLE"){
-            body = new Rectangle(color);
-        }
-        else if(figure == "TRIANGLE"){
-            body = new Triangle(color);
-        }
-        else{
-            body = new Circle(color);
-        }
+    public Symbol(Figure figure){   
+        body = figure.copy();
     }
     
     /**
@@ -58,10 +50,18 @@ public class Symbol
     }
     
     /**
-     * Get symbol's body name.
-     * @return body's figure.
+     * Get symbol's figure name.
+     * @return figure's name.
      */
-    public String getBodyFigureName(){
-        return body.getFigureName();
+    public String getBodyFiguresName(){
+        if(body instanceof Triangle){
+            return "TRIANGLE";
+        }
+        else if(body instanceof Circle){
+            return "CIRCLE";
+        }
+        else{
+            return "RECTANGLE";
+        }
     }
 }

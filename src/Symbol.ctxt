@@ -1,8 +1,8 @@
 #BlueJ class context
 comment0.target=Symbol
 comment0.text=\r\n\ Represents\ a\ symbol\ with\ a\ specefic\ shape\ and\ color.<br>\r\n\ <b>circleBody,\ triangleBody,\ rectangleBody</b><br>\r\n\ <b>Inv\:\ circleBody\ \!\=\ null</b>\ or\ <b>\ triangleBody\ \!\=\ null</b>\ or\ <b>\ rectangleBody\ \!\=\ null\ </b>\r\n\ @author\ David\ Garzon,\ Wilson\ Mendivelso\r\n\ @version\ 0.1\r\n
-comment1.params=figure\ color
-comment1.target=Symbol(java.lang.String,\ java.lang.String)
+comment1.params=figure
+comment1.target=Symbol(Figure)
 comment1.text=\r\n\ Create\ a\ new\ symbol\ with\ a\ specific\ color\ and\ an\ specific\ shape.\r\n
 comment2.params=
 comment2.target=void\ makeVisible()
@@ -17,6 +17,6 @@ comment5.params=
 comment5.target=java.lang.String\ getColor()
 comment5.text=\r\n\ Get\ symbol's\ color.\r\n\ @return\ the\ color's\ name.\r\n
 comment6.params=
-comment6.target=java.lang.String\ getBodyFigureName()
-comment6.text=\r\n\ Get\ symbol's\ body\ name.\r\n\ @return\ body's\ figure.\r\n
+comment6.target=java.lang.String\ getBodyFiguresName()
+comment6.text=\r\n\ Get\ symbol's\ figure\ name.\r\n\ @return\ figure's\ name.\r\n
 numComments=7

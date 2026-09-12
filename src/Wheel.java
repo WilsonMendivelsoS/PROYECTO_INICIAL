@@ -22,6 +22,9 @@ public class Wheel{
         rectangleBodyPart = new Rectangle("white");
         rectangleBodyPart.changeSize(100,50);
         isLocked = false;
+        for(Figure f: SlotMachine.getSymbols()){
+            symbols.add(new Symbol(f)); 
+        }
     }
     
     /**
@@ -32,15 +35,13 @@ public class Wheel{
             rectangleBodyPart.makeVisible();
         }
         int moverExtra = 0;
-        if(symbols.get(currentSymbol).getBodyFigureName().equals("TRIANGLE")){
+        if(symbols.get(currentSymbol).getBodyFiguresName().equals("TRIANGLE")){
             moverExtra = 15;
         }
-        else if(symbols.get(currentSymbol).getBodyFigureName().equals("CIRCLE")){
+        else if(symbols.get(currentSymbol).getBodyFiguresName().equals("CIRCLE")){
             moverExtra = -2;
         }
         symbols.get(currentSymbol).place(rectangleBodyPart.getPosition()[0]+10 + moverExtra, rectangleBodyPart.getPosition()[1] + 7*rectangleBodyPart.getHeight()/20);
-        
-        
         symbols.get(currentSymbol).makeVisible();
         isVisible = true;
     }
@@ -76,8 +77,8 @@ public class Wheel{
     /**
      * Adds a symbol to the wheel in a specific position.
      */
-    public void addSymbol(int pos, String color, String figure){
-        symbols.add(Math.min(Math.max(0, pos-1), symbols.size()), new Symbol(figure, color));
+    public void addSymbol(int pos, Figure symbol){
+        symbols.add(Math.min(Math.max(0, pos-1),symbols.size()), new Symbol(symbol));
         if(pos<= currentSymbol+1){
             currentSymbol =  (currentSymbol+1)%symbols.size(); 
         }
@@ -134,21 +135,19 @@ public class Wheel{
                 }
             }
             if(steps<0){
-                if(isLocked == false){
-                    for(int i = 0; i < Math.abs(steps); i++){
-                        symbols.get(currentSymbol).makeInvisible();
-                        if(currentSymbol == 0){
-                            currentSymbol = symbols.size()-1;
-                        }
-                        else{
-                            currentSymbol--;
-                        }
-                        if(isVisible){
-                            makeVisible();
-                            Canvas.getCanvas().wait(300);
-                        }
+                for(int i = 0; i < Math.abs(steps); i++){
+                    symbols.get(currentSymbol).makeInvisible();
+                    if(currentSymbol == 0){
+                        currentSymbol = symbols.size()-1;
                     }
-                }
+                    else{
+                        currentSymbol--;
+                    }
+                    if(isVisible){
+                        makeVisible();
+                        Canvas.getCanvas().wait(300);
+                    }
+                } 
             }
         } 
     }

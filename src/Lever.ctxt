@@ -1,0 +1,19 @@
+#BlueJ class context
+comment0.target=Lever
+comment0.text=\r\n\ Represents\ a\ Lever.\r\n\ \r\n\ @author\ David\ Garzon,\ Wilson\ Mendivelso\r\n\ @version\ 2\r\n
+comment1.params=
+comment1.target=Lever()
+comment1.text=\r\n\ Creates\ a\ new\ Lever\r\n
+comment2.params=
+comment2.target=void\ prepareBody()
+comment3.params=machineWidth\ machineHeight
+comment3.target=void\ changeBodyPartsPosition(int,\ int)
+comment3.text=\r\n\ Changes\ bodyParts\ position\ adapting\ all\ the\ body\ parts\ to\ the\ slotMachine\ window\r\n\ @param\ machineWidth\ is\ the\ machine's\ width\r\n\ @param\ machineHeight\ is\ the\ machine's\ height.\r\n
+comment4.params=
+comment4.target=void\ makeVisible()
+comment5.params=
+comment5.target=void\ makeInvisible()
+comment6.params=
+comment6.target=void\ animation()
+comment6.text=\r\n\ Animates\ the\ lever\r\n
+numComments=7

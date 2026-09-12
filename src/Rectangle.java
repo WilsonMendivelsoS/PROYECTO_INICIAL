@@ -117,13 +117,13 @@ public class Rectangle extends Figure{
         }
     }
     
-    
     /**
-     * Gives the Figure's name.
+     * Returns rectangle's copy
+     * @return rectangle's copy
      */
     @Override
-    public String getFigureName(){
-        return "RECTANGLE";
+    public Rectangle copy(){
+        return new Rectangle(this.color);
     }
 }
 

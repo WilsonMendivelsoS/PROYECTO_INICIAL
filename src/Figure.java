@@ -6,7 +6,7 @@ import java.awt.*;
  * @author David Garzon, Wilson Mendivelso
  * @version 1
  */
-public class Figure
+public abstract class Figure
 {
     protected int xPosition;
     protected int yPosition;
@@ -24,9 +24,7 @@ public class Figure
     /*
      * Draws the figure on screen
      */
-    protected void draw(){
-        
-    }
+    protected abstract void draw();
     
     /*
      * Erase the figure on screen.
@@ -41,9 +39,7 @@ public class Figure
     /*
      * Draws quickly the figure
      */
-    protected void fastDraw(){
-        
-    }
+    protected abstract void fastDraw();
     
     /**
      * Slowly move the figure vertically.
@@ -133,12 +129,11 @@ public class Figure
     }
     
     /**
-     * Gives the Figure's name.
-     * @return figure's name
+     * Copys the figure.
+     * @return figure's copy.
      */
-    public String getFigureName(){
-        return "";
-    }
+    public abstract Figure copy();
+    
     
     /**
      * Returns if figure is visible.

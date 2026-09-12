@@ -97,11 +97,12 @@ public class Circle extends Figure{
     }
 
     /**
-     * Gives the Figure's name.
+     * Returns circle's copy
+     * @return cicle's copy
      */
     @Override
-    public String getFigureName(){
-        return "CIRCLE";
+    public Circle copy(){
+        return new Circle(this.color);
     }
     
 }

@@ -94,12 +94,25 @@ public class Triangle extends Figure{
         }
     }
 
-    
-    /**
-     * Gives the Figure's name.
+    /*
+     * Draw the triangle very fast with current specifications on screen.
      */
     @Override
-    public String getFigureName(){
-        return "TRIANGLE";
+    protected void fastDraw(){
+        if(isVisible) {
+            Canvas canvas = Canvas.getCanvas();
+            int[] xpoints = { xPosition, xPosition + (width/2), xPosition - (width/2) };
+            int[] ypoints = { yPosition, yPosition + height, yPosition + height };
+            canvas.draw(this, color, new Polygon(xpoints, ypoints, 3));
+        }
     }
+    /**
+     * Returns triangle's copy
+     * @return triangle's copy
+     */
+    @Override
+    public Triangle copy(){
+        return new Triangle(this.color);
+    }
+    
 }
