@@ -145,10 +145,8 @@ public class SlotMachine{
     public void addWheel(int pos){
         if(wheels.size()!= 50){
             pos = Math.min(Math.max(0, pos-1), wheels.size());
-
-            wheels.add(pos, new Wheel());
-
             makeInvisible();
+            wheels.add(pos, new Wheel());
             wheels.get(pos).randomizeSymbol();
             
             // If wheels are 13 or 26 or 39, slotMachine will be higher.  
@@ -221,7 +219,9 @@ public class SlotMachine{
      * Moves all the wheels to its next symbol.
      */
     public void spin(){ //Sean 0 simbolos o 0 ruedas
-        lever.animation();
+        if(isVisual){
+            lever.animation();  
+        }
         for(Wheel w: wheels){
             w.spin();
             if(isVisual){
@@ -239,11 +239,9 @@ public class SlotMachine{
         
         int a= Math.max(0, wheel-1);
         int b = Math.min(a, wheels.size()-1);
-        lever.animation();
         wheels.get(b).spin();
-           
-    
         if(isVisual){
+            lever.animation();
             wheels.get(b).makeVisible();
             isJackpot();
         }
@@ -270,24 +268,19 @@ public class SlotMachine{
      */
     public void placeSymbol(int wheel, String symbol){
         //Looks if symbol exists
-        if(!colorExists(symbol)){
-            ok = false;
-            return;
-        }
-        int idxSymbol = 0;
-        for(Figure f: symbols){
-            if(symbol.equals(f.getColor())){
-                idxSymbol = symbols.indexOf(f);
-                break;
+        if(colorExists(symbol)){
+            int idxSymbol = getIdxSymbol(symbol);
+            int idxWheel = Math.min(Math.max(0, wheel-1), wheels.size()-1);
+            wheels.get(idxWheel).setCurrentSymbol(idxSymbol);
+            ok = true;
+            if(isVisual){
+                lever.animation();
+                wheels.get(idxWheel).makeVisible();
+                isJackpot();
             }
         }
-        lever.animation();
-        int idxWheel = Math.min(Math.max(0, wheel-1), wheels.size()-1);
-        wheels.get(idxWheel).setCurrentSymbol(idxSymbol);
-        ok = true;
-        if(isVisual){
-            wheels.get(idxWheel).makeVisible();
-            isJackpot();
+        else{
+            ok = false;
         }
     }
     
@@ -343,16 +336,30 @@ public class SlotMachine{
      * Adds a symbol in a specific position, this symbol is also added to all the wheels
      */
     public void addSymbol(int pos, String color){
-        if(!colorExists(color)){
-            ok = false;
-            return;
-        }
-        for(Figure f: symbols){
-            if(f.getColor().equals(color)){
-                return;
+        if(colorExists(color)){
+            for(Figure f: symbols){
+                //Color already exists in the symbols
+                if(f.getColor().equals(color)){
+                    return;
+                }
             }
+            pos = Math.min(Math.max(0, pos-1), symbols.size());
+            createSymbol(pos, color);
+            
+            for(Wheel w: wheels){
+                w.addSymbol(pos+1, symbols.get(pos));
+            }            
+            ok = true;
         }
-        pos = Math.min(Math.max(0, pos-1), symbols.size());
+        else{
+            ok = false;
+        }
+    }
+    /**
+     * Creates a new symbol
+     * @param pos is the position of the symbol.
+     */
+    private void createSymbol(int pos, String color){
         int ran = randomNumGenerator(0,3);
         if(ran == 0){
             symbols.add(pos, new Triangle(color));
@@ -363,29 +370,37 @@ public class SlotMachine{
         else if(ran == 2){
             symbols.add(pos,new Circle(color));
         }
-        
-        for(Wheel w: wheels){
-            w.addSymbol(pos+1, symbols.get(pos));
-        }            
-        ok = true;
     }
     /**
      * Deletes a specific symbol
      */
-    public void delSymbol(String symbolColor){
-        if(symbols.size()>0){
-            for(int i = 0; i < symbols.size(); i++){
-                if(symbols.get(i).getColor().equals(symbolColor)){
-                    symbols.remove(i);
-                }
+    public void delSymbol(String symbol){ //Qué pasa si queda en 0 simbolos, revisar eso
+        if(symbols.size()>0 && colorExists(symbol)){
+            int idxSymbol = getIdxSymbol(symbol);
+            symbols.remove(idxSymbol);
+            for(Wheel w: wheels){
+                w.delSymbol(symbol);
             }
-            ok = true;
+            ok = true; 
         }else{
-            JOptionPane.showMessageDialog(null, "Accion Invalida");
+            JOptionPane.showMessageDialog(null, "Accion invalida.");
             ok = false;
         }
     }
-
+    
+    /**
+     * Returns the idx color's number for its color.
+     * @param color is the symbol's color.
+     */
+    private int getIdxSymbol(String color){
+        for(int i = 0; i < symbols.size(); i++){
+            if(symbols.get(i).getColor().equals(color)){
+                return i;
+            }
+        }
+        return -1;
+    }
+    
     /**
      * The program ends with a message and make invisible all wheels and symbols.
      */
@@ -491,9 +506,12 @@ public class SlotMachine{
     public void spin(int wheel, int steps){ //Mirar que pasa si hay 0 wheels y 0 simbolos
         int a = Math.max(wheel-1, 0);
         int b = Math.min(a, wheels.size()-1);
-        lever.animation();
         wheels.get(b).spin(steps);
-        isJackpot();
+        if(isVisual){
+            lever.animation();
+            wheels.get(b).makeVisible();
+            isJackpot();
+        }
     }
     
     /**
@@ -502,14 +520,16 @@ public class SlotMachine{
      */
     public void spin(String[] setSymbols){
         if(setSymbols.length == wheels.size()){
-            for(int i = 0; i< wheels.size();i++){
-                if(colorExists(setSymbols[i])){
-                    while(wheels.get(i).colorCurrentSymbol() != setSymbols[i]){
-                        wheels.get(i).spin();
-                    }    
+            int cont =0;
+            for(Wheel w: wheels){
+                if(colorExists(setSymbols[cont])){
+                    int idxSymbol = getIdxSymbol(setSymbols[cont]);
+                    w.setCurrentSymbol(idxSymbol);
                 }
+                cont ++;
             }
             if(isVisual){
+                lever.animation();
                 makeVisible(); 
                 isJackpot();
             }

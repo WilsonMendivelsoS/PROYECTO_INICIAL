@@ -93,6 +93,7 @@ public class Wheel{
         for(Symbol s: symbols){ 
             idxDeleted ++;
             if(s.getColor().equals(symbol)){
+                s.makeInvisible();
                 symbols.remove(s);
                 break;
             }
