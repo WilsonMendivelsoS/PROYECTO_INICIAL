@@ -336,13 +336,7 @@ public class SlotMachine{
      * Adds a symbol in a specific position, this symbol is also added to all the wheels
      */
     public void addSymbol(int pos, String color){
-        if(colorExists(color)){
-            for(Figure f: symbols){
-                //Color already exists in the symbols
-                if(f.getColor().equals(color)){
-                    return;
-                }
-            }
+        if(colorExists(color) && !hasSymbol(color)){
             pos = Math.min(Math.max(0, pos-1), symbols.size());
             createSymbol(pos, color);
             
@@ -354,6 +348,19 @@ public class SlotMachine{
         else{
             ok = false;
         }
+    }
+    
+    /**
+     * Looks if colors in slotMachine
+     * @return if colors already exists in slotMachine
+     */
+    private boolean hasSymbol(String color){
+        for(String i: symbols()){
+            if(color.equals(i)){
+                return true;
+            }
+        }
+        return false;
     }
     /**
      * Creates a new symbol
@@ -375,7 +382,7 @@ public class SlotMachine{
      * Deletes a specific symbol
      */
     public void delSymbol(String symbol){ //Qué pasa si queda en 0 simbolos, revisar eso
-        if(symbols.size()>0 && colorExists(symbol)){
+        if(symbols.size()>0 && hasSymbol(symbol)){
             int idxSymbol = getIdxSymbol(symbol);
             symbols.remove(idxSymbol);
             for(Wheel w: wheels){
@@ -383,7 +390,9 @@ public class SlotMachine{
             }
             ok = true; 
         }else{
-            JOptionPane.showMessageDialog(null, "Accion invalida.");
+            if(isVisual){
+                JOptionPane.showMessageDialog(null, "Accion invalida.");
+            }
             ok = false;
         }
     }
