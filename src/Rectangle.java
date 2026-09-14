@@ -6,7 +6,7 @@ import java.awt.*;
  * @author David Garzon, Wilson Mendivelso
  * @version 1
  */
-public class Rectangle extends Figure{
+public class Rectangle extends Symbol{
 
     public static int EDGES = 4;
     
@@ -125,5 +125,6 @@ public class Rectangle extends Figure{
     public Rectangle copy(){
         return new Rectangle(this.color);
     }
+
 }
 

@@ -60,7 +60,9 @@ public class Lever
         body[3].moveHorizontal(-body[3].getPosition()[0]+head.getPosition()[0]+10);
         body[3].moveVertical(-body[3].getPosition()[1]+head.getPosition()[1]+111);
     }
-    
+    /**
+     * Makes the lever visible
+     */
     public void makeVisible(){
         for(Rectangle r: body){
             r.makeVisible();
@@ -68,6 +70,9 @@ public class Lever
         head.makeVisible();
     }
     
+    /**
+     * Makes the lever invisible
+     */
     public void makeInvisible(){
         head.makeInvisible();
         for(Rectangle r: body){

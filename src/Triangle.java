@@ -7,7 +7,7 @@ import java.awt.*;
  * @version 1
  */
 
-public class Triangle extends Figure{
+public class Triangle extends Symbol{
     public static int VERTICES=3;
     
     private int height;

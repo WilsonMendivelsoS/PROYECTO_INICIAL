@@ -22,11 +22,11 @@ public class Wheel{
         rectangleBodyPart = new Rectangle("white");
         rectangleBodyPart.changeSize(100,50);
         isLocked = false;
-        for(Figure f: SlotMachine.getSymbols()){
-            symbols.add(new Symbol(f)); 
+        for(Symbol s: SlotMachine.getSymbols()){
+            symbols.add(s.copy()); 
         }
     }
-    
+
     /**
      * Make this wheel visible.
      */
@@ -35,10 +35,10 @@ public class Wheel{
             rectangleBodyPart.makeVisible();
         }
         int moverExtra = 0;
-        if(symbols.get(currentSymbol).getBodyFiguresName().equals("TRIANGLE")){
+        if(symbols.get(currentSymbol) instanceof Triangle){
             moverExtra = 15;
         }
-        else if(symbols.get(currentSymbol).getBodyFiguresName().equals("CIRCLE")){
+        else if(symbols.get(currentSymbol) instanceof Circle){
             moverExtra = -2;
         }
         symbols.get(currentSymbol).place(rectangleBodyPart.getPosition()[0]+10 + moverExtra, rectangleBodyPart.getPosition()[1] + 7*rectangleBodyPart.getHeight()/20);
@@ -77,12 +77,11 @@ public class Wheel{
     /**
      * Adds a symbol to the wheel in a specific position.
      */
-    public void addSymbol(int pos, Figure symbol){
-        symbols.add(Math.min(Math.max(0, pos-1),symbols.size()), new Symbol(symbol));
+    public void addSymbol(int pos, Symbol symbol){
+        symbols.add(Math.min(Math.max(0, pos-1),symbols.size()), symbol);
         if(pos<= currentSymbol+1){
             currentSymbol =  (currentSymbol+1)%symbols.size(); 
         }
-        
     }
     
     /**

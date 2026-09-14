@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 */
 public class SlotMachine{
     private Rectangle[] rectangleBodyParts;
-    private static ArrayList<Figure> symbols;
+    private static ArrayList<Symbol> symbols;
     private ArrayList<Wheel> wheels;
     private Lever lever;
     private boolean isVisual;
@@ -184,7 +184,7 @@ public class SlotMachine{
      * @param pos is the position of thw wheel that we wanna delete
      */
     
-    public void delWheel(int pos){ 
+    public void delWheel(int pos){ //Mirar lo de 0.
         if(wheels.size()>0){
             pos = Math.min(Math.max(0, pos-1), wheels.size()-1);
             makeInvisible();
@@ -209,7 +209,9 @@ public class SlotMachine{
             }
             
         }else{
-            JOptionPane.showMessageDialog(null, "Accion Invalida, no puedes tener menos de 3 ruedas."); //Cambiar esto, si se pueden tener menos de 3, pero no negativas.
+            if(isVisual){
+                JOptionPane.showMessageDialog(null, "Accion Invalida, no puedes tener menos de 3 ruedas."); //Cambiar esto, si se pueden tener menos de 3, pero no negativas.        
+            }
         
             ok = false;
         }
@@ -562,10 +564,10 @@ public class SlotMachine{
         }
     }
     /**
-     * Gives all the current figures.
-     * @return all current figures.
+     * Gives all the current symbols.
+     * @return all current symbols.
      */
-    public static ArrayList<Figure> getSymbols(){
+    public static ArrayList<Symbol> getSymbols(){
         return symbols;
     }
 }
