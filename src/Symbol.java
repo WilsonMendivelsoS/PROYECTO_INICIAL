@@ -11,15 +11,7 @@ public abstract class Symbol{
     protected int yPosition;
     protected String color;
     protected boolean isVisible;
-    /**
-     * Creates a new Figure
-     */
-    public Symbol(){
-        xPosition = 0;
-        yPosition = 0;
-        color = "black";
-        isVisible = false;
-    }
+
     /*
      * Draws the figure on screen
      */

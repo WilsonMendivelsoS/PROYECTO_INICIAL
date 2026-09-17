@@ -21,8 +21,18 @@ public class SlotMachineC2Test{
     public void setUp(){
         
         slotMachine = new SlotMachine();
+        
+        slotMachine.addSymbol(1, "green");
+        slotMachine.addSymbol(2, "red");
+        slotMachine.addSymbol(3, "blue");
+        
+        slotMachine.addWheel(1);
+        slotMachine.addWheel(2);
+        slotMachine.addWheel(3);
+        
 
     }
+    
     /**
      * If a wheel is added, the number of wheels should be greater
      */

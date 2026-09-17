@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+  import java.util.ArrayList;
 
 /**
  * Represents a wheel that can have a lot of symbols.
@@ -34,16 +34,18 @@ public class Wheel{
         if(!isVisible){
             rectangleBodyPart.makeVisible();
         }
-        int moverExtra = 0;
-        if(symbols.get(currentSymbol) instanceof Triangle){
-            moverExtra = 15;
+        if(symbols.size()>0){
+            int moverExtra = 0;
+            if(symbols.get(currentSymbol) instanceof Triangle){
+                moverExtra = 15;
+            }
+            else if(symbols.get(currentSymbol) instanceof Circle){
+                moverExtra = -2;
+            }
+            symbols.get(currentSymbol).place(rectangleBodyPart.getPosition()[0]+10 + moverExtra, rectangleBodyPart.getPosition()[1] + 7*rectangleBodyPart.getHeight()/20);
+            symbols.get(currentSymbol).makeVisible();
+            isVisible = true;
         }
-        else if(symbols.get(currentSymbol) instanceof Circle){
-            moverExtra = -2;
-        }
-        symbols.get(currentSymbol).place(rectangleBodyPart.getPosition()[0]+10 + moverExtra, rectangleBodyPart.getPosition()[1] + 7*rectangleBodyPart.getHeight()/20);
-        symbols.get(currentSymbol).makeVisible();
-        isVisible = true;
     }
     
     /**
@@ -51,6 +53,9 @@ public class Wheel{
      */
     public void makeInvisible(){
         rectangleBodyPart.makeInvisible();
+        if(symbols.size() == 0){
+            return ;
+        }
         symbols.get(currentSymbol).makeInvisible();
         isVisible = false;
     }
@@ -79,6 +84,13 @@ public class Wheel{
      */
     public void addSymbol(int pos, Symbol symbol){
         symbols.add(Math.min(Math.max(0, pos-1),symbols.size()), symbol);
+        if(symbols.size() == 1){
+            makeInvisible();
+            setCurrentSymbol(0);
+            makeVisible();
+            
+        }
+        
         if(pos<= currentSymbol+1){
             currentSymbol =  (currentSymbol+1)%symbols.size(); 
         }
@@ -101,7 +113,11 @@ public class Wheel{
             currentSymbol = (currentSymbol-1)%symbols.size();
         }
         else{
-            currentSymbol = (currentSymbol)%symbols.size(); 
+            if(symbols.size()==0){
+                currentSymbol=0;
+            }else{
+                currentSymbol = (currentSymbol)%symbols.size(); 
+            }
         }
         if(isVisible){
             makeVisible();
