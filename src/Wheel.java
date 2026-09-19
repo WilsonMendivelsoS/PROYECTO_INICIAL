@@ -85,10 +85,10 @@ public class Wheel{
     public void addSymbol(int pos, Symbol symbol){
         symbols.add(Math.min(Math.max(0, pos-1),symbols.size()), symbol);
         if(symbols.size() == 1){
-            makeInvisible();
             setCurrentSymbol(0);
-            makeVisible();
-            
+            if(isVisible){
+                makeVisible();
+            }
         }
         
         if(pos<= currentSymbol+1){

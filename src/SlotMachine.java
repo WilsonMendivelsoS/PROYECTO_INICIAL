@@ -18,7 +18,6 @@ public class SlotMachine{
     private boolean ok;
     
     /** 
-     * 
      * Creates a slotMachine with a initial composition.
      */
     public SlotMachine(){
@@ -33,7 +32,6 @@ public class SlotMachine{
             rectangleBodyParts[i] = new Rectangle();
         }
         
-        ////////////////////////////////////////////////////////////primer cambio
         rectangleBodyParts[0].moveHorizontal(-rectangleBodyParts[0].getPosition()[0]+50);
         rectangleBodyParts[0].moveVertical(-rectangleBodyParts[0].getPosition()[1]+50);
         rectangleBodyParts[0].changeColor("gray");
@@ -46,7 +44,19 @@ public class SlotMachine{
         rectangleBodyParts[1].changeColor("black");
 
     }
-    /////////////////////////////////////////////////////////////////////////////////////////////////
+    /** 
+     * Creates a slotMachine with a specific n wheels and n symbols.
+     * @param n are the number of wheels and number of symbols
+    */
+    public SlotMachine(int n){
+        this();
+        for(int i = 0; i < n; i++){
+            addSymbol(i,Canvas.colors[i]);
+        }
+        for(int j = 0; j < n; j++){
+            addWheel(j);
+        }
+    }
     /**
      * Makes visible the machine, its wheels and symbols.
      */
@@ -90,7 +100,6 @@ public class SlotMachine{
      * It returns all the symbol's colors.
      * @return Symbol's colors in order starting by one.
      */
-    ///////////////////////////////////////////////////////////////// segundo cambio
     public String[] symbols(){
         if(symbols.size() == 0){
             String[] names = new String[0];
@@ -187,20 +196,28 @@ public class SlotMachine{
     /**
      * Moves all the wheels to its next symbol.
      */
-    public void spin(){ //Sean 0 simbolos o 0 ruedas ############ hecho
+    public void spin(){ 
         if((symbols.size()>0 && wheels.size() >0)){
             if(isVisual){
                 lever.animation();  
             }
+            ok=true;
+            int cantLock = 0;
             for(Wheel w: wheels){
                 w.spin();
                 if(isVisual){
                     w.makeVisible();
                     Canvas.getCanvas().wait(150);
                 }
+                if(w.getIsLocked()){
+                    ok = false;
+                    cantLock ++;
+                }
             }
-            isJackpot();  
-            ok=true;
+            if(cantLock != wheels.size()){
+                isJackpot();
+            }
+            
         }else{
             if(isVisual){
                 JOptionPane.showMessageDialog(null, "No hay simbolos o no hay ruedas");
@@ -213,17 +230,22 @@ public class SlotMachine{
     /**
      * Moves a specific wheel to its next symbol.
      */
-    public void spin(int wheel){ //Sean 0 simbolos o 0 ruedas ############### hecho
+    public void spin(int wheel){ 
         if(symbols.size()>0 && wheels.size() >0){
             int a= Math.max(0, wheel-1);
             int b = Math.min(a, wheels.size()-1);
             wheels.get(b).spin();
+            ok=true;
             if(isVisual){
                 lever.animation();
                 wheels.get(b).makeVisible();
+            }
+            if(wheels.get(b).getIsLocked()){
+                ok = false;
+            }
+            else{
                 isJackpot();
             }
-            ok=true;
         }else{
             if(isVisual){
                 JOptionPane.showMessageDialog(null, "No hay simbolos o no hay ruedas");
@@ -256,13 +278,19 @@ public class SlotMachine{
         if(colorExists(symbol)){
             int idxSymbol = getIdxSymbol(symbol);
             int idxWheel = Math.min(Math.max(0, wheel-1), wheels.size()-1);
-            wheels.get(idxWheel).setCurrentSymbol(idxSymbol);
-            ok = true;
-            if(isVisual){
-                lever.animation();
-                wheels.get(idxWheel).makeVisible();
-                isJackpot();
+            if(!wheels.get(idxWheel).colorCurrentSymbol().equals(symbol)){
+                wheels.get(idxWheel).setCurrentSymbol(idxSymbol);
+                ok = true;
+                if(isVisual){
+                    lever.animation();
+                    wheels.get(idxWheel).makeVisible();
+                    isJackpot();
+                }
             }
+            else{
+                ok = false;
+            }
+            
         }
         else{
             ok = false;
@@ -335,7 +363,9 @@ public class SlotMachine{
             
             for(Wheel w: wheels){
                 w.addSymbol(pos+1, symbols.get(pos).copy());
-                
+                if(isVisual){
+                    w.makeVisible();
+                }
             }  
             ok = true;
         }
@@ -378,7 +408,7 @@ public class SlotMachine{
     /**
      * Deletes a specific symbol
      */
-    public void delSymbol(String symbol){ //Qué pasa si queda en 0 simbolos, revisar eso  #################### ya lo hace
+    public void delSymbol(String symbol){ 
         if(symbols.size()>0 && hasSymbol(symbol)){
             int idxSymbol = getIdxSymbol(symbol);
             symbols.remove(idxSymbol);
@@ -456,7 +486,7 @@ public class SlotMachine{
      * @param wheel1 Position in ArrayList wheels of wheel number 1
      * @param wheel2 Position in Arraylist wheels of wheel number 2
      */
-    public void swap(int wheel1, int wheel2){ //Mirar que pasa si hay 0 wheels ############# hecho
+    public void swap(int wheel1, int wheel2){
         if(wheels.size()>=2){
             int b = Math.max(wheel1-1, 0);
             int a = Math.min(b, wheels.size()-1);
@@ -489,7 +519,7 @@ public class SlotMachine{
      * lock a wheel, if is negative, get position 0, if is larger than the wheel size, it adopts that size
      * @param wheel in wheels( position )
      */
-    public void lock(int wheel){ //Mirar que pasa si hay 0 wheels ####################### hecho
+    public void lock(int wheel){ 
         if(wheels.size()>0){
             int a = Math.max(wheel-1, 0);
             int b = Math.min(a, wheels.size()-1);
@@ -510,7 +540,7 @@ public class SlotMachine{
      * unlock a wheel, if is negative, get position 0, if is larger than the wheel size, it adopts that size
      * @param wheel in wheels ( position )
      */
-    public void unlock(int wheel){ //Mirar que pasa si hay 0 wheels ###################### hecho
+    public void unlock(int wheel){
         if(wheels.size()>0){
             int a = Math.max(wheel-1, 0);
             int b = Math.min(a, wheels.size()-1);
@@ -532,7 +562,7 @@ public class SlotMachine{
      * @param wheel is the wheel number.
      * @param steps are the steps it will move.
      */
-    public void spin(int wheel, int steps){//Mirar que pasa si hay 0 wheels y 0 simbolos ################ hecho
+    public void spin(int wheel, int steps){
         if(symbols.size()>0 && wheels.size()>0){
             int a = Math.max(wheel-1, 0);
             int b = Math.min(a, wheels.size()-1);
@@ -540,9 +570,14 @@ public class SlotMachine{
             if(isVisual){
                 lever.animation();
                 wheels.get(b).makeVisible();
+            }
+            if(wheels.get(b).getIsLocked()){
+                ok = false;
+            }
+            else{
+                ok = true;
                 isJackpot();
             }
-            ok=true;
         }else{
             if(isVisual){
                 JOptionPane.showMessageDialog(null, "Accion invalida, no hay ruedas y no hay simbolos"); 

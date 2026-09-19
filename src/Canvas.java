@@ -20,9 +20,7 @@ public class Canvas{
     // shape objects in this project clean and simple for educational purposes.
 
     private static Canvas canvasSingleton;
-    public static String[] colors = {"red", "black", "blue", "yellow", "green", "magenta", "white", "gray", "purple", "orange", "pink", "cyan"};
-
-    /**
+    public static String[] colors = {"red", "black", "blue", "yellow", "green", "magenta", "gray", "purple", "orange", "pink", "cyan", "brown", "lime", "teal", "indigo", "maroon", "navy", "olive", "silver", "gold"};    /**
      * Factory method to get the canvas singleton object.
      */
     public static Canvas getCanvas(){
@@ -139,6 +137,24 @@ public class Canvas{
             graphic.setColor(new Color(255,192,203));
         else if(colorString.equals("cyan"))
             graphic.setColor(new Color(0,255,255));
+        else if(colorString.equals("brown"))
+            graphic.setColor(new Color(165, 42, 42));
+        else if(colorString.equals("lime"))
+            graphic.setColor(new Color(0, 255, 0));
+        else if(colorString.equals("teal"))
+            graphic.setColor(new Color(0, 128, 128));
+        else if(colorString.equals("indigo"))
+            graphic.setColor(new Color(75, 0, 130));
+        else if(colorString.equals("maroon"))
+            graphic.setColor(new Color(128, 0, 0));
+        else if(colorString.equals("navy"))
+            graphic.setColor(new Color(0, 0, 128));
+        else if(colorString.equals("olive"))
+            graphic.setColor(new Color(128, 128, 0));
+        else if(colorString.equals("silver"))
+            graphic.setColor(new Color(192, 192, 192));
+        else if(colorString.equals("gold"))
+            graphic.setColor(new Color(255, 215, 0));
         else
             graphic.setColor(Color.black);
     }
