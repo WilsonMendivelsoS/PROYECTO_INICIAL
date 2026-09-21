@@ -84,25 +84,25 @@ public class Lever
      * Animates the lever
      */
     public void animation(){
-        int speed = 3;
-        for(int i = 0; i <99/speed; i++){
-            if (i>81/speed){
+        int speed = 5;
+        for(int i = 0; i <100/speed; i++){
+            if (i>80/speed){
                 body[3].fastMoveVertical(speed,speed);
             }
             body[2].fastMoveVertical(speed,speed); 
             head.fastMoveVertical(speed,speed);  
         }
 
-        for(int i = 0; i < 72/speed; i++){
+        for(int i = 0; i < 70/speed; i++){
             body[3].fastMoveVertical(speed,speed);
             head.fastMoveVertical(speed,speed);
         }
         
-        for(int i = 0; i < 72/speed; i++){
+        for(int i = 0; i < 70/speed; i++){
             head.fastMoveVertical(-speed,speed);  
             body[3].fastMoveVertical(-speed,speed);
         }
-        for(int i = 0; i <99/speed; i++){
+        for(int i = 0; i <100/speed; i++){
             head.fastMoveVertical(-speed,speed);     
             if(i<15/speed){
                 body[3].fastMoveVertical(-speed,speed);

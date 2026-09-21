@@ -20,7 +20,9 @@ public class Canvas{
     // shape objects in this project clean and simple for educational purposes.
 
     private static Canvas canvasSingleton;
-    public static String[] colors = {"red", "black", "blue", "yellow", "green", "magenta", "gray", "purple", "orange", "pink", "cyan", "brown", "lime", "teal", "indigo", "maroon", "navy", "olive", "silver", "gold"};    /**
+    public static String[] colors = {"red", "black", "blue", "yellow", "green", "magenta", "gray", "purple", "orange", "pink", "cyan", "brown", "lime", "teal", "indigo", "maroon", 
+    "navy", "olive", "silver", "gold", "violet", "turquoise", "coral", "salmon", "plum", "orchid", "crimson", "chocolate", "tomato", "sienna", "fuchsia", "cerulean", "sapphire", "jade", "amber", "ruby", "emerald", "forest", "burgundy", "rust", "bronze", "copper", "cobalt", "charcoal", "slate", "brick", "wine", "grape", "moss", "ocean"};
+    /**
      * Factory method to get the canvas singleton object.
      */
     public static Canvas getCanvas(){
@@ -155,6 +157,66 @@ public class Canvas{
             graphic.setColor(new Color(192, 192, 192));
         else if(colorString.equals("gold"))
             graphic.setColor(new Color(255, 215, 0));
+        else if(colorString.equals("violet"))
+            graphic.setColor(new Color(238, 130, 238));
+        else if(colorString.equals("turquoise"))
+            graphic.setColor(new Color(64, 224, 208));
+        else if(colorString.equals("coral"))
+            graphic.setColor(new Color(255, 127, 80));
+        else if(colorString.equals("salmon"))
+            graphic.setColor(new Color(250, 128, 114));
+        else if(colorString.equals("plum"))
+            graphic.setColor(new Color(221, 160, 221));
+        else if(colorString.equals("orchid"))
+            graphic.setColor(new Color(218, 112, 214));
+        else if(colorString.equals("crimson"))
+            graphic.setColor(new Color(220, 20, 60));
+        else if(colorString.equals("chocolate"))
+            graphic.setColor(new Color(210, 105, 30));
+        else if(colorString.equals("tomato"))
+            graphic.setColor(new Color(255, 99, 71));
+        else if(colorString.equals("sienna"))
+            graphic.setColor(new Color(160, 82, 45));
+        else if(colorString.equals("fuchsia"))
+            graphic.setColor(new Color(255, 0, 255));
+        else if(colorString.equals("cerulean"))
+            graphic.setColor(new Color(0, 123, 167));
+        else if(colorString.equals("sapphire"))
+            graphic.setColor(new Color(15, 82, 186));
+        else if(colorString.equals("jade"))
+            graphic.setColor(new Color(0, 168, 107));
+        else if(colorString.equals("amber"))
+            graphic.setColor(new Color(255, 191, 0));
+        else if(colorString.equals("ruby"))
+            graphic.setColor(new Color(224, 17, 95));
+        else if(colorString.equals("emerald"))
+            graphic.setColor(new Color(80, 200, 120));
+        else if(colorString.equals("forest"))
+            graphic.setColor(new Color(34, 139, 34));
+        else if(colorString.equals("burgundy"))
+            graphic.setColor(new Color(128, 0, 32));
+        else if(colorString.equals("rust"))
+            graphic.setColor(new Color(183, 65, 14));
+        else if(colorString.equals("bronze"))
+            graphic.setColor(new Color(205, 127, 50));
+        else if(colorString.equals("copper"))
+            graphic.setColor(new Color(184, 115, 51));
+        else if(colorString.equals("cobalt"))
+            graphic.setColor(new Color(0, 71, 171));
+        else if(colorString.equals("charcoal"))
+            graphic.setColor(new Color(54, 69, 79));
+        else if(colorString.equals("slate"))
+            graphic.setColor(new Color(112, 128, 144));
+        else if(colorString.equals("brick"))
+            graphic.setColor(new Color(178, 34, 34));
+        else if(colorString.equals("wine"))
+            graphic.setColor(new Color(114, 47, 55));
+        else if(colorString.equals("grape"))
+            graphic.setColor(new Color(111, 45, 168));
+        else if(colorString.equals("moss"))
+            graphic.setColor(new Color(138, 154, 91));
+        else if(colorString.equals("ocean"))
+            graphic.setColor(new Color(0, 119, 190));
         else
             graphic.setColor(Color.black);
     }

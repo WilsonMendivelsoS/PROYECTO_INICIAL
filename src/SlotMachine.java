@@ -56,6 +56,12 @@ public class SlotMachine{
         for(int j = 0; j < n; j++){
             addWheel(j);
         }
+        
+        if(distinctSymbols() == 1){
+            Wheel w=wheels.get(n-1);
+            w.spin(1);
+            
+        }
     }
     /**
      * Makes visible the machine, its wheels and symbols.
@@ -566,10 +572,12 @@ public class SlotMachine{
         if(symbols.size()>0 && wheels.size()>0){
             int a = Math.max(wheel-1, 0);
             int b = Math.min(a, wheels.size()-1);
-            wheels.get(b).spin(steps);
-            if(isVisual){
-                lever.animation();
-                wheels.get(b).makeVisible();
+            for(int i=0; i<Math.abs(steps); i++){
+                wheels.get(b).spin(steps/Math.abs(steps));
+                if(isVisual){
+                    lever.animation();
+                    wheels.get(b).makeVisible();
+                }
             }
             if(wheels.get(b).getIsLocked()){
                 ok = false;
