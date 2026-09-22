@@ -166,7 +166,7 @@ public class SlotMachine{
      * @param pos is the position of thw wheel that we wanna delete
      */
     
-    public void delWheel(int pos){ //Mirar lo de 0. ############# ya lo hace
+    public void delWheel(int pos){ 
         if(wheels.size()>0){
             pos = Math.min(Math.max(0, pos-1), wheels.size()-1);
             makeInvisible();
@@ -600,6 +600,11 @@ public class SlotMachine{
      */
     public void spin(String[] setSymbols){
         if(setSymbols.length == wheels.size()){
+            for(String symbol: setSymbols){
+                if(!colorExists(symbol)){
+                    return;
+                }
+            }
             int cont =0;
             for(Wheel w: wheels){
                 if(colorExists(setSymbols[cont])){
@@ -626,6 +631,7 @@ public class SlotMachine{
     private void winningAnimation(){
         for(int i = 0; i < 2*symbols.size(); i++){
             for(Wheel w: wheels){
+                w.setIsLocked(false);
                 w.spin();
                 w.makeVisible();
             }
