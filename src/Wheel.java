@@ -35,14 +35,8 @@ public class Wheel{
             rectangleBodyPart.makeVisible();
         }
         if(symbols.size()>0){
-            int moverExtra = 0;
-            if(symbols.get(currentSymbol) instanceof Triangle){
-                moverExtra = 15;
-            }
-            else if(symbols.get(currentSymbol) instanceof Circle){
-                moverExtra = -2;
-            }
-            symbols.get(currentSymbol).place(rectangleBodyPart.getPosition()[0]+10 + moverExtra, rectangleBodyPart.getPosition()[1] + 7*rectangleBodyPart.getHeight()/20);
+        
+            symbols.get(currentSymbol).place(rectangleBodyPart.getPosition()[0]+10, rectangleBodyPart.getPosition()[1] + 7*rectangleBodyPart.getHeight()/20);
             symbols.get(currentSymbol).makeVisible();
             isVisible = true;
         }
@@ -53,11 +47,11 @@ public class Wheel{
      */
     public void makeInvisible(){
         rectangleBodyPart.makeInvisible();
-        if(symbols.size() == 0){
-            return ;
-        }
-        symbols.get(currentSymbol).makeInvisible();
         isVisible = false;
+        if(symbols.size() != 0){
+            symbols.get(currentSymbol).makeInvisible();
+        }
+        
     }
     
     /**

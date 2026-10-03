@@ -8,7 +8,7 @@ import java.awt.geom.*;
  * @version 1
  */
 
-public class Circle extends Symbol{
+public class Circle extends Figure{
     public static final double PI=3.1416;
     
     private int diameter;
@@ -96,13 +96,15 @@ public class Circle extends Symbol{
         draw();
     }
 
+
     /**
-     * Returns circle's copy
-     * @return cicle's copy
-     */
+     * Puts the Figure in a specific position.
+     * @param x is the x position
+     * @param y is the y position
+     */    
     @Override
-    public Circle copy(){
-        return new Circle(this.color);
+    public void place(int x, int y){
+        moveHorizontal(-getPosition()[0]+x-2);
+        moveVertical(-getPosition()[1]+y);
     }
-    
 }
