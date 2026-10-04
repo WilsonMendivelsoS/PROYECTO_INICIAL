@@ -58,4 +58,27 @@ public class Symbol{
     public String getColor(){
         return figure.getColor();
     }
+    
+    /**
+     * Does an action
+     */
+    public void action(){
+        
+    }
+    
+    /**
+     * Gives the figure
+     * @return the figure
+     */
+    public Figure getFigure(){
+        return figure;
+    }
+    
+    /**
+     * Gives the figureNum
+     * @return the figureNum
+     */
+    public int getFigureNum(){
+        return figureNum;
+    }
 }

@@ -114,7 +114,21 @@ public class Triangle extends Figure{
      */
     @Override
     public void place(int x, int y){
-        moveHorizontal(-getPosition()[0]+x+15);
-        moveVertical(-getPosition()[1]+y);
+        int extra = 0;
+        if(width != 35){
+            extra = 5*(7-width/5);
+        }
+        moveHorizontal(-getPosition()[0]+x+15+ extra/10);
+        moveVertical(-getPosition()[1]+y+extra/2);
+    }
+    
+    /**
+     * Decreases triangle's size
+     */
+    public void decreaseSize(){
+        if(width > 5){
+            width -= 5;
+            equilateral();
+        }
     }
 }

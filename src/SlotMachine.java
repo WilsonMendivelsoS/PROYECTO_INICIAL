@@ -51,7 +51,7 @@ public class SlotMachine{
     public SlotMachine(int n){
         this();
         for(int i = 0; i < n; i++){
-            addSymbol(i,Canvas.colors[i]);
+            addSymbol("Normal", i,Canvas.colors[i]);
         }
         for(int j = 0; j < n; j++){
             addWheel(j);
@@ -361,11 +361,13 @@ public class SlotMachine{
     
     /**
      * Adds a symbol in a specific position, this symbol is also added to all the wheels
+     * @param pos is the symbol's position
+     * @param color is the symbol's color.
      */
     public void addSymbol(int pos, String color){
         if(colorExists(color) && !hasSymbol(color)){
             pos = Math.min(Math.max(0, pos-1), symbols.size());
-            createSymbol(pos, color);
+            createSymbol(pos, color, "Normal");
             
             for(Wheel w: wheels){
                 w.addSymbol(pos+1, symbols.get(pos).copy());
@@ -399,9 +401,11 @@ public class SlotMachine{
      * Creates a new symbol
      * @param pos is the position of the symbol.
      */
-    private void createSymbol(int pos, String color){
+    private void createSymbol(int pos, String color, String type){
         int ran = randomNumGenerator(0,3);
-        symbols.add(pos, new Symbol(color, ran));
+        if(type.equals("Normal"))symbols.add(pos, new Symbol(color, ran));
+        else if(type.equals("Ephemeral")) symbols.add(pos, new EphemeralSymbol(color, ran));
+        else if(type.equals("Shy")) symbols.add(pos, new ShySymbol(color, ran));
 
     }
     /**
@@ -566,11 +570,12 @@ public class SlotMachine{
             int a = Math.max(wheel-1, 0);
             int b = Math.min(a, wheels.size()-1);
             for(int i=0; i<Math.abs(steps); i++){
-                wheels.get(b).spin(steps/Math.abs(steps));
+                
                 if(isVisual){
                     lever.animation();
-                    wheels.get(b).makeVisible();
                 }
+                wheels.get(b).spin(steps/Math.abs(steps));
+                if(isVisual) wheels.get(b).makeVisible();
             }
             if(wheels.get(b).getIsLocked()){
                 ok = false;
@@ -632,5 +637,32 @@ public class SlotMachine{
      */
     public static ArrayList<Symbol> getSymbols(){
         return symbols;
+    }
+    
+    /**
+     * Adds a symbol to the slot machine, it can have an special type.
+     * @param type is symbol's type, it can be "normal", "ephemeral", or "shy".
+     * @param pos is the symbol's position
+     * @param color is the symbol's color.
+     */
+    public void addSymbol(String type, int pos, String color){
+        if(colorExists(color) && !hasSymbol(color)){
+            pos = Math.min(Math.max(0, pos-1), symbols.size());
+            createSymbol(pos, color, type);
+            
+            for(Wheel w: wheels){
+                w.addSymbol(pos+1, symbols.get(pos).copy());
+                if(isVisual){
+                    w.makeVisible();
+                }
+            }  
+            ok = true;
+        }
+        else{
+            if(isVisual){
+                JOptionPane.showMessageDialog(null, "Accion invalida. No existe ese color");
+            }
+            ok = false;
+        }
     }
 }

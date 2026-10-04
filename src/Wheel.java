@@ -35,7 +35,6 @@ public class Wheel{
             rectangleBodyPart.makeVisible();
         }
         if(symbols.size()>0){
-        
             symbols.get(currentSymbol).place(rectangleBodyPart.getPosition()[0]+10, rectangleBodyPart.getPosition()[1] + 7*rectangleBodyPart.getHeight()/20);
             symbols.get(currentSymbol).makeVisible();
             isVisible = true;
@@ -124,7 +123,8 @@ public class Wheel{
     public void spin(){
         if(isLocked == false){
             symbols.get(currentSymbol).makeInvisible();
-            currentSymbol = (currentSymbol+1)% symbols.size(); 
+            currentSymbol = (currentSymbol+1)% symbols.size();
+            symbols.get(currentSymbol).action();
             return;
         }
     }
@@ -137,11 +137,7 @@ public class Wheel{
         if(isLocked == false){
             if(steps>=0){
                 for( int i = 0; steps>i ; i++){
-                    spin();
-                    if(isVisible){
-                        makeVisible(); 
-                        Canvas.getCanvas().wait(300);
-                    }                    
+                    spin();                
                 }
             }
             if(steps<0){
@@ -153,10 +149,7 @@ public class Wheel{
                     else{
                         currentSymbol--;
                     }
-                    if(isVisible){
-                        makeVisible();
-                        Canvas.getCanvas().wait(300);
-                    }
+                    symbols.get(currentSymbol).action();
                 } 
             }
         } 

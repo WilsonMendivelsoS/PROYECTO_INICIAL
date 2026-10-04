@@ -7,6 +7,9 @@ comment1.text=\r\n\ Create\ a\ new\ circle\ at\ default\ position\ with\ default
 comment10.params=x\ y
 comment10.target=void\ place(int,\ int)
 comment10.text=\r\n\ Puts\ the\ Figure\ in\ a\ specific\ position.\r\n\ @param\ x\ is\ the\ x\ position\r\n\ @param\ y\ is\ the\ y\ position\r\n
+comment11.params=
+comment11.target=void\ decreaseSize()
+comment11.text=\r\n\ Decreases\ circle's\ size\r\n
 comment2.params=color
 comment2.target=Circle(java.lang.String)
 comment2.text=\r\n\ Create\ a\ new\ circle\ at\ default\ position\ with\ a\ specific\ color.\r\n
@@ -31,4 +34,4 @@ comment8.text=\r\n\ Move\ the\ circle\ a\ few\ pixels\ down.\r\n
 comment9.params=newDiameter
 comment9.target=void\ changeSize(int)
 comment9.text=\r\n\ Change\ the\ size.\r\n\ @param\ newDiameter\ the\ new\ size\ (in\ pixels).\ Size\ must\ be\ >\=0.\r\n
-numComments=11
+numComments=12
