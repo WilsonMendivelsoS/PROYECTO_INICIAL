@@ -172,4 +172,9 @@ public abstract class Figure{
         moveHorizontal(-getPosition()[0]+x);
         moveVertical(-getPosition()[1]+y);
     }
+    
+    /**
+     * Decreases figure's size in one pixel.
+     */
+    public abstract void decreaseSize();
 }

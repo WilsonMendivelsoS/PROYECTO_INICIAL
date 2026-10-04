@@ -104,7 +104,22 @@ public class Circle extends Figure{
      */    
     @Override
     public void place(int x, int y){
-        moveHorizontal(-getPosition()[0]+x-2);
-        moveVertical(-getPosition()[1]+y);
+        int extra = 0;
+        if(diameter != 35){
+            extra = 5*(8-diameter/5);
+        }
+        moveHorizontal(-getPosition()[0]+x-2 + 2*extra/5);
+        moveVertical(-getPosition()[1]+y + 3*extra/10);
     }
+        
+    /**
+     * Decreases circle's size
+     */
+    public void decreaseSize(){
+        if(diameter > 5){
+            diameter-= 5;
+        }
+
+    }
+    
 }

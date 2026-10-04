@@ -117,5 +117,30 @@ public class Rectangle extends Figure{
         }
     }
 
+    /**
+     * Decreases rectangle's size
+     */
+    public void decreaseSize(){
+        if(height > 5 && width > 5){
+            height-= 5;
+            width-= 5;
+        }
+
+    }
+    
+    /**
+     * Puts the Rectangle in a specific position.
+     * @param x is the x position
+     * @param y is the y position
+     */
+    public void place(int x, int y){
+        int extra = 0;
+        if(width != 30){
+            extra = 5*(6-width/5);
+        }
+        moveHorizontal(-getPosition()[0]+x+extra/2);
+        moveVertical(-getPosition()[1]+y+extra/2);
+    }
+
 }
 

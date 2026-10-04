@@ -55,7 +55,7 @@ public class Lever
         body[1].moveVertical(-body[1].getPosition()[1] + head.getPosition()[1]+10);
         
         body[2].moveHorizontal(-body[2].getPosition()[0]+head.getPosition()[0]+10);
-        body[2].moveVertical(-body[2].getPosition()[1]+head.getPosition()[1]-100);
+        body[2].moveVertical(-body[2].getPosition()[1]+head.getPosition()[1]-100-1);
         
         body[3].moveHorizontal(-body[3].getPosition()[0]+head.getPosition()[0]+10);
         body[3].moveVertical(-body[3].getPosition()[1]+head.getPosition()[1]+111);
