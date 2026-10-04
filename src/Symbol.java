@@ -1,173 +1,45 @@
-import java.awt.*;
-
 /**
- * Represents a Figure
- * 
+ * Represets a Symbol.
  * @author David Garzon, Wilson Mendivelso
  * @version 1
  */
-public abstract class Symbol{
-    protected int xPosition;
-    protected int yPosition;
-    protected String color;
-    protected boolean isVisible;
-
-    /*
-     * Draws the figure on screen
-     */
-    protected abstract void draw();
-    
-    /*
-     * Erase the figure on screen.
-     */
-    protected void erase(){
-        if(isVisible) {
-            Canvas canvas = Canvas.getCanvas();
-            canvas.erase(this);
-        }
-    }
-    
-    /*
-     * Draws quickly the figure
-     */
-    protected abstract void fastDraw();
+public class Symbol{
+    private Figure figure;
+    private int figureNum;
     
     /**
-     * Slowly move the figure vertically.
-     * @param distance the desired distance in pixels
+     * Creates a Symbol
+     * @param color is the figure's color
+     * @param figureNum determinates which figure will we use. If figureNum is 1 it will do a Circle,
+     * if it is two it will do a Rectangle, if it is other it will do a Triangle
      */
-    public void slowMoveVertical(int distance){
-        int delta;
-
-        if(distance < 0) {
-            delta = -1;
-            distance = -distance;
-        } else {
-            delta = 1;
-        }
-
-        for(int i = 0; i < distance; i++){
-            yPosition += delta;
-            draw();
-        }
+    public Symbol(String color, int figureNum){
+        this.figureNum = figureNum;
+        
+        if(figureNum == 1) figure= new Circle(color);
+        else if(figureNum == 2) figure = new Rectangle(color);
+        else figure = new Triangle(color);
+    }
+    /**
+     * Makes a copy of this symbol cloning it
+     * @return a symbol with the same atributes.
+     */
+    public Symbol copy(){
+        return new Symbol(figure.getColor(), figureNum);
     }
     
     /**
-     * Slowly move the figure horizontally.
-     * @param distance the desired distance in pixels
-     */
-    public void slowMoveHorizontal(int distance){
-        int delta;
-
-        if(distance < 0) {
-            delta = -1;
-            distance = -distance;
-        } else {
-            delta = 1;
-        }
-
-        for(int i = 0; i < distance; i++){
-            xPosition += delta;
-            draw();
-        }
-    }
-    
-    /**
-     * Fastly move the figure vertically
-     * @param distance the desired distance in pixels
-     * @param speed is speed drawing
-     */
-    public void fastMoveVertical(int distance, int speed){
-        int delta;
-
-        if(distance < 0) {
-            delta = -1;
-            distance = -distance;
-        }else {
-            delta = 1;
-        }
-
-        for(int i = 0; i < distance; i = i+speed){
-            yPosition += speed*delta;
-            fastDraw();
-        }
-    }
-    
-    /**
-     * Returns figure's position
-     * @return the xPosition and the yPosition
-     */
-    public int[] getPosition(){
-        int[] temp = {xPosition, yPosition};
-        return temp;
-    }
-    
-    /**
-     * Return figure's color.
-     * @return figure's color.
-     */
-    public String getColor(){
-        return color;
-    }
-    
-    /**
-     * Change the color. 
-     * @param color the new color. Valid colors are "red", "yellow", "blue", "green", "magenta" and "black".
-     */
-    public void changeColor(String newColor){
-        color = newColor;
-        draw();
-    }
-    
-    /**
-     * Copys the figure.
-     * @return figure's copy.
-     */
-    public abstract Symbol copy();
-    
-    
-    /**
-     * Returns if figure is visible.
-     * @return if it is visible
-     */
-    public boolean isVisible(){
-        return isVisible;
-    }
-    
-    /**
-     * Make this figure visible. If it was already visible, do nothing.
+     * Makes visible the figure
      */
     public void makeVisible(){
-        isVisible = true;
-        draw();
+        figure.makeVisible();
     }
     
     /**
-     * Make this figure invisible. If it was already invisible, do nothing.
+     * Makes invisible the figure
      */
     public void makeInvisible(){
-        erase();
-        isVisible = false;
-    }
-    
-    /**
-     * Move the figure horizontally.
-     * @param distance the desired distance in pixels
-     */
-    public void moveHorizontal(int distance){
-        erase();
-        xPosition += distance;
-        draw();
-    }
-
-    /**
-     * Move the figure vertically.
-     * @param distance the desired distance in pixels
-     */
-    public void moveVertical(int distance){
-        erase();
-        yPosition += distance;
-        draw();
+        figure.makeInvisible();
     }
     
     /**
@@ -176,9 +48,14 @@ public abstract class Symbol{
      * @param y is the y position
      */
     public void place(int x, int y){
-        makeInvisible();
-        moveHorizontal(-getPosition()[0]+x);
-        moveVertical(-getPosition()[1]+y);
-        makeVisible();
+        figure.place(x,y);
+    }
+    
+    /**
+     * Return Symbols's color.
+     * @return Symbols's color.
+     */
+    public String getColor(){
+        return figure.getColor();
     }
 }

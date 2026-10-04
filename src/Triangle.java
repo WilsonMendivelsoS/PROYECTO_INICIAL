@@ -7,7 +7,7 @@ import java.awt.*;
  * @version 1
  */
 
-public class Triangle extends Symbol{
+public class Triangle extends Figure{
     public static int VERTICES=3;
     
     private int height;
@@ -106,13 +106,15 @@ public class Triangle extends Symbol{
             canvas.draw(this, color, new Polygon(xpoints, ypoints, 3));
         }
     }
+
     /**
-     * Returns triangle's copy
-     * @return triangle's copy
+     * Puts the Figure in a specific position.
+     * @param x is the x position
+     * @param y is the y position
      */
     @Override
-    public Triangle copy(){
-        return new Triangle(this.color);
+    public void place(int x, int y){
+        moveHorizontal(-getPosition()[0]+x+15);
+        moveVertical(-getPosition()[1]+y);
     }
-    
 }

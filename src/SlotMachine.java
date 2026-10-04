@@ -401,15 +401,8 @@ public class SlotMachine{
      */
     private void createSymbol(int pos, String color){
         int ran = randomNumGenerator(0,3);
-        if(ran == 0){
-            symbols.add(pos, new Triangle(color));
-        }
-        else if(ran == 1){
-            symbols.add(pos, new Rectangle(color));
-        }
-        else if(ran == 2){
-            symbols.add(pos,new Circle(color));
-        }
+        symbols.add(pos, new Symbol(color, ran));
+
     }
     /**
      * Deletes a specific symbol
@@ -600,11 +593,6 @@ public class SlotMachine{
      */
     public void spin(String[] setSymbols){
         if(setSymbols.length == wheels.size()){
-            for(String symbol: setSymbols){
-                if(!colorExists(symbol)){
-                    return;
-                }
-            }
             int cont =0;
             for(Wheel w: wheels){
                 if(colorExists(setSymbols[cont])){
