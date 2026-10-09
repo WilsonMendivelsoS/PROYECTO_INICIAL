@@ -1,13 +1,13 @@
 #BlueJ class context
+#Fri Oct 09 15:14:12 COT 2026
 comment0.target=SlotMachineContest
-comment0.text=\r\n\ Represents\ a\ slotMachineContest\r\n\ \r\n\ @author\ David\ Garzon,\ Wilson\ Mendivelso\r\n\ @version\ 3\r\n
-comment1.params=
+comment0.text=\r\n Represents a slotMachineContest\r\n \r\n @author David Garzon, Wilson Mendivelso\r\n @version 3\r\n
 comment1.target=SlotMachineContest()
-comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ SlotMachineContest\r\n
+comment1.text=\r\n Constructor for objects of class SlotMachineContest\r\n
 comment2.params=n
-comment2.target=int[][]\ solve(int)
-comment2.text=\r\n\ Solves\ the\ problem,\ returning\ all\ the\ steps\ \r\n
+comment2.target=int[][] solve(int)
+comment2.text=\r\n Solves the problem, returning all the steps \r\n
 comment3.params=n
-comment3.target=void\ simulate(int)
-comment3.text=\r\n\ Simulates\ the\ solution,\ showing\ the\ machine.\r\n\ @param\ n\ is\ the\ number\ of\ wheels\ and\ symbols.\r\n
+comment3.target=void simulate(int)
+comment3.text=\r\n Simulates the solution, showing the machine.\r\n @param n is the number of wheels and symbols.\r\n
 numComments=4

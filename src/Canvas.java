@@ -217,6 +217,10 @@ public class Canvas{
             graphic.setColor(new Color(138, 154, 91));
         else if(colorString.equals("ocean"))
             graphic.setColor(new Color(0, 119, 190));
+        else if(colorString.equals("Rebel"))
+            graphic.setColor(new Color(128, 0, 32));
+        else if(colorString.equals("Lefty"))
+            graphic.setColor(new Color(255, 0, 127));
         else
             graphic.setColor(Color.black);
     }

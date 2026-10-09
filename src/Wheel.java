@@ -8,7 +8,7 @@
  */
 public class Wheel{
     private ArrayList<Symbol> symbols; 
-    private Rectangle rectangleBodyPart;
+    protected Rectangle rectangleBodyPart;
     private int currentSymbol;
     private boolean isVisible;
     private boolean isLocked;
@@ -195,5 +195,30 @@ public class Wheel{
      */
     public void setIsLocked(boolean isLocked){
         this.isLocked = isLocked;
+    }
+    
+    /**
+     * 
+     */
+    public boolean canSwap(){
+        if(isLocked==false){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    /**
+     * 
+     */
+    public boolean canBeDelete(){
+        return true;
+    }
+    
+    /**
+     * 
+     */
+    public boolean canCopyTheColorFromLeft(){
+        return false;
     }
 }

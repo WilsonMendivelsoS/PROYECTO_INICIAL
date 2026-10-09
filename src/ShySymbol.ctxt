@@ -1,13 +1,12 @@
 #BlueJ class context
+#Fri Oct 09 14:30:04 COT 2026
 comment0.target=ShySymbol
-comment0.text=\r\n\ Represents\ a\ ShySymbol\ that\ is\ a\ special\ type\ of\ symbol\r\n
-comment1.params=color\ figureNum
-comment1.target=ShySymbol(java.lang.String,\ int)
-comment1.text=\r\n\ Creates\ a\ ShySymbol\r\n
-comment2.params=
-comment2.target=ShySymbol\ copy()
-comment2.text=\r\n\ Creates\ a\ copy\ of\ this\ EphemeralSymbol\r\n\ @return\ a\ EphemeralSymbol\ with\ the\ same\ atributes.\r\n
-comment3.params=
-comment3.target=void\ makeVisible()
-comment3.text=\r\n\ Makes\ visible\ its\ figure\r\n
+comment0.text=\r\n Represents a ShySymbol that is a special type of symbol\r\n
+comment1.params=color figureNum
+comment1.target=ShySymbol(java.lang.String, int)
+comment1.text=\r\n Creates a ShySymbol\r\n
+comment2.target=ShySymbol copy()
+comment2.text=\r\n Creates a copy of this EphemeralSymbol\r\n @return a EphemeralSymbol with the same atributes.\r\n
+comment3.target=void makeVisible()
+comment3.text=\r\n Makes visible its figure\r\n
 numComments=4

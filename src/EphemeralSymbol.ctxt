@@ -1,13 +1,12 @@
 #BlueJ class context
+#Fri Oct 09 14:30:04 COT 2026
 comment0.target=EphemeralSymbol
-comment0.text=\r\n\ Represents\ a\ EphemeralSymbol\ that\ is\ a\ special\ type\ of\ symbol\r\n
-comment1.params=color\ figureNum
-comment1.target=EphemeralSymbol(java.lang.String,\ int)
-comment1.text=\r\n\ Creates\ a\ EphemeralSymbol\r\n
-comment2.params=
-comment2.target=EphemeralSymbol\ copy()
-comment2.text=\r\n\ Creates\ a\ copy\ of\ this\ EphemeralSymbol\r\n\ @return\ a\ EphemeralSymbol\ with\ the\ same\ atributes.\r\n
-comment3.params=
-comment3.target=void\ action()
-comment3.text=\r\n\ Does\ an\ action.\ In\ this\ case\ the\ figure\ will\ be\ smaller.\r\n
+comment0.text=\r\n Represents a EphemeralSymbol that is a special type of symbol\r\n
+comment1.params=color figureNum
+comment1.target=EphemeralSymbol(java.lang.String, int)
+comment1.text=\r\n Creates a EphemeralSymbol\r\n
+comment2.target=EphemeralSymbol copy()
+comment2.text=\r\n Creates a copy of this EphemeralSymbol\r\n @return a EphemeralSymbol with the same atributes.\r\n
+comment3.target=void action()
+comment3.text=\r\n Does an action. In this case the figure will be smaller.\r\n
 numComments=4

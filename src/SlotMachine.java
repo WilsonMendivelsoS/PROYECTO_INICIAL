@@ -152,6 +152,38 @@ public class SlotMachine{
     }
     
     /**
+     * Adds a wheel to the slot machine, it can have an special type.
+     * @param type is wheel's type, it can be "normal", "rebel", or "lefty".
+     * @param pos is the wheel's position 
+     */
+    public void addWheel(String type, int pos){
+        if(wheels.size()!= 50){
+            pos = Math.min(Math.max(0, pos-1), wheels.size());
+            makeInvisible();
+            createWheel(pos, type);
+            wheels.get(pos).randomizeSymbol();
+            
+            // If wheels are 13 or 26 or 39, slotMachine will be higher.  
+            if(wheels.size() <14 ){
+                rectangleBodyParts[0].changeSize(200, rectangleBodyParts[0].getWidth()+60);
+            }
+            else{
+                rectangleBodyParts[0].changeSize(((wheels.size()/13)+1)*150, rectangleBodyParts[0].getWidth());
+            }
+            rectangleBodyParts[1].changeSize(25, rectangleBodyParts[0].getWidth()+50);
+            
+            changeBodyPartsPosition();
+            ok = true;
+            if(isVisual){
+                makeVisible();  
+            }   
+        }else{
+            JOptionPane.showMessageDialog(null, "Accion Invalida, se ha alcanzado el máximo número de ruedas.");
+            ok = false;
+        }
+    }
+    
+    /**
      * Changes bodyParts position adapting all the body parts to the slotMachine window
      */
     private void changeBodyPartsPosition(){
@@ -167,8 +199,8 @@ public class SlotMachine{
      */
     
     public void delWheel(int pos){ 
-        if(wheels.size()>0){
-            pos = Math.min(Math.max(0, pos-1), wheels.size()-1);
+        pos = Math.min(Math.max(0, pos-1), wheels.size()-1);
+        if(wheels.size()>0 && wheels.get(pos).canBeDelete() == true){
             makeInvisible();
             wheels.remove(pos);
             isJackpot();
@@ -192,7 +224,7 @@ public class SlotMachine{
             
         }else{
             if(isVisual){
-                JOptionPane.showMessageDialog(null, "Accion Invalida, no puedes tener menos de 0 ruedas."); //Cambiar esto, si se pueden tener menos de 3, pero no negativas.############# ya lo hice, con que sea menos que 0        
+                JOptionPane.showMessageDialog(null, "Accion Invalida, no puedes tener menos de 0 ruedas o no puedes eliminar una rueda rebelde."); //Cambiar esto, si se pueden tener menos de 3, pero no negativas.############# ya lo hice, con que sea menos que 0        
             }
         
             ok = false;
@@ -210,7 +242,16 @@ public class SlotMachine{
             ok=true;
             int cantLock = 0;
             for(Wheel w: wheels){
-                w.spin();
+                if(w.canCopyTheColorFromLeft() && wheels.indexOf(w) != 0){
+                    int posA = wheels.indexOf(w)-1;
+                    Wheel a = wheels.get(posA);
+                    String col = a.colorCurrentSymbol();
+                    w.setCurrentSymbol(symbols.indexOf(col));
+                }
+                else{
+                   w.spin(); 
+                }
+                
                 if(isVisual){
                     w.makeVisible();
                     Canvas.getCanvas().wait(150);
@@ -240,13 +281,22 @@ public class SlotMachine{
         if(symbols.size()>0 && wheels.size() >0){
             int a= Math.max(0, wheel-1);
             int b = Math.min(a, wheels.size()-1);
-            wheels.get(b).spin();
+            Wheel w = wheels.get(b);
+            if(w.canCopyTheColorFromLeft() && wheels.indexOf(w) != 0){
+                    int posA = wheels.indexOf(w)-1;
+                    Wheel w2 = wheels.get(posA);
+                    String col = w2.colorCurrentSymbol();
+                    w.setCurrentSymbol(symbols.indexOf(col));
+                }
+                else{
+                   w.spin(); 
+                }
             ok=true;
             if(isVisual){
                 lever.animation();
-                wheels.get(b).makeVisible();
+                w.makeVisible();
             }
-            if(wheels.get(b).getIsLocked()){
+            if(w.getIsLocked()){
                 ok = false;
             }
             else{
@@ -409,6 +459,16 @@ public class SlotMachine{
 
     }
     /**
+     * Creates a new Wheel
+     * @param pos is the position of the wheel
+     * @param type is the type of the wheel 
+     */
+    private void createWheel(int pos, String type){
+        if(type.equals("normal"))wheels.add(pos, new Wheel());
+        else if(type.equals("lefty")) wheels.add(pos, new LeftyWheel());
+        else if(type.equals("rebel")) wheels.add(pos, new RebelWheel());
+    }
+    /**
      * Deletes a specific symbol
      */
     public void delSymbol(String symbol){ 
@@ -438,6 +498,18 @@ public class SlotMachine{
             }
         }
         return -1;
+    }
+    
+    /**
+     * 
+     */
+    public Wheel getWheel(int pos){
+        if(wheels.size() == 0){
+            return new Wheel();
+        }
+        
+        pos = Math.min(Math.max(0, pos-1), symbols.size());
+        return wheels.get(pos); 
     }
     
     /**
@@ -498,12 +570,15 @@ public class SlotMachine{
             
             Wheel wheelOne = wheels.get(a);
             Wheel wheelTwo = wheels.get(c);
-            if(wheelOne.getIsLocked() == false && wheelTwo.getIsLocked() == false){
+            if(wheelOne.canSwap() == true && wheelTwo.canSwap() == true){
                 wheels.set(a, wheelTwo);
                 wheels.set(c, wheelOne);
                 ok = true;
             }
             else{
+                if(isVisual){
+                    JOptionPane.showMessageDialog(null, "Accion invalida, alguna de las ruedas esta bloqueada o es una rueda Rebelde");
+                }
                 ok = false;
             }
             if(isVisual){
