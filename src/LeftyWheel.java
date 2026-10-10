@@ -1,9 +1,6 @@
-
+import java.util.ArrayList;
 /**
- * Write a description of class LeftyWheel here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ * Represents a LeftyWheel
  */
 public class LeftyWheel extends Wheel
 {
@@ -15,12 +12,32 @@ public class LeftyWheel extends Wheel
         super();
         this.rectangleBodyPart.changeColor("Lefty");
     }
-
-    /**
-     * 
-     */
+    
     @Override
-    public boolean canCopyTheColorFromLeft(){
-        return true;
+    public void spin(){
+        ArrayList<Wheel> wheels = SlotMachine.getWheels();
+        if(wheels.get(0) ==this ){
+            super.spin();
+        }
+        else{
+            for(Wheel w: wheels){
+                if(w == this){
+                    int posThis = wheels.indexOf(w);
+                    int newCurrentSymbol = wheels.get(posThis-1).getCurrentSymbol(); 
+                    setCurrentSymbol(newCurrentSymbol);
+                }
+            }
+        }
+    }
+    
+    @Override
+    public void spin(int steps){
+        ArrayList<Wheel> wheels = SlotMachine.getWheels();
+        if(wheels.get(0) ==this ){
+            super.spin(steps);
+        }
+        else{
+            spin();
+        }
     }
 }

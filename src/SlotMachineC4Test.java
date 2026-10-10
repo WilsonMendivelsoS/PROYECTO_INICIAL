@@ -53,7 +53,7 @@ public class SlotMachineC4Test
      * 
      */
     @Test
-    public void shouldNotBeLocked(){
+    public void shouldRebelNotBeLocked(){
         slotMachine.lock(4);
         assertTrue(slotMachine.getWheel(4).getIsLocked());
     }
@@ -62,7 +62,7 @@ public class SlotMachineC4Test
      * 
      */
     @Test
-    public void shouldNotSwap(){
+    public void shouldRebelNotSwap(){
         slotMachine.swap(3, 4);
         assertFalse(slotMachine.getWheel(4).canSwap());
     }
@@ -71,11 +71,37 @@ public class SlotMachineC4Test
      * 
      */
     @Test
-    public void shouldNotBeDelete(){
+    public void shouldRebelNotBeDelete(){
         slotMachine.delWheel(4);
         assertFalse(slotMachine.getWheel(4).canBeDelete());
     }
-
+    
+    /**
+     * 
+     */
+    @Test
+    public void shouldSplattyMoveWheelsNearToHim(){
+        slotMachine.addWheel("Splatty", 4);
+        String[] beforeSpin = slotMachine.configuration();
+        slotMachine.spin(4,1);
+        String[] afterSpin = slotMachine.configuration();
+        
+        assertTrue(beforeSpin[3] != afterSpin[3]);
+    }
+    
+    @Test
+    public void shouldSplattyMoveOtherSplatties(){
+        slotMachine.addWheel("Splatty", 4);
+        slotMachine.addWheel("Splatty", 5);
+        slotMachine.spin(new String[]{"red", "red", "red", "red","blue", "green", "yellow", "red"});
+        slotMachine.spin(5,1);
+        String[] afterSpin = slotMachine.configuration();
+        
+        assertTrue(afterSpin[4].equals("green"));
+        assertTrue(afterSpin[3].equals("blue"));
+        assertTrue(afterSpin[2].equals("blue"));
+    }
+    
     /**
      * Tears down the test fixture.
      *

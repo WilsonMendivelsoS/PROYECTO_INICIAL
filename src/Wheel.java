@@ -137,7 +137,11 @@ public class Wheel{
         if(isLocked == false){
             if(steps>=0){
                 for( int i = 0; steps>i ; i++){
-                    spin();                
+                    if(isLocked == false){
+                        symbols.get(currentSymbol).makeInvisible();
+                        currentSymbol = (currentSymbol+1)% symbols.size();
+                        symbols.get(currentSymbol).action();
+                    }               
                 }
             }
             if(steps<0){
@@ -156,13 +160,19 @@ public class Wheel{
     }
     
     /**
+     * Return the position of the current symbol
+     * @return the currentSymbol position
+     */
+    public int getCurrentSymbol(){
+        return currentSymbol;
+    }
+    
+    /**
      * Return the color of de current symbol
      * @return the symbol color's name
      */
     public String colorCurrentSymbol(){
-        String color = new String();
-        color=symbols.get(currentSymbol).getColor();
-        return color;
+        return symbols.get(currentSymbol).getColor();
     }
     
     /**
@@ -179,7 +189,13 @@ public class Wheel{
      * Sets wheel's currentSymbol to the new symbol
      */
     public void setCurrentSymbol(int numSymbol){
-        currentSymbol = numSymbol; 
+        if(numSymbol <0){
+            currentSymbol = symbols.size()-(Math.abs(numSymbol)%symbols.size());
+        }
+        else{
+            currentSymbol = numSymbol% symbols.size();     
+        }
+        
     }
     
     /**
@@ -218,7 +234,7 @@ public class Wheel{
     /**
      * 
      */
-    public boolean canCopyTheColorFromLeft(){
-        return false;
+    public boolean isVisible(){
+        return isVisible;
     }
 }

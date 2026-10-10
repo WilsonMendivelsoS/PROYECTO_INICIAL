@@ -1,10 +1,12 @@
 #BlueJ class context
 #Fri Oct 09 19:25:08 COT 2026
-comment0.target=LeftyWheel
-comment0.text=\r\n Represents a LeftyWheel\r\n
-comment1.target=LeftyWheel()
+comment0.target=SplattyWheel
+comment0.text=\r\n Represents splattyWheel if he moves, he will move the wheel in his left.\r\n
+comment1.target=SplattyWheel()
 comment1.text=\r\n Constructor for objects of class LeftyWheel\r\n
 comment2.target=void spin()
+comment2.text=\r\n \r\n
 comment3.params=steps
 comment3.target=void spin(int)
+comment3.text=\r\n \r\n
 numComments=4
