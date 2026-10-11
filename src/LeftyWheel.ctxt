@@ -1,10 +1,12 @@
 #BlueJ class context
-#Fri Oct 09 19:25:08 COT 2026
+#Sat Oct 10 19:49:01 COT 2026
 comment0.target=LeftyWheel
 comment0.text=\r\n Represents a LeftyWheel\r\n
 comment1.target=LeftyWheel()
 comment1.text=\r\n Constructor for objects of class LeftyWheel\r\n
 comment2.target=void spin()
+comment2.text=\r\n Move the wheel and takes the state of the left wheel, if it is not the first wheel.\r\n
 comment3.params=steps
 comment3.target=void spin(int)
+comment3.text=\r\n Move the wheel n steps \r\n @param steps number of wheel will advance \r\n
 numComments=4

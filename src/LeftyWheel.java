@@ -13,6 +13,9 @@ public class LeftyWheel extends Wheel
         this.rectangleBodyPart.changeColor("Lefty");
     }
     
+    /*
+     * Move the wheel and takes the state of the left wheel, if it is not the first wheel.
+     */
     @Override
     public void spin(){
         ArrayList<Wheel> wheels = SlotMachine.getWheels();
@@ -30,6 +33,10 @@ public class LeftyWheel extends Wheel
         }
     }
     
+    /*
+     * Move the wheel n steps 
+     * @param steps number of wheel will advance 
+     */
     @Override
     public void spin(int steps){
         ArrayList<Wheel> wheels = SlotMachine.getWheels();

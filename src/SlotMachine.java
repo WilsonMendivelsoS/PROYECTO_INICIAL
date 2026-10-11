@@ -417,7 +417,9 @@ public class SlotMachine{
     }
     
     /**
-     * 
+     * returns the wheel in the wheels 
+     * @param pos of the wheel
+     * @return wheel if the wheels have at least one
      */
     public Wheel getWheel(int pos){
         if(wheels.size() == 0){

@@ -1,9 +1,6 @@
 
 /**
- * Write a description of class RebelWheel here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ * Represents a RebelWheel
  */
 public class RebelWheel extends Wheel
 {
@@ -17,7 +14,8 @@ public class RebelWheel extends Wheel
     }
 
     /**
-     * 
+     * return if get is locked
+     * @return true
      */
     @Override
     public boolean getIsLocked(){
@@ -25,7 +23,8 @@ public class RebelWheel extends Wheel
     }
     
     /**
-     * 
+     * set false in isLocked 
+     * @param isLocked
      */
     @Override 
     public void setIsLocked(boolean isLocked){
@@ -33,7 +32,8 @@ public class RebelWheel extends Wheel
     }
     
     /**
-     * 
+     * return if can swap
+     * @return false
      */
     @Override
     public boolean canSwap(){
@@ -41,7 +41,8 @@ public class RebelWheel extends Wheel
     }
     
     /**
-     * 
+     * return if can be delete
+     * @return false
      */
     @Override
     public boolean canBeDelete(){

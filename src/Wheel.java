@@ -214,7 +214,8 @@ public class Wheel{
     }
     
     /**
-     * 
+     * return if the wheel can swap 
+     * @return canSwap 
      */
     public boolean canSwap(){
         if(isLocked==false){
@@ -225,14 +226,16 @@ public class Wheel{
     }
     
     /**
-     * 
+     * returns the boolean value true because it can be deleted 
+     * @return true
      */
     public boolean canBeDelete(){
         return true;
     }
     
     /**
-     * 
+     * return if is Visible 
+     * @return isVisible
      */
     public boolean isVisible(){
         return isVisible;

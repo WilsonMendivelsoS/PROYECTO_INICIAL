@@ -1,5 +1,5 @@
 #BlueJ class context
-#Fri Oct 09 19:25:08 COT 2026
+#Sat Oct 10 19:49:01 COT 2026
 comment0.target=SplattyWheel
 comment0.text=\r\n Represents splattyWheel if he moves, he will move the wheel in his left.\r\n
 comment1.target=SplattyWheel()

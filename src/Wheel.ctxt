@@ -1,5 +1,5 @@
 #BlueJ class context
-#Fri Oct 09 19:25:08 COT 2026
+#Sat Oct 10 19:49:01 COT 2026
 comment0.target=Wheel
 comment0.text=\r\n Represents a wheel that can have a lot of symbols.\r\n \r\n @author David Garzon, Wilson Mendivelso\r\n @version 1\r\n
 comment1.target=Wheel()
@@ -19,11 +19,11 @@ comment15.params=isLocked
 comment15.target=void setIsLocked(boolean)
 comment15.text=\r\n modifies the wheel's locking state\r\n
 comment16.target=boolean canSwap()
-comment16.text=\r\n \r\n
+comment16.text=\r\n return if the wheel can swap \r\n @return canSwap \r\n
 comment17.target=boolean canBeDelete()
-comment17.text=\r\n \r\n
+comment17.text=\r\n returns the boolean value true because it can be deleted \r\n @return true\r\n
 comment18.target=boolean isVisible()
-comment18.text=\r\n \r\n
+comment18.text=\r\n return if is Visible \r\n @return isVisible\r\n
 comment2.target=void makeVisible()
 comment2.text=\r\n Make this wheel visible.\r\n
 comment3.target=void makeInvisible()
