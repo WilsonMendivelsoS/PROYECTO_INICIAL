@@ -23,9 +23,7 @@ public class SlotMachineContest
         if(n < 3 || n > 50){
             return new int[0][0];
         }
-        if(slotMachine==null){
-            slotMachine = new SlotMachine(n);
-        }
+        slotMachine = new SlotMachine(n);
         
         ArrayList<int[]> movimientos = new ArrayList<>();
  

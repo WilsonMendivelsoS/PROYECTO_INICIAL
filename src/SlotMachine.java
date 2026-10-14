@@ -52,16 +52,15 @@ public class SlotMachine{
     public SlotMachine(int n){
         this();
         for(int i = 0; i < n; i++){
-            addSymbol("Normal", i,Canvas.colors[i]);
+            addSymbol("Normal", i + 1, Canvas.colors[i]);
         }
         for(int j = 0; j < n; j++){
-            addWheel(j);
+            addWheel(j + 1);
         }
         
-        if(distinctSymbols() == 1){
-            Wheel w=wheels.get(n-1);
+        if(wheels.size() > 1 && distinctSymbols() == 1){
+            Wheel w = wheels.get(n - 1);
             w.spin(1);
-            
         }
     }
     /**
@@ -214,9 +213,7 @@ public class SlotMachine{
      */
     public void spin(){ 
         if((symbols.size()>0 && wheels.size() >0)){
-            if(isVisual){
-                lever.animation();  
-            }
+
             ok=true;
             int cantLock = 0;
             for(Wheel w: wheels){
@@ -278,7 +275,6 @@ public class SlotMachine{
                 wheels.get(idxWheel).setCurrentSymbol(idxSymbol);
                 ok = true;
                 if(isVisual){
-                    lever.animation();
                     wheels.get(idxWheel).makeVisible();
                     isJackpot();
                 }
@@ -347,7 +343,7 @@ public class SlotMachine{
      * @param color is the symbol's color.
      */
     public void addSymbol(int pos, String color){
-        addSymbol(color,pos, "Normal");
+        addSymbol("Normal", pos, color);
     }
     
     /**
@@ -564,7 +560,6 @@ public class SlotMachine{
             Wheel w = wheels.get(b);         
             for(int i=0; i<Math.abs(steps); i++){
                 if(isVisual){
-                    lever.animation();
                 }
                 w.spin(steps/Math.abs(steps));
                 if(isVisual) w.makeVisible();
@@ -599,7 +594,6 @@ public class SlotMachine{
                 cont ++;
             }
             if(isVisual){
-                lever.animation();
                 makeVisible(); 
                 isJackpot();
             }

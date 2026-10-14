@@ -53,16 +53,20 @@ public class SlotMachineCC2Test
      */
     @Test
     public void accordingGrMsShouldNotAddStrangeSymbolsAndWinWithThatSymbol(){
-        slotMachine.addSymbol(1,"red");
-        slotMachine.addSymbol(2,"blue");
-        slotMachine.addSymbol(3,"green");
+        slotMachine.addSymbol(1, "red");
+        slotMachine.addSymbol(2, "blue");
+        slotMachine.addSymbol(3, "green");
         while(slotMachine.configuration().length < 3){
-             slotMachine.addWheel(1);   
+            slotMachine.addWheel(1);   
         }
-
-        slotMachine.addSymbol(4, "strange");
         
+        slotMachine.spin(new String[]{"red", "blue", "green"});
+    
+        slotMachine.addSymbol(4, "strange");
+        assertFalse(slotMachine.ok());
+    
         String[] strangeCombination = {"strange", "strange", "strange"};
+        slotMachine.spin(strangeCombination); 
         
         assertFalse(slotMachine.isJackpot());
     }

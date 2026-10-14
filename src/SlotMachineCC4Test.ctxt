@@ -1,0 +1,17 @@
+#BlueJ class context
+#Tue Oct 13 20:29:12 COT 2026
+comment0.target=SlotMachineCC4Test
+comment0.text=\r\n The test class SlotMachineC4Test.\r\n\r\n @author David Garzon, Wilson Mendivelso\r\n @version 1\r\n
+comment1.target=void setUp()
+comment1.text=\r\n Sets up the test fixture.\r\n\r\n Called before every test case method.\r\n
+comment2.target=void accordingGrMsshouldBeTheSameColorAsTheWheelOnTheLeft()
+comment2.text=\r\n \r\n
+comment3.target=void accordingGrMsshouldNotDeleteARebelWheel()
+comment3.text=\r\n \r\n
+comment4.target=void accordingGbShouldAllowDifferentSymbolTypesInSameWheel()
+comment4.text=\r\n    \u00A0* Verifica que los simbolos de tipo normal, ephemeral y shy\r\n    \u00A0* puedan coexistir en una misma rueda.\r\n\u00A0
+comment5.target=void accordingGbShouldNotAllowDuplicateColorAcrossSymbolTypes()
+comment5.text=\r\n    \u00A0* Verifica que diferentes tipos de simbolos no puedan\r\n    \u00A0* introducir colores duplicados en la misma rueda.\r\n\u00A0
+comment6.target=void tearDown()
+comment6.text=\r\n Tears down the test fixture.\r\n\r\n Called after every test case method.\r\n
+numComments=7
