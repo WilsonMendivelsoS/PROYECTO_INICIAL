@@ -1,20 +1,23 @@
 #BlueJ class context
-#Tue Oct 13 19:41:38 COT 2026
+#Mon Oct 19 15:10:05 COT 2026
 comment0.target=SlotMachineC4Test
-comment0.text=\r\n The test class SlotMachineC4Test.\r\n\r\n @author David Garzon, Wilson Mendivelso\r\n @version 1\r\n
+comment0.text=\r\n The test class SlotMachineC4Test.\r\n Pruebas para el Ciclo 4\: Validaci\u00F3n de nuevas tipolog\u00EDas de ruedas y s\u00EDmbolos.\r\n\r\n @author David Garzon, Wilson Mendivelso\r\n @version 1\r\n
 comment1.target=void setUp()
-comment1.text=\r\n Sets up the test fixture.\r\n\r\n Called before every test case method.\r\n
+comment1.text=\r\n Sets up the test fixture.\r\n Called before every test case method.\r\n
 comment2.target=void shouldBeTheSameColorAsTheWheelOnTheLeft()
-comment2.text=\r\n \r\n
+comment2.text=\r\n Lefty wheel should copy the state of the wheel on its left when it spins.\r\n
 comment3.target=void shouldRebelNotBeLocked()
-comment3.text=\r\n \r\n
+comment3.text=\r\n Rebel wheel returns true for locking intrinsically.\r\n
 comment4.target=void shouldRebelNotSwap()
-comment4.text=\r\n \r\n
+comment4.text=\r\n Rebel wheels should not allow swapping actions.\r\n
 comment5.target=void shouldRebelNotBeDelete()
-comment5.text=\r\n \r\n
+comment5.text=\r\n Rebel wheels cannot be deleted.\r\n
 comment6.target=void shouldSplattyMoveWheelsNearToHim()
-comment6.text=\r\n \r\n
+comment6.text=\r\n Spinning a Splatty wheel should also move the wheel exactly to its left.\r\n
 comment7.target=void shouldSplattyMoveOtherSplatties()
-comment8.target=void tearDown()
-comment8.text=\r\n Tears down the test fixture.\r\n\r\n Called after every test case method.\r\n
-numComments=9
+comment7.text=\r\n Splatty wheels should trigger a chain reaction moving other Splatties on the left.\r\n
+comment8.target=void shouldAddNewSymbolTypesCorrectly()
+comment8.text=\r\n The system should accept new types of symbols seamlessly without crashing.\r\n
+comment9.target=void tearDown()
+comment9.text=\r\n Tears down the test fixture.\r\n
+numComments=10

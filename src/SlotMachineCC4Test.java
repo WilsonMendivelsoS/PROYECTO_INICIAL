@@ -79,13 +79,11 @@ public class SlotMachineCC4Test
         SlotMachine machine = new SlotMachine();
         machine.addWheel("Normal", 1);
         machine.addSymbol("Normal",1, "red");
-        machine.addSymbol("Ephemeral", 1,"blue");
-        machine.addSymbol("Shy", 1,"green");
+        machine.addSymbol("Ephemeral", 2,"blue");
+        machine.addSymbol("Shy", 3,"green");
         assertTrue(machine.ok());
         assertArrayEquals(new String[]{"red", "blue", "green"}, machine.symbols());
     }
-    
-    
     
     /**
      * Verifica que diferentes tipos de simbolos no puedan
