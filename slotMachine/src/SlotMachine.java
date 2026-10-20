@@ -1,0 +1,663 @@
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.lang.Math;
+import javax.swing.JOptionPane;
+
+/**
+* Represents a slotMachine, it can add wheels and spin them, if you wanna win, you will need a jackpot.<br>
+* <b>(symbolsQuantity, wheelsQuantity, lever, rectangleBodyParts, symbols, wheels)</b><br>
+* <b>Inv: symbols</b> > 0 and <b>wheels</b> > 0 
+* @author David Garzon, Wilson Mendivelso
+* @version 1
+*/
+public class SlotMachine{
+    private Rectangle[] rectangleBodyParts;
+    private static ArrayList<Symbol> symbols;
+    private static ArrayList<Wheel> wheels;
+    private Lever lever;
+    private boolean isVisual;
+    private boolean ok;
+    
+    /** 
+     * Creates a slotMachine with a initial composition.
+     */
+    public SlotMachine(){
+        isVisual =false;
+        wheels = new ArrayList<>();
+        rectangleBodyParts = new Rectangle[2];
+        symbols = new ArrayList<>();
+        lever = new Lever();
+        ok = true;
+        
+        for(int i = 0; i < rectangleBodyParts.length; i++){
+            rectangleBodyParts[i] = new Rectangle();
+        }
+        
+        rectangleBodyParts[0].moveHorizontal(-rectangleBodyParts[0].getPosition()[0]+50);
+        rectangleBodyParts[0].moveVertical(-rectangleBodyParts[0].getPosition()[1]+50);
+        rectangleBodyParts[0].changeColor("gray");
+        rectangleBodyParts[0].changeSize(200, 150);
+        
+        changeBodyPartsPosition();
+        
+        //Base
+        rectangleBodyParts[1].changeSize( 25 , rectangleBodyParts[0].getWidth()+50);
+        rectangleBodyParts[1].changeColor("black");
+
+    }
+    /** 
+     * Creates a slotMachine with a specific n wheels and n symbols.
+     * @param n are the number of wheels and number of symbols
+    */
+    public SlotMachine(int n){
+        this();
+        for(int i = 0; i < n; i++){
+            addSymbol("Normal", i + 1, Canvas.colors[i]);
+        }
+        for(int j = 0; j < n; j++){
+            addWheel(j + 1);
+        }
+        
+        if(wheels.size() > 1 && distinctSymbols() == 1){
+            Wheel w = wheels.get(n - 1);
+            w.spin(1);
+        }
+    }
+    /**
+     * Makes visible the machine, its wheels and symbols.
+     */
+    public void makeVisible(){
+        if(!isVisual){
+            isVisual = true;
+        }
+        for(Rectangle r: rectangleBodyParts){
+            if(!r.isVisible()){
+                r.makeVisible();    
+            }
+        }
+        lever.makeVisible();
+        int espacioInterm = (rectangleBodyParts[0].getWidth() - 50*Math.min(wheels.size(),13))/(Math.min(wheels.size(),13) + 1);
+        
+        for(int j = 0; j < wheels.size(); j++){
+            int posX = j % 13;
+            int posY = j/13;
+            wheels.get(j).place(rectangleBodyParts[0].getPosition()[0] + espacioInterm*(1 + posX) + 50 * posX, rectangleBodyParts[0].getPosition()[1] +50 + 125*posY);
+            wheels.get(j).makeVisible();
+        }
+    }
+    
+    
+    /**
+     * Makes invisible the machine, its wheels and symbols.
+     */
+    
+    public void makeInvisible(){
+        for(Rectangle r: rectangleBodyParts){
+            r.makeInvisible();
+        }
+        for(Wheel w: wheels){
+            w.makeInvisible();
+        }
+        lever.makeInvisible();
+    }
+    
+    
+    /**
+     * It returns all the symbol's colors.
+     * @return Symbol's colors in order starting by one.
+     */
+    public String[] symbols(){
+        if(symbols.size() == 0){
+            String[] names = new String[0];
+            return names;
+        }else{
+            String[] names = new String[symbols.size()];
+            for (int i = 0; i < symbols.size(); i++){
+                names[i] = symbols.get(i).getColor();
+            }
+            return names;
+        }
+    }
+   
+    
+    /**
+     * Add a new wheel in a specific position.
+     * @param pos is the position of the new wheel.
+     */
+    public void addWheel(int pos){
+        addWheel("Normal", pos);
+    }
+    
+    /**
+     * Adds a wheel to the slot machine, it can have an special type.
+     * @param type is wheel's type, it can be "normal", "rebel","lefty", or "Splatty".
+     * @param pos is the wheel's position 
+     */
+    public void addWheel(String type, int pos){
+        if(wheels.size()!= 50){
+            pos = Math.min(Math.max(0, pos-1), wheels.size());
+            makeInvisible();
+            createWheel(pos, type);
+            wheels.get(pos).randomizeSymbol();
+            
+            // If wheels are 13 or 26 or 39, slotMachine will be higher.  
+            if(wheels.size() <14 ){
+                rectangleBodyParts[0].changeSize(200, rectangleBodyParts[0].getWidth()+60);
+            }
+            else{
+                rectangleBodyParts[0].changeSize(((wheels.size()/13)+1)*150, rectangleBodyParts[0].getWidth());
+            }
+            rectangleBodyParts[1].changeSize(25, rectangleBodyParts[0].getWidth()+50);
+            
+            changeBodyPartsPosition();
+            ok = true;
+            if(isVisual){
+                makeVisible();  
+            }   
+        }else{
+            JOptionPane.showMessageDialog(null, "Accion Invalida, se ha alcanzado el máximo número de ruedas.");
+            ok = false;
+        }
+    }
+    
+    /**
+     * Changes bodyParts position adapting all the body parts to the slotMachine window
+     */
+    private void changeBodyPartsPosition(){
+        lever.changeBodyPartsPosition(rectangleBodyParts[0].getWidth(), rectangleBodyParts[0].getHeight());
+        
+        rectangleBodyParts[1].moveHorizontal(-rectangleBodyParts[1].getPosition()[0]+rectangleBodyParts[0].getPosition()[0]-25);
+        rectangleBodyParts[1].moveVertical(-rectangleBodyParts[1].getPosition()[1] +rectangleBodyParts[0].getPosition()[1]+rectangleBodyParts[0].getHeight());
+    }
+    
+    /**
+     * Deletes a specific wheel
+     * @param pos is the position of thw wheel that we wanna delete
+     */
+    
+    public void delWheel(int pos){ 
+        pos = Math.min(Math.max(0, pos-1), wheels.size()-1);
+        if(wheels.size()>0 && wheels.get(pos).canBeDelete() == true){
+            makeInvisible();
+            wheels.remove(pos);
+            isJackpot();
+
+            
+            // If wheels are 13 or 26 or 39, slotMachine will be lower.
+            if(wheels.size() <13 ){
+                rectangleBodyParts[0].changeSize(200, rectangleBodyParts[0].getWidth()-60);
+            }
+            else{
+                rectangleBodyParts[0].changeSize(((wheels.size()/13)+1)*150, rectangleBodyParts[0].getWidth());
+            }
+            
+            rectangleBodyParts[1].changeSize(25, rectangleBodyParts[0].getWidth()+50);
+            
+            changeBodyPartsPosition();
+            ok = true;
+            if(isVisual){
+                makeVisible();  
+            }
+            
+        }else{
+            if(isVisual){
+                JOptionPane.showMessageDialog(null, "Accion Invalida, no puedes tener menos de 0 ruedas o no puedes eliminar una rueda rebelde."); //Cambiar esto, si se pueden tener menos de 3, pero no negativas.############# ya lo hice, con que sea menos que 0        
+            }
+        
+            ok = false;
+        }
+    }
+    
+    /**
+     * Moves all the wheels to its next symbol.
+     */
+    public void spin(){ 
+        if((symbols.size()>0 && wheels.size() >0)){
+
+            ok=true;
+            int cantLock = 0;
+            for(Wheel w: wheels){
+                
+                w.spin(); 
+                if(isVisual){
+                    w.makeVisible();
+                    Canvas.getCanvas().wait(150);
+                }
+                if(w.getIsLocked()){
+                    ok = false;
+                    cantLock ++;
+                }
+            }
+            if(cantLock != wheels.size()){
+                isJackpot();
+            }
+            
+        }else{
+            if(isVisual){
+                JOptionPane.showMessageDialog(null, "No hay simbolos o no hay ruedas");
+            }
+            ok=false;
+        }
+        
+    }
+    
+    /**
+     * Moves a specific wheel to its next symbol.
+     */
+    public void spin(int wheel){ 
+        spin(wheel, 1);
+    }
+    
+    /**
+     * Return a List with the color of the current symbols  arranged from left to right of the slotmachine
+     * @return String[] with the color of the current symbols
+     */
+    public String[] configuration(){
+        String[] actualSym = new String[wheels.size()];
+        int c =0;
+        for(Wheel w: wheels){
+            actualSym[c]=w.colorCurrentSymbol();
+            c++;
+        }
+        return actualSym;
+    }
+    
+    /**
+     * Place a wheel in a specific symbol
+     * @param wheel is the number of the wheel.
+     * @param symbol is the name of the symbol
+     */
+    public void placeSymbol(int wheel, String symbol){
+        if(colorExists(symbol)){
+            int idxSymbol = getIdxSymbol(symbol);
+            int idxWheel = Math.min(Math.max(0, wheel-1), wheels.size()-1);
+            if(!wheels.get(idxWheel).colorCurrentSymbol().equals(symbol)){
+                wheels.get(idxWheel).setCurrentSymbol(idxSymbol);
+                ok = true;
+                if(isVisual){
+                    wheels.get(idxWheel).makeVisible();
+                    isJackpot();
+                }
+            }
+            else{
+                ok = false;
+            }
+            
+        }
+        else{
+            ok = false;
+        }
+    }
+    
+    /**
+     * Return the number of the distincs Symbols of the currents wheels
+     * @return the number of the distincs Symbols
+     */
+    public int distinctSymbols(){
+        if(symbols.size()==0 && wheels.size()>0){
+            if(isVisual){
+                JOptionPane.showMessageDialog(null, "No hay simbolos");
+            }
+            return 0;
+        }else{
+            HashSet<String> colors = new HashSet<>();
+            String[] actualColorSym = configuration();
+            for(String color: actualColorSym){
+                colors.add(color);
+            }
+            return colors.size();
+        }
+    }
+    
+    
+    /**
+     * return true if the current number of symbols is 1 iand finish the game
+     * @return true if the symbols currents in the wheels are equals 1
+     */
+    public boolean isJackpot(){
+        if(distinctSymbols()==1 && symbols().length > 0){
+            if(!rectangleBodyParts[0].getColor().equals("yellow")){
+                rectangleBodyParts[0].changeColor("yellow");
+                if(isVisual){ 
+                    makeVisible();
+                    JOptionPane.showMessageDialog(null, "Ganaste");  
+                    winningAnimation();
+                }       
+            }
+            return true;
+        }
+        else{
+            if(rectangleBodyParts[0].getColor().equals("yellow")){
+                rectangleBodyParts[0].changeColor("gray");  
+                if(isVisual){
+                    makeVisible();
+                }
+            }
+        }
+        return false;
+    } 
+    
+    /**
+     * Adds a symbol in a specific position, this symbol is also added to all the wheels
+     * @param pos is the symbol's position
+     * @param color is the symbol's color.
+     */
+    public void addSymbol(int pos, String color){
+        addSymbol("Normal", pos, color);
+    }
+    
+    /**
+     * Looks if colors in slotMachine
+     * @return if colors already exists in slotMachine
+     */
+    private boolean hasSymbol(String color){
+        for(String i: symbols()){
+            if(color.equals(i)){
+                return true;
+            }
+        }
+        return false;
+    }
+    /**
+     * Creates a new symbol
+     * @param pos is the position of the symbol.
+     */
+    private void createSymbol(int pos, String color, String type){
+        int ran = randomNumGenerator(0,3);
+        if(type.equals("Normal"))symbols.add(pos, new Symbol(color, ran));
+        else if(type.equals("Ephemeral")) symbols.add(pos, new EphemeralSymbol(color, ran));
+        else if(type.equals("Shy")) symbols.add(pos, new ShySymbol(color, ran));
+
+    }
+    /**
+     * Creates a new Wheel
+     * @param pos is the position of the wheel
+     * @param type is the type of the wheel 
+     */
+    private void createWheel(int pos, String type){
+        if(type.equals("Normal"))wheels.add(pos, new Wheel());
+        else if(type.equals("Lefty")) wheels.add(pos, new LeftyWheel());
+        else if(type.equals("Rebel")) wheels.add(pos, new RebelWheel());
+        else if(type.equals("Splatty")) wheels.add(pos, new SplattyWheel());
+    }
+    /**
+     * Deletes a specific symbol
+     */
+    public void delSymbol(String symbol){ 
+        if(symbols.size()>0 && hasSymbol(symbol)){
+            int idxSymbol = getIdxSymbol(symbol);
+            symbols.remove(idxSymbol);
+            for(Wheel w: wheels){
+                w.delSymbol(symbol);
+            }
+            ok = true; 
+        }else{
+            if(isVisual){
+                JOptionPane.showMessageDialog(null, "Accion invalida.");
+            }
+            ok = false;
+        }
+    }
+    
+    /**
+     * Returns the idx color's number for its color.
+     * @param color is the symbol's color.
+     */
+    private int getIdxSymbol(String color){
+        for(int i = 0; i < symbols.size(); i++){
+            if(symbols.get(i).getColor().equals(color)){
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    /**
+     * returns the wheel in the wheels 
+     * @param pos of the wheel
+     * @return wheel if the wheels have at least one
+     */
+    public Wheel getWheel(int pos){
+        if(wheels.size() == 0){
+            return new Wheel();
+        }
+        
+        pos = Math.min(Math.max(0, pos-1), symbols.size());
+        return wheels.get(pos); 
+    }
+    
+    /**
+     * The program ends with a message and make invisible all wheels and symbols.
+     */
+    public void exit(){
+        makeInvisible();
+        JOptionPane.showMessageDialog(null, "Adios");
+        System.exit(0);
+    }
+
+    
+    /**
+     * check if the last action can be performed
+     * @return true if the last action can be performed
+     */
+    public boolean ok(){
+        return ok;
+    }
+    
+    
+    /**
+     * Generates a random number.
+     * @param infLimit is the minimum number that can have.
+     * @param supLimit - 1 is the maximum number that can have.
+     * @return a random number between infLimit and supLimit-1
+     */
+    public static int randomNumGenerator(int infLimit, int supLimit){
+        int numeroRand = infLimit + (int)(Math.random()* supLimit);
+        return numeroRand;
+    }
+    
+    /**
+     * Checks if a symbol exists
+     * @param color is the symbol's color
+     * @return if that symbols exists
+     */
+    private boolean colorExists(String color){
+        for(String c: Canvas.colors){
+            if(color.equals(c)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * swap the positions of two wheels given their positions
+     * @param wheel1 Position in ArrayList wheels of wheel number 1
+     * @param wheel2 Position in Arraylist wheels of wheel number 2
+     */
+    public void swap(int wheel1, int wheel2){
+        if(wheels.size()>=2){
+            int b = Math.max(wheel1-1, 0);
+            int a = Math.min(b, wheels.size()-1);
+            int d = Math.max(wheel2-1, 0);
+            int c = Math.min(d, wheels.size()-1);
+            
+            Wheel wheelOne = wheels.get(a);
+            Wheel wheelTwo = wheels.get(c);
+            if(wheelOne.canSwap() == true && wheelTwo.canSwap() == true){
+                wheels.set(a, wheelTwo);
+                wheels.set(c, wheelOne);
+                ok = true;
+            }
+            else{
+                if(isVisual){
+                    JOptionPane.showMessageDialog(null, "Accion invalida, alguna de las ruedas esta bloqueada o es una rueda Rebelde");
+                }
+                ok = false;
+            }
+            if(isVisual){
+                makeVisible();
+            }
+        }else{
+            if(isVisual){
+                JOptionPane.showMessageDialog(null, "Accion invalida, no hay suficientes ruedas para intercambiar");
+            }
+            ok=false;
+        }
+    }
+    
+    /**
+     * lock a wheel, if is negative, get position 0, if is larger than the wheel size, it adopts that size
+     * @param wheel in wheels( position )
+     */
+    public void lock(int wheel){ 
+        if(wheels.size()>0){
+            int a = Math.max(wheel-1, 0);
+            int b = Math.min(a, wheels.size()-1);
+            Wheel wheelact = wheels.get(b);
+            if(wheelact.getIsLocked() == false){
+                wheelact.setIsLocked(true);
+            }
+            ok=true;
+        }else{
+            if(isVisual){
+                JOptionPane.showMessageDialog(null, "Accion invalida, no hay ruedas"); 
+            }
+            ok=false;
+        }
+    }
+    
+    /**
+     * unlock a wheel, if is negative, get position 0, if is larger than the wheel size, it adopts that size
+     * @param wheel in wheels ( position )
+     */
+    public void unlock(int wheel){
+        if(wheels.size()>0){
+            int a = Math.max(wheel-1, 0);
+            int b = Math.min(a, wheels.size()-1);
+            Wheel wheelact = wheels.get(b);
+            if(wheelact.getIsLocked() == true){
+                wheelact.setIsLocked(false);
+            }
+            ok=true;
+        }else{
+            if(isVisual){
+                JOptionPane.showMessageDialog(null, "Accion invalida, no hay ruedas"); 
+            }
+            ok=false;
+        }        
+    }
+    
+    /**
+     * Moves a specific wheel specific steps. Steps can be negative.
+     * @param wheel is the wheel number.
+     * @param steps are the steps it will move.
+     */
+    public void spin(int wheel, int steps){
+        if(symbols.size()>0 && wheels.size()>0){
+            int a = Math.max(wheel-1, 0);
+            int b = Math.min(a, wheels.size()-1);
+            Wheel w = wheels.get(b);         
+            for(int i=0; i<Math.abs(steps); i++){
+                if(isVisual){
+                }
+                w.spin(steps/Math.abs(steps));
+                if(isVisual) w.makeVisible();
+            }
+            if(wheels.get(b).getIsLocked()){
+                ok = false;
+            }
+            else{
+                ok = true;
+                isJackpot();
+            }
+        }else{
+            if(isVisual){
+                JOptionPane.showMessageDialog(null, "Accion invalida, no hay ruedas y no hay simbolos"); 
+            }
+            ok=false;
+        }
+    }
+    
+    /**
+     * Change the symbol's color that are given
+     * @param setSymbols are the symbols that are given
+     */
+    public void spin(String[] setSymbols){
+        if(setSymbols.length == wheels.size()){
+            int cont =0;
+            for(Wheel w: wheels){
+                if(colorExists(setSymbols[cont])){
+                    int idxSymbol = getIdxSymbol(setSymbols[cont]);
+                    w.setCurrentSymbol(idxSymbol);
+                }
+                cont ++;
+            }
+            if(isVisual){
+                makeVisible(); 
+                isJackpot();
+            }
+            ok = true;
+        }
+        else{
+            ok = false;
+        }
+    }
+    
+    /**
+     * If you win you will see this animation, where all the symbols changes.
+     */
+    private void winningAnimation(){
+        int winningSymbol = wheels.get(0).getCurrentSymbol();
+        for(int i = 0+winningSymbol; i < 2*symbols.size() + winningSymbol-1; i++){
+            for(Wheel w: wheels){
+                w.makeInvisible();
+                w.setCurrentSymbol(i+1);
+                w.makeVisible();
+            }
+            Canvas.getCanvas().wait(300);
+        }
+    }
+    /**
+     * Gives all the current symbols.
+     * @return all current symbols.
+     */
+    public static ArrayList<Symbol> getSymbols(){
+        return symbols;
+    }
+    
+    /**
+     * Adds a symbol to the slot machine, it can have an special type.
+     * @param type is symbol's type, it can be "normal", "ephemeral", or "shy".
+     * @param pos is the symbol's position
+     * @param color is the symbol's color.
+     */
+    public void addSymbol(String type, int pos, String color){
+        if(colorExists(color) && !hasSymbol(color)){
+            pos = Math.min(Math.max(0, pos-1), symbols.size());
+            createSymbol(pos, color, type);
+            
+            for(Wheel w: wheels){
+                w.addSymbol(pos+1, symbols.get(pos).copy());
+                if(isVisual){
+                    w.makeVisible();
+                }
+            }  
+            ok = true;
+        }
+        else{
+            if(isVisual){
+                JOptionPane.showMessageDialog(null, "Accion invalida. No existe ese color");
+            }
+            ok = false;
+        }
+    }
+    
+    /**
+     * Returns the wheels
+     * @return the wheels
+     */
+    public static ArrayList<Wheel> getWheels(){
+        return wheels;
+    }
+}

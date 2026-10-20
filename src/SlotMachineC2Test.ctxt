@@ -1,5 +1,5 @@
 #BlueJ class context
-#Mon Oct 19 15:07:20 COT 2026
+#Mon Oct 19 19:36:13 COT 2026
 comment0.target=SlotMachineC2Test
 comment0.text=\r\n The test class SlotMachineC2Test.\r\n Pruebas para el Ciclo 2\: Extensiones como swap, lock, unlock, configuraciones por arreglos y pasos de giro.\r\n\r\n @author David Garzon, Wilson Mendivelso\r\n @version 1\r\n
 comment1.target=void setUp()
