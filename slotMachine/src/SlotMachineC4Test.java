@@ -144,7 +144,6 @@ public class SlotMachineC4Test {
         slotMachine.spin(1);
         String[] after = slotMachine.configuration();
         
-        /* It shouldn't crash trying to move a left wheel, it should just spin normally */
         assertTrue(!before[0].equals(after[0]));
     }
     
@@ -163,7 +162,6 @@ public class SlotMachineC4Test {
         slotMachine.spin(3, 1);
         String[] afterSpin = slotMachine.configuration();
         
-        /* It should have affected itself, the Splatty to its left, and the normal wheel on the far left */
         assertTrue(!beforeSpin[0].equals(afterSpin[0]));
         assertTrue(!beforeSpin[1].equals(afterSpin[1]));
         assertTrue(!beforeSpin[2].equals(afterSpin[2]));
@@ -177,7 +175,6 @@ public class SlotMachineC4Test {
         slotMachine.addSymbol("Ephemeral", 4, "yellow");
         slotMachine.addSymbol("Shy", 5, "purple");
         
-        /* It must be capable of counting the original 3 plus these 2 new symbols */
         assertEquals(5, slotMachine.symbols().length);
     }
 
@@ -191,10 +188,8 @@ public class SlotMachineC4Test {
         slotMachine.addWheel(1);
         slotMachine.placeSymbol(1, "purple");
         
-        /* Spin multiple times to trigger the visibility toggles in action() */
         slotMachine.spin(1, 4);
         
-        /* If it doesn't throw a NullPointerException or equivalent, the test passes the integration */
         assertNotNull(slotMachine.configuration()[0]);
     }
 
@@ -207,13 +202,126 @@ public class SlotMachineC4Test {
         slotMachine.addWheel(1);
         slotMachine.placeSymbol(1, "yellow");
         
-        /* Spin multiple times to trigger the size reduction in action() */
         slotMachine.spin(1, 10);
         
-        /* Verifies the machine stays stable despite the symbol's internal state changes */
         assertNotNull(slotMachine.configuration()[0]);
     }
-    
+    /*
+     * Should Splatty not change the left wheel if it is explicitly locked.
+     */
+    @Test
+    public void shouldSplattyRespectLockedWheels(){
+        slotMachine.addWheel(1);
+        slotMachine.addWheel("Splatty", 2);
+        
+        slotMachine.lock(1);
+        String[] beforeSpin = slotMachine.configuration();
+        slotMachine.spin(2, 1);
+        String[] afterSpin = slotMachine.configuration();
+        
+        assertTrue(!beforeSpin[1].equals(afterSpin[1]));
+        assertEquals(beforeSpin[0], afterSpin[0]);
+    }
+
+    /*
+     * Should Splatty with 0 steps keep both itself and the left wheel in the exact same position.
+     */
+    @Test
+    public void shouldSplattyNotMoveAnythingWithZeroSteps(){
+        slotMachine.addWheel(1);
+        slotMachine.addWheel("Splatty", 2);
+        
+        String[] beforeSpin = slotMachine.configuration();
+        slotMachine.spin(2, 0);
+        String[] afterSpin = slotMachine.configuration();
+        
+        assertArrayEquals(beforeSpin, afterSpin);
+    }
+
+    /*
+     * Should Splatty spinning a LeftyWheel trigger the Lefty behavior on the left.
+     */
+    @Test
+    public void shouldSplattyTriggerLeftyLeftOfIt(){
+        slotMachine.addWheel(1);
+        slotMachine.addWheel("Lefty", 2);
+        slotMachine.addWheel("Splatty", 3);
+        
+        String[] beforeSpin = slotMachine.configuration();
+        
+        slotMachine.spin(3, 1);
+        String[] afterSpin = slotMachine.configuration();
+        
+        assertEquals(afterSpin[0], afterSpin[1]);
+        assertTrue(!beforeSpin[2].equals(afterSpin[2]));
+    }
+
+    /*
+     * Should ShySymbol alternate its visibility state internally without breaking the wheel configuration.
+     */
+    @Test
+    public void shouldShySymbolAlternateVisibilityOnAction(){
+        slotMachine.addSymbol("Shy", 4, "purple");
+        slotMachine.addWheel(1);
+        
+        slotMachine.placeSymbol(1, "purple");
+        
+        slotMachine.spin(1, 1);
+        
+        slotMachine.spin(1, 1);
+        
+        assertEquals("blue", slotMachine.configuration()[0]);
+    }
+    /*
+     * Should only affect the exact wheel on its left, totally ignoring wheels on its right.
+     */
+    @Test
+    public void shouldSplattyOnlyMoveLeftWheelNotRight(){
+        slotMachine.addWheel(1);
+        slotMachine.addWheel("Splatty", 2);
+        slotMachine.addWheel(3);
+        
+        String[] beforeSpin = slotMachine.configuration();
+        slotMachine.spin(2, 1);
+        String[] afterSpin = slotMachine.configuration();
+        
+
+        assertTrue(!beforeSpin[0].equals(afterSpin[0]));
+        assertEquals(beforeSpin[2], afterSpin[2]);
+    }
+
+    /*
+     * Should preserve the visibility state of the left wheel after spinning it.
+     * This tests the specific visibility logic inside SplattyWheel's overridden spin methods.
+     */
+    @Test
+    public void shouldSplattyPreserveLeftWheelVisibility(){
+        slotMachine.addWheel(1);
+        slotMachine.addWheel("Splatty", 2);
+        
+        slotMachine.makeVisible();
+        
+        slotMachine.spin(2, 1);
+        
+        assertTrue(slotMachine.getWheel(1).isVisible());
+    }
+
+    /*
+     * Should handle a massive amount of steps accurately without crashing.
+     */
+    @Test
+    public void shouldSplattyHandleLargeNumberOfSteps(){
+        slotMachine.addWheel(1);
+        slotMachine.addWheel("Splatty", 2);
+        
+        String[] beforeSpin = slotMachine.configuration();
+        
+        slotMachine.spin(2, 100);
+        String[] afterSpin = slotMachine.configuration();
+        
+        assertTrue(!beforeSpin[0].equals(afterSpin[0]));
+        assertTrue(!beforeSpin[1].equals(afterSpin[1]));
+    }
     /**
      * Tears down the test fixture.
      */
