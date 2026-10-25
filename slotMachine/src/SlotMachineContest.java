@@ -106,7 +106,7 @@ public class SlotMachineContest
     public static void simulate(int n){
         slotMachine = new SlotMachine(n);
         slotMachine.makeVisible();
-        int[][] a = solve(n);
+        solve(n);
         
     }
         

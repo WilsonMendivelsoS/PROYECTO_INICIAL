@@ -1,4 +1,3 @@
-import java.awt.*;
 
 /**
  * Represents a Figure
